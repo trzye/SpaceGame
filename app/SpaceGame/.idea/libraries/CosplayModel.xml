@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CosplayModel">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../CosplayModel/out/artifacts/CosplayModel_jar/CosplayModel.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
