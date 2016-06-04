@@ -24,15 +24,15 @@ CREATE TABLE planet_fields(
   planet_field_id INT PRIMARY KEY AUTO_INCREMENT,
   coordinate_x INT NOT NULL,
   coordinate_y INT NOT NULL,
-  status varchar(6) DEFAULT 'LOCKED', -- "LOCKED", "EMPTY" or "USED",
+  status varchar(6) DEFAULT 'LOCKED' NOT NULL, -- "LOCKED", "EMPTY" or "USED",
   UNIQUE(coordinate_x, coordinate_y)
 );
 
 CREATE TABLE activations(
   activation_id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT UNIQUE NOT NULL,
-  planet_field_id INT UNIQUE,
-  activation_code VARCHAR(256),
+  planet_field_id INT UNIQUE NOT NULL,
+  activation_code VARCHAR(256) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (planet_field_id) REFERENCES planet_fields(planet_field_id)
 );
@@ -41,7 +41,7 @@ CREATE TABLE resources(
   resource_id INT PRIMARY KEY AUTO_INCREMENT,
   gadolin INT DEFAULT '0' NOT NULL,
   ununtrium INT DEFAULT '0' NOT NULL,
-  last_update TIMESTAMP DEFAULT now()
+  last_update TIMESTAMP DEFAULT now() NOT NULL
 );
 
 CREATE TABLE buildings_dic(
@@ -63,13 +63,15 @@ CREATE TABLE fleets(
 
 CREATE TABLE planets(
   planet_id INT PRIMARY KEY AUTO_INCREMENT,
+  planet_field_id INT NOT NULL,
   user_id INT UNIQUE NOT NULL,
   name VARCHAR(256) NOT NULL,
   resource_id INT UNIQUE NOT NULL,
   fleet_id INT UNIQUE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (resource_id) REFERENCES resources(resource_id),
-  FOREIGN KEY (fleet_id) REFERENCES fleets(fleet_id)
+  FOREIGN KEY (fleet_id) REFERENCES fleets(fleet_id),
+  FOREIGN KEY (planet_field_id) REFERENCES planet_fields(planet_field_id)
 );
 
 CREATE TABLE buildings(
@@ -106,7 +108,7 @@ CREATE TABLE attack_histories(
   bombers INT NOT NULL,
   ironclads INT NOT NULL,
   attacked_planet_id INT NULL,
-  result BOOLEAN, -- 0 - LOSE, 1 - WIN
+  result BOOLEAN NOT NULL, -- 0 - LOSE, 1 - WIN
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -117,7 +119,7 @@ CREATE TABLE alliance_histories(
   bombers INT NOT NULL,
   ironclads INT NOT NULL,
   helped_planet_id INT NULL,
-  result BOOLEAN, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET
+  result BOOLEAN NOT NULL, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -127,4 +129,4 @@ CREATE TABLE logs(
   class VARCHAR(256) NOT NULL, -- class from where logger is used
   information LONGTEXT NOT NULL,
   level VARCHAR(32) DEFAULT 'INFO' NOT NULL -- INFO, DEBUG or ERROR
-)
+);
