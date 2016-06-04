@@ -17,6 +17,7 @@ CREATE TABLE users(
   nickname VARCHAR(32) UNIQUE NOT NULL,
   salt VARCHAR(256) NOT NULL,
   email VARCHAR(256) NOT NULL,
+  password VARCHAR(256) NOT NULL,
   is_activated BOOLEAN DEFAULT '0' NOT NULL
 );
 
