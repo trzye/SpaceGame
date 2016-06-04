@@ -31,8 +31,8 @@ CREATE TABLE planet_fields(
 CREATE TABLE activations(
   activation_id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT UNIQUE NOT NULL,
-  planet_field_id INT UNIQUE,
-  activation_code VARCHAR(256),
+  planet_field_id INT UNIQUE NOT NULL,
+  activation_code VARCHAR(256) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (planet_field_id) REFERENCES planet_fields(planet_field_id)
 );
