@@ -1,14 +1,37 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+angular.module('SpaceGame', [
+      'ui.router',
+      'SpaceGame.HeaderModule',
+      'SpaceGame.LoginModule',
+      'SpaceGame.HomeModule'
+    ])
+    .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+      $stateProvider
+          .state('login', {
+            url: "/login",
+            views: {
+              'content@': {
+                templateUrl: "components/login/login.html",
+                controller: "LoginController"
+              }
+            }
+          })
+          .state('header', {
+            views: {
+              'header@': {
+                templateUrl: "components/header/header.html",
+                controller: "HeaderController"
+              }
+            }
+          })
+          .state('header.home', {
+            url: "/home",
+            views: {
+              'content@': {
+                templateUrl: "components/home/home.html",
+                controller: "HomeController"
+              }
+            }
+          })
+    }]);
