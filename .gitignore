@@ -10,3 +10,18 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Front
+app/SpaceGameFront/app/bower_components/
+
+
+app/SpaceGame/.idea/
+app/SpaceGame/build/
+app/SpaceGame/gradle/
+app/SpaceGame/.gradle/
+app/SpaceGame/gradlew
+app/SpaceGame/gradlew.bat
+
+*.iml
+*.log
+
