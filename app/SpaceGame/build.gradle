@@ -18,6 +18,9 @@ repositories {
     mavenCentral()
 }
 
+bootRun {
+    addResources = true
+}
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -26,5 +29,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("com.google.collections:google-collections:1.0")
     compile("org.springframework.security:spring-security-web:4.1.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-devtools")
     testCompile("junit:junit:4.10")
 }

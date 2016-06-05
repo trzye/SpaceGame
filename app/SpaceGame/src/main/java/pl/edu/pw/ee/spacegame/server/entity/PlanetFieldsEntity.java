@@ -12,7 +12,7 @@ public class PlanetFieldsEntity {
     private Integer planetFieldId;
     private Integer coordinateX;
     private Integer coordinateY;
-    private String status;
+    private Status status = Status.LOCKED;
     private Collection<ActivationsEntity> activationsesByPlanetFieldId;
     private Collection<PlanetsEntity> planetsesByPlanetFieldId;
 
@@ -48,12 +48,13 @@ public class PlanetFieldsEntity {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -97,5 +98,11 @@ public class PlanetFieldsEntity {
 
     public void setPlanetsesByPlanetFieldId(Collection<PlanetsEntity> planetsesByPlanetFieldId) {
         this.planetsesByPlanetFieldId = planetsesByPlanetFieldId;
+    }
+
+    public enum Status {
+        LOCKED,
+        EMPTY,
+        USED
     }
 }
