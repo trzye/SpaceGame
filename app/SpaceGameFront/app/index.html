@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" ng-app="SpaceGame">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,22 @@
 </head>
 <body>
 
+<div ui-view="header"></div>
+<div ui-view="content"></div>
 
+<!--Plugins -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="resources/js/jquery.backstretch.min.js"></script>
+
+<!--Angular -->
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="app.js"></script>
+
+<!--Controllers -->
+<script src="components/header/headerController.js"></script>
+<script src="components/home/homeController.js"></script>
+<script src="components/login/loginController.js"></script>
+
 </body>
+</html>
