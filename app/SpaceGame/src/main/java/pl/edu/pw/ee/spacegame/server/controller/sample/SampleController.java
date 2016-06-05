@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.spacegame.server.controller.test;
+package pl.edu.pw.ee.spacegame.server.controller.sample;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.AutowiredController;
 
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.TEST_PATH;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.SAMPLE_PATH;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.UNEXPECTED_ERROR;
 
 /**
  * Created by Michał on 2016-05-05.
  * <p>
- * Klasa do testowania i zabawy.
+ * Przykładowa klasa do testowania i zabawy.
  * </p>
  */
 @RestController
-@RequestMapping(TEST_PATH)
-public class TestController extends AutowiredController {
+@RequestMapping(SAMPLE_PATH)
+public class SampleController extends AutowiredController {
 
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> test() {
         databaseLogger.setClass(getClass());
         try {
-            databaseLogger.info("Getting GET request in test controller");
+            databaseLogger.info("Getting GET request in sample controller");
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             databaseLogger.error(UNEXPECTED_ERROR + e.getMessage());
