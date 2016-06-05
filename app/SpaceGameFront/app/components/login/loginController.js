@@ -7,6 +7,13 @@ angular.module("SpaceGame.LoginModule", [])
         ], {
             fade: 1000,
             duration: 7000
-        })
+        });
+
+        $scope.username = "";
+        $scope.password = "";
+
+        $scope.login = function() {
+            console.log($scope.username);
+        }
 
     }]);

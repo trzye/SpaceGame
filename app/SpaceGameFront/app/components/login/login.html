@@ -1,1 +1,38 @@
-<p>login</p>
+<div class="container">
+    <div class="panel panel-default panel-login">
+        <div class="panel-heading">
+            <i class="fa fa-sign-in" aria-hidden="true"></i> Zaloguj się
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="page-title-header"><b>SpaceGame - podbijaj wszechświat</b></h4>
+                    <!--<p>Przedstawiamy Wam grę przeglądarkową, w której jesteśmy dowódcą międzygalaktycznej floty. Naszym zadaniem jest zadządznie swoją planetą i podboj galaktyki.</p>-->
+                    <p>Nie posiadasz jeszcze konta?!</p>
+                    <a ui-sref="register" class="btn btn-danger">Zarejestruj się</a>
+
+                </div>
+                <div class="col-md-6">
+                    <form method="POST" class="form-login">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                <input type="text" ng-model="username" class="form-control" placeholder="Nazwa użytkownika" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                <input type="password" ng-model="password" class="form-control" placeholder="Hasło" required />
+                            </div>
+                        </div>
+                        <div class="form-group form-login-button">
+                            <button type="submit" class="btn btn-success" ng-click="login()">Zaloguj się</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

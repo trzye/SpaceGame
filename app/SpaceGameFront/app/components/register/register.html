@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="panel panel-default panel-login">
+        <div class="panel-heading">
+            <i class="fa fa-sign-in" aria-hidden="true"></i> Utwórz nowe konto
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="page-title-header"><b>SpaceGame - podbijaj wszechświat</b></h4>
+                    <!--<p>Przedstawiamy Wam grę przeglądarkową, w której jesteśmy dowódcą międzygalaktycznej floty. Naszym zadaniem jest zadządznie swoją planetą i podboj galaktyki.</p>-->
+                    <p>Posiadasz już konto?</p>
+                    <a ui-sref="login" class="btn btn-danger">Zaloguj się</a>
+
+                </div>
+                <div class="col-md-6">
+                    <form method="POST" class="form-login">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                <input type="text" ng-model="username" class="form-control"
+                                       placeholder="Nazwa użytkownika" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                <input type="password" ng-model="password" class="form-control" placeholder="Hasło"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                <input type="password" ng-model="passwordRepeat" class="form-control"
+                                       placeholder="Powtórz hasło" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></span>
+                                <input type="email" ng-model="email" class="form-control" placeholder="Adres email"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="form-group form-login-button">
+                                <span ng-bind="selectedPlanet.name" ng-model="selectedPlanet.name"></span>
+                                <button style="margin-left: 10px;" type="button" class="btn btn-info" data-toggle="modal" data-target="#selectPlanetModal">Wybierz planetę</button>
+                        </div>
+                        <div class="form-group form-login-button">
+                            <button type="submit" class="btn btn-success" ng-click="register()">Zarejestruj się</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="selectPlanetModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Wybierz pozycję swojej planety</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" disabled="disabled">Wybierz</button>
+            </div>
+        </div>
+
+    </div>
+</div>
