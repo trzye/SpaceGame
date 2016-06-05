@@ -14,7 +14,7 @@ public class UsersEntity {
     private String salt;
     private String email;
     private String password;
-    private Byte isActivated;
+    private Byte isActivated = 0;
     private Collection<ActivationsEntity> activationsesByUserId;
     private Collection<AllianceHistoriesEntity> allianceHistoriesByUserId;
     private Collection<AttackHistoriesEntity> attackHistoriesByUserId;

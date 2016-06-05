@@ -9,12 +9,8 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'spring-boot' 
+apply plugin: 'spring-boot'
 
-jar {
-    baseName = 'CosplayServer'
-    version = '0.0.1'
-}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -22,6 +18,9 @@ repositories {
     mavenCentral()
 }
 
+bootRun {
+    addResources = true
+}
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -29,5 +28,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("com.google.collections:google-collections:1.0")
+    compile("org.springframework.security:spring-security-web:4.1.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-devtools")
     testCompile("junit:junit:4.10")
 }
