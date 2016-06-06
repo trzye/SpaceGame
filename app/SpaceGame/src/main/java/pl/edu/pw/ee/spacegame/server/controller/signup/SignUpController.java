@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
-import pl.edu.pw.ee.spacegame.server.controller.TextResponceEntity;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
 import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
@@ -38,7 +38,7 @@ public class SignUpController extends BaseAbstractController {
             ActivationsEntity activationsEntity = getActivationsEntity(usersEntity, planetFieldsEntity);
             saveUserAndSendMail(usersEntity, planetFieldsEntity, activationsEntity);
             databaseLogger.info(String.format(USER_ADDED_LOG, signUpData.getNickname()));
-            return new TextResponceEntity<Object>(String.format(USER_ADDED, signUpData.getEmail()), HttpStatus.OK);
+            return new TextResponseEntity<Object>(String.format(USER_ADDED, signUpData.getEmail()), HttpStatus.OK);
         } catch (IOException e) {
             return handleBadRequest(e);
         } catch (Exception e) {
