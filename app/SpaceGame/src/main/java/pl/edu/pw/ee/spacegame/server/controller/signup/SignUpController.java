@@ -21,8 +21,6 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 
 /**
  * Created by Michał on 2016-06-05.
- * //TODO: dodanie timestamp do BD aktywacji (nie odliczymy 10 minut :P )
- * http://docs.michaljereczek.apiary.io/#reference/0/rejestracja/zarejestruj-uzytkownika
  */
 @RestController
 @CrossOrigin
@@ -89,7 +87,7 @@ public class SignUpController extends BaseAbstractController {
         try {
             Mail.sent(usersEntity.getEmail(), activationsEntity.getActivationCode());
         } catch (MessagingException e) {
-            throw new IOException("Podczas wysyłania maila wystąpił niespodziewany wyjątek", e);
+            throw new IOException(MAIL_ERROR, e);
         }
     }
 

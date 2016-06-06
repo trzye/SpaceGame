@@ -15,21 +15,22 @@ import java.io.IOException;
 import java.util.Date;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.ACTIVATION_PATH;
 
 /**
  * Created by Michał on 2016-06-06.
  */
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/activation")
+@RequestMapping(path = ACTIVATION_PATH)
 public class ActivationController extends BaseAbstractController {
 
     @RequestMapping(method = GET)
     public ResponseEntity<?> activate(@RequestParam(name = "email") String email,
                                       @RequestParam(name = "activationCode") String activationCode) {
+        databaseLogger.setClass(getClass());
         try {
-            databaseLogger.setClass(getClass());
-            activateAccount(email, activationCode);
+            activateAction(email, activationCode);
             databaseLogger.info("Aktywowano konto dla email " + email);
             return new ResponseEntity<>("Pomyślnie aktywowano konto", HttpStatus.OK);
         } catch (IOException e) {
@@ -40,7 +41,7 @@ public class ActivationController extends BaseAbstractController {
     }
 
     @Transactional
-    private void activateAccount(String email, String activationCode) throws IOException {
+    private void activateAction(String email, String activationCode) throws IOException {
         ActivationsEntity activationsEntity = activationsDAO.getActivationByEmail(email);
         if (activationsEntity == null)
             throw new IOException("Nie istnieje użytkownik o takim adresie email");
