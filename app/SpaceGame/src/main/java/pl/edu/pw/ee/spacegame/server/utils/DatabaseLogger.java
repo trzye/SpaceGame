@@ -8,7 +8,7 @@ import pl.edu.pw.ee.spacegame.server.dao.crud.LogsDAO;
 import pl.edu.pw.ee.spacegame.server.entity.LogsEntity;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
 @Repository
 public class DatabaseLogger {

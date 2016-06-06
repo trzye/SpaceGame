@@ -2,7 +2,7 @@ package pl.edu.pw.ee.spacegame.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import pl.edu.pw.ee.spacegame.server.dao.crud.*;
 import pl.edu.pw.ee.spacegame.server.utils.DatabaseLogger;
 
@@ -14,10 +14,10 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.UNEXPECTED_ERROR;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
-@RestController
-public abstract class AutowiredController {
+@Component
+public abstract class BaseAbstractController {
 
     @Autowired
     protected DatabaseLogger databaseLogger;
@@ -61,15 +61,15 @@ public abstract class AutowiredController {
     @Autowired
     protected UsersDAO usersDAO;
 
-    protected ResponseEntity<?> getResponseEntity(IOException e) {
-        databaseLogger.error(UNEXPECTED_ERROR + e.getMessage());
+    protected ResponseEntity<?> handleBadRequest(IOException e) {
+        databaseLogger.info(REQUEST_ERROR + e.getMessage());
         e.printStackTrace();
         return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
     }
 
-    protected ResponseEntity<?> getResponseEntity(Exception e) {
-        String error = REQUEST_ERROR + e.getMessage();
-        databaseLogger.error(error);
+    protected ResponseEntity<?> handleServerError(Exception e) {
+        databaseLogger.error(UNEXPECTED_ERROR + e.getMessage());
+        e.printStackTrace();
         return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
     }
 }

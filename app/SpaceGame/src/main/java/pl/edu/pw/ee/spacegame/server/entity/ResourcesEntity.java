@@ -2,10 +2,11 @@ package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
 @Entity
 @Table(name = "resources", schema = "", catalog = "spacegame")
@@ -13,7 +14,7 @@ public class ResourcesEntity {
     private Integer resourceId;
     private Integer gadolin;
     private Integer ununtrium;
-    private Timestamp lastUpdate;
+    private Timestamp lastUpdate = new Timestamp(Calendar.getInstance().getTime().getTime());
     private Collection<PlanetsEntity> planetsesByResourceId;
 
     @Id

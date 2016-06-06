@@ -2,15 +2,16 @@ package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
 @Entity
 @Table(name = "logs", schema = "", catalog = "spacegame")
 public class LogsEntity {
     private Integer logId;
-    private Timestamp time;
+    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
     private String clazz;
     private String information;
     private String level;

@@ -3,7 +3,7 @@ package pl.edu.pw.ee.spacegame.server.security;
 import java.util.HashMap;
 
 /**
- * Created by Micha≥ on 2016-05-19.
+ * Created by Micha≈Ç on 2016-05-19.
  */
 public class LoggedUsers {
 

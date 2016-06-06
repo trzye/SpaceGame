@@ -1,9 +1,11 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
 @Entity
 @Table(name = "activations", schema = "", catalog = "spacegame")
@@ -12,6 +14,7 @@ public class ActivationsEntity {
     private String activationCode;
     private UsersEntity usersByUserId;
     private PlanetFieldsEntity planetFieldsByPlanetFieldId;
+    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
 
     @Id
     @GeneratedValue
@@ -33,6 +36,16 @@ public class ActivationsEntity {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    @Basic
+    @Column(name = "time")
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     @Override
