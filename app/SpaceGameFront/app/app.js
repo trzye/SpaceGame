@@ -6,7 +6,8 @@ angular.module('SpaceGame', [
         'SpaceGame.HeaderModule',
         'SpaceGame.LoginModule',
         'SpaceGame.RegisterModule',
-        'SpaceGame.HomeModule'
+        'SpaceGame.HomeModule',
+        'SpaceGame.InfoModule'
 
     ])
     .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
@@ -18,6 +19,19 @@ angular.module('SpaceGame', [
                         templateUrl: "components/login/login.html",
                         controller: "LoginController"
                     }
+                }
+            })
+            .state('info', {
+                url: "/info",
+                views: {
+                    'content@': {
+                        templateUrl: "components/info/info.html",
+                        controller: "InfoController"
+                    }
+                },
+                params: {
+                    "type" : "",
+                    "message" : ""
                 }
             })
             .state('register', {
