@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('SpaceGame', [
+var spaceGameApp = angular.module('SpaceGame', [
         'ui.router',
         'SpaceGame.ApiModule',
         'SpaceGame.HeaderModule',

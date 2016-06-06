@@ -14,12 +14,23 @@ angular.module("SpaceGame.RegisterModule", [])
         $scope.passwordRepeat = "";
         $scope.email = "";
         $scope.error = [];
+        $scope.map = [];
 
         $scope.selectedPlanet = {
             "name": "nie wybrano",
             "x": -1,
             "y": -1
         };
+
+        $http({
+            method: "GET",
+            url: ApiService.map,
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }).then(function success(response) {
+            $scope.map = response.data;
+        });
 
         $scope.register = function() {
 
@@ -61,5 +72,10 @@ angular.module("SpaceGame.RegisterModule", [])
             }
         }
         
+        $scope.choosePlanet = function(x, y) {
+            $scope.selectedPlanet.x = x;
+            $scope.selectedPlanet.y = y;
+            $scope.selectedPlanet.name = "planeta[" + x + "|" + y + "]";
+        }
 
     }]);

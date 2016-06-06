@@ -26,3 +26,23 @@ html, body {
 .page-title-header {
     color: #e8e8e8;
 }
+
+.table-map {
+    border: 1px solid red;
+    width: 100%;
+}
+
+.table-map td {
+    border: 1px solid #8b8f94;
+    text-align: center;
+    width: 25px;
+}
+
+.table-map tr {
+    height: 25px;
+}
+
+.table-map td:hover {
+    background-color: #516264;
+    cursor: pointer;
+}

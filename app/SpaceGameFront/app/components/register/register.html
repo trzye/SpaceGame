@@ -44,8 +44,10 @@
                             </div>
                         </div>
                         <div class="form-group form-login-button">
-                                <span ng-bind="selectedPlanet.name" ng-model="selectedPlanet.name"></span>
-                                <button style="margin-left: 10px;" type="button" class="btn btn-info" data-toggle="modal" data-target="#selectPlanetModal">Wybierz planetę</button>
+                            <span ng-bind="selectedPlanet.name" ng-model="selectedPlanet.name"></span>
+                            <button style="margin-left: 10px;" type="button" class="btn btn-info" data-toggle="modal"
+                                    data-target="#selectPlanetModal">Wybierz planetę
+                            </button>
                         </div>
                         <div class="form-group form-login-button">
                             <button type="submit" class="btn btn-success" ng-click="register()">Zarejestruj się</button>
@@ -68,7 +70,15 @@
                 <h4 class="modal-title">Wybierz pozycję swojej planety</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+
+                <table class="table-map">
+                    <tr ng-repeat="n in [] | range:10">
+                        <td ng-repeat="i in [] | range:10" ng-click="choosePlanet(n,i)" data-dismiss="modal">
+                            {{n}},{{i}}
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" disabled="disabled">Wybierz</button>
