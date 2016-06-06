@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponceEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.security.AES;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
@@ -32,7 +33,7 @@ public class SignInController extends BaseAbstractController {
         try {
             AuthenticationData authenticationData = signInAction(signInData);
             databaseLogger.info(String.format(USER_LOGGED_LOG, signInData.getNickname()));
-            return new ResponseEntity<>(authenticationData, OK);
+            return new TextResponceEntity<>(authenticationData, OK);
         } catch (IOException e) {
             return handleBadRequest(e);
         } catch (Exception e) {

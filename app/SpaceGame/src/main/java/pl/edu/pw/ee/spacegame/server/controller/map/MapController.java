@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
+import pl.edu.pw.ee.spacegame.server.controller.JsonResponceEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MapController extends BaseAbstractController {
             for (PlanetFieldsEntity planetField : planetFields) {
                 outputPlanetFields.add(new PlanetFieldData(planetField));
             }
-            return new ResponseEntity<>(outputPlanetFields, OK);
+            return new JsonResponceEntity<>(outputPlanetFields, OK);
         } catch (Exception e) {
             return handleServerError(e);
         }

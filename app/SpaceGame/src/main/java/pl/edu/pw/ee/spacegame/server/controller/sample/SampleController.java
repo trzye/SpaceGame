@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponceEntity;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -27,7 +28,7 @@ public class SampleController extends BaseAbstractController {
         databaseLogger.setClass(getClass());
         try {
             databaseLogger.info(SAMPLE_LOG);
-            return new ResponseEntity<>(OK);
+            return new TextResponceEntity<>(OK);
         } catch (Exception e) {
             return handleServerError(e);
         }

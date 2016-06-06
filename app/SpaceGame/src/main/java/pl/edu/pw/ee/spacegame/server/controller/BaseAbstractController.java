@@ -64,12 +64,12 @@ public abstract class BaseAbstractController {
     protected ResponseEntity<?> handleBadRequest(IOException e) {
         databaseLogger.info(REQUEST_ERROR_LOG + e.getMessage());
         e.printStackTrace();
-        return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
+        return new TextResponceEntity<>(e.getMessage(), BAD_REQUEST);
     }
 
     protected ResponseEntity<?> handleServerError(Exception e) {
         databaseLogger.error(UNEXPECTED_ERROR_LOG + e.getMessage());
         e.printStackTrace();
-        return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+        return new TextResponceEntity<>(INTERNAL_SERVER_ERROR);
     }
 }

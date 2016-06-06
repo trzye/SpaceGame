@@ -1,6 +1,5 @@
 package pl.edu.pw.ee.spacegame.server.controller.signup;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponceEntity;
 import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
@@ -38,11 +38,7 @@ public class SignUpController extends BaseAbstractController {
             ActivationsEntity activationsEntity = getActivationsEntity(usersEntity, planetFieldsEntity);
             saveUserAndSendMail(usersEntity, planetFieldsEntity, activationsEntity);
             databaseLogger.info(String.format(USER_ADDED_LOG, signUpData.getNickname()));
-
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Content-Type", "text/plain");
-
-            return new ResponseEntity<>(String.format(USER_ADDED, signUpData.getEmail()), responseHeaders, HttpStatus.OK);
+            return new TextResponceEntity<Object>(String.format(USER_ADDED, signUpData.getEmail()), HttpStatus.OK);
         } catch (IOException e) {
             return handleBadRequest(e);
         } catch (Exception e) {

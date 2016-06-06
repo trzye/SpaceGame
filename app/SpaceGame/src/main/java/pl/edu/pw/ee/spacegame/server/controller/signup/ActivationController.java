@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponceEntity;
 import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 
@@ -32,7 +33,7 @@ public class ActivationController extends BaseAbstractController {
         try {
             activateAction(email, activationCode);
             databaseLogger.info(String.format(ACTIVATION_LOG, email));
-            return new ResponseEntity<>(ACTIVATION_SUCCESS, HttpStatus.OK);
+            return new TextResponceEntity<>(ACTIVATION_SUCCESS, HttpStatus.OK);
         } catch (IOException e) {
             return handleBadRequest(e);
         } catch (Exception e) {
