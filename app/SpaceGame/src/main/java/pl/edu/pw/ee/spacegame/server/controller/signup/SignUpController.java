@@ -111,12 +111,15 @@ public class SignUpController extends BaseAbstractController {
      */
     @Transactional
     private void saveUserAndSendMail(UsersEntity usersEntity, PlanetFieldsEntity planetFieldsEntity, ActivationsEntity activationsEntity) throws IOException {
-        usersDAO.save(usersEntity);
-        planetFieldsDAO.save(planetFieldsEntity);
-        activationsDAO.save(activationsEntity);
         try {
+            usersDAO.save(usersEntity);
+            planetFieldsDAO.save(planetFieldsEntity);
+            activationsDAO.save(activationsEntity);
             Mail.sent(usersEntity.getEmail(), activationsEntity.getActivationCode());
         } catch (MessagingException e) {
+            activationsDAO.delete(activationsEntity);
+            planetFieldsDAO.delete(planetFieldsEntity);
+            usersDAO.delete(usersEntity);
             throw new IOException(MAIL_ERROR, e);
         }
     }
