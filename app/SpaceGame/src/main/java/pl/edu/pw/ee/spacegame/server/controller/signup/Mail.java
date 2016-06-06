@@ -42,6 +42,7 @@ public class Mail {
     private static Properties getProperties() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", SMTP_SERVER);
         props.put("mail.smtp.port", SMTP_PORT.toString());
