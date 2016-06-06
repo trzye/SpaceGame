@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.REQUEST_ERROR;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.UNEXPECTED_ERROR;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.REQUEST_ERROR_LOG;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.UNEXPECTED_ERROR_LOG;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -62,13 +62,13 @@ public abstract class BaseAbstractController {
     protected UsersDAO usersDAO;
 
     protected ResponseEntity<?> handleBadRequest(IOException e) {
-        databaseLogger.info(REQUEST_ERROR + e.getMessage());
+        databaseLogger.info(REQUEST_ERROR_LOG + e.getMessage());
         e.printStackTrace();
         return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
     }
 
     protected ResponseEntity<?> handleServerError(Exception e) {
-        databaseLogger.error(UNEXPECTED_ERROR + e.getMessage());
+        databaseLogger.error(UNEXPECTED_ERROR_LOG + e.getMessage());
         e.printStackTrace();
         return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
     }

@@ -15,7 +15,8 @@ import java.io.IOException;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.SIGN_IN_PATH;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.*;
+
 
 /**
  * Created by Michał on 2016-05-05.
@@ -25,13 +26,12 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RequestMapping(SIGN_IN_PATH)
 public class SignInController extends BaseAbstractController {
 
-
     @RequestMapping(method = POST)
     public ResponseEntity<?> signIn(@RequestBody SignInData signInData) {
         databaseLogger.setClass(getClass());
         try {
             AuthenticationData authenticationData = signInAction(signInData);
-            databaseLogger.info("Zalogowano użytkownika: " + signInData.getNickname());
+            databaseLogger.info(String.format(USER_LOGGED_LOG, signInData.getNickname()));
             return new ResponseEntity<>(authenticationData, OK);
         } catch (IOException e) {
             return handleBadRequest(e);
@@ -43,10 +43,10 @@ public class SignInController extends BaseAbstractController {
     private AuthenticationData signInAction(SignInData signInData) throws IOException {
         UsersEntity user = usersDAO.getUserByNickname(signInData.getNickname());
         if (user == null) {
-            throw new IOException("Nie istnieje użytkownik o podanej nazwie");
+            throw new IOException(USER_NOT_EXISTS);
         }
         if (!AES.isPasswordCorrect(signInData.getRawPassword(), new AES.EncryptionData(user.getPassword(), user.getSalt()))) {
-            throw new IOException("Złe hasło");
+            throw new IOException(WRONG_PASSWORD);
         }
         return LoggedUsers.generateTokenAndAddToLoggedUsers(user.getNickname());
     }

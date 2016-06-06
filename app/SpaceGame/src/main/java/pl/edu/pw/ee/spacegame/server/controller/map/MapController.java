@@ -11,13 +11,11 @@ import java.util.ArrayList;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.GET_MAP_LOG;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.MAP_PATH;
 
 /**
  * Created by Michał on 2016-05-05.
- * <p>
- * Przykładowa klasa do testowania i zabawy.
- * </p>
  */
 @RestController
 @CrossOrigin
@@ -28,7 +26,7 @@ public class MapController extends BaseAbstractController {
     public ResponseEntity<?> getMap() {
         databaseLogger.setClass(getClass());
         try {
-            databaseLogger.info("Wysłano informacje o mapie galaktyki");
+            databaseLogger.info(GET_MAP_LOG);
             Iterable<PlanetFieldsEntity> planetFields = planetFieldsDAO.findAll();
             ArrayList<PlanetFieldData> outputPlanetFields = new ArrayList<>();
             for (PlanetFieldsEntity planetField : planetFields) {

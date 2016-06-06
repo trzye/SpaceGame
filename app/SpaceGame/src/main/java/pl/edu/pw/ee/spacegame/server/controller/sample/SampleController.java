@@ -8,6 +8,7 @@ import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.SAMPLE_LOG;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.SAMPLE_PATH;
 
 /**
@@ -21,12 +22,11 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RequestMapping(SAMPLE_PATH)
 public class SampleController extends BaseAbstractController {
 
-
     @RequestMapping(method = GET)
     public ResponseEntity<?> test() {
         databaseLogger.setClass(getClass());
         try {
-            databaseLogger.info("Getting GET request in sample controller");
+            databaseLogger.info(SAMPLE_LOG);
             return new ResponseEntity<>(OK);
         } catch (Exception e) {
             return handleServerError(e);
