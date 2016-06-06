@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.spacegame.server.controller.signup;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,11 @@ public class SignUpController extends BaseAbstractController {
             ActivationsEntity activationsEntity = getActivationsEntity(usersEntity, planetFieldsEntity);
             saveUserAndSendMail(usersEntity, planetFieldsEntity, activationsEntity);
             databaseLogger.info(String.format(USER_ADDED_LOG, signUpData.getNickname()));
-            return new ResponseEntity<>(String.format(USER_ADDED, signUpData.getEmail()), HttpStatus.OK);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Content-Type", "text/plain");
+
+            return new ResponseEntity<>(String.format(USER_ADDED, signUpData.getEmail()), responseHeaders, HttpStatus.OK);
         } catch (IOException e) {
             return handleBadRequest(e);
         } catch (Exception e) {
