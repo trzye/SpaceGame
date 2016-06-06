@@ -2,10 +2,12 @@
 
 angular.module('SpaceGame', [
         'ui.router',
+        'SpaceGame.ApiModule',
         'SpaceGame.HeaderModule',
         'SpaceGame.LoginModule',
         'SpaceGame.RegisterModule',
         'SpaceGame.HomeModule'
+
     ])
     .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
         $stateProvider

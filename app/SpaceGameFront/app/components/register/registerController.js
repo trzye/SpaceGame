@@ -1,5 +1,5 @@
 angular.module("SpaceGame.RegisterModule", [])
-    .controller("RegisterController", ["$scope", "$http", function ($scope, $http) {
+    .controller("RegisterController", ["$scope", "$http", "ApiService", function ($scope, $http, ApiService) {
 
         $.backstretch([
             "resources/img/bg-login-1.jpg",
@@ -42,19 +42,23 @@ angular.module("SpaceGame.RegisterModule", [])
                     "nickname" : $scope.username,
                     "rawPassword": $scope.password,
                     "email": $scope.email,
-                    "coordinateX" : 0,
-                    "coordinateY" : 0
+                    "coordinateX" : "1",
+                    "coordinateY" : "3"
                 };
 
+                // console.log(JSON.stringify(data));
+
                 $http({
-                    method: "POST",
-                    url: "http://localhost:8080/signUp",
+                    method: 'POST',
+                    url: ApiService.register,
                     data: JSON.stringify(data),
-                    headers: {"Content-Type": "application/json"}
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(function success(response){
-
+                    console.log(response);
                 }, function error(response) {
-
+                    console.log(response);
                 });
             }
         }
