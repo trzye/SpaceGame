@@ -5,41 +5,47 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.*;
+
 /**
  * Created by Michał on 2016-06-06.
  */
 public class Mail {
 
-    public static void sent(String email, String activationCode) throws MessagingException {
-        final String username = "space.game.noreply@gmail.com";
-        final String password = "spacegamenoreply";
+    public static void sent(String emailToSend, String activationCode) throws MessagingException {
+        String activationLink = String.format(ACTIVATION_LINK, emailToSend, activationCode);
+        Properties props = getProperties();
+        Session session = getSession(props);
+        Message message = getMessage(emailToSend, activationLink, session);
+        Transport.send(message);
+    }
 
+    private static Message getMessage(String email, String activationLink, Session session) throws MessagingException {
+        String contentType = "text/html; charset=\"UTF-8\"";
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(EMAIL));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+        message.setSubject(EMAIL_TITLE);
+        message.setContent(String.format(EMAIL_CONTENT, activationLink), contentType);
+        return message;
+    }
+
+    private static Session getSession(Properties props) {
+        return Session.getInstance(props,
+                new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(EMAIL, EMAIL_PASSWORD);
+                    }
+                });
+    }
+
+    private static Properties getProperties() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("space.game.noreply@gmail.com"));
-        message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(email));
-        
-        //TODO: nie zapinać się na localhost
-        String activationLink = "http://localhost:8080/activation?email=" + email + "&activationCode=" + activationCode;
-
-        //TODO: zaprojektować ładniejszą wiadomość
-        message.setSubject("Link aktywacyjny do konta w SpaceGame");
-        message.setContent("<a href=\"" + activationLink + "\">Kliknij aby aktywować swoje konto w SpaceGame</a>", "text/html; charset=\"UTF-8\"");
-
-        Transport.send(message);
+        props.put("mail.smtp.host", SMTP_SERVER);
+        props.put("mail.smtp.port", SMTP_PORT.toString());
+        return props;
     }
 
 }

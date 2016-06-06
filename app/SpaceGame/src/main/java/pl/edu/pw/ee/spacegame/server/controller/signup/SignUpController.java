@@ -31,6 +31,7 @@ public class SignUpController extends BaseAbstractController {
     public ResponseEntity<?> signUp(@RequestBody SignUpData signUpData) {
         databaseLogger.setClass(getClass());
         try {
+            validate(signUpData);
             UsersEntity usersEntity = getUsersEntity(signUpData);
             PlanetFieldsEntity planetFieldsEntity = getPlanetFieldsEntity(signUpData);
             ActivationsEntity activationsEntity = getActivationsEntity(usersEntity, planetFieldsEntity);
@@ -44,9 +45,7 @@ public class SignUpController extends BaseAbstractController {
         }
     }
 
-
-    private ActivationsEntity getActivationsEntity(UsersEntity usersEntity, PlanetFieldsEntity planetFieldsEntity) throws IOException {
-        //TODO walidacja
+    private ActivationsEntity getActivationsEntity(UsersEntity usersEntity, PlanetFieldsEntity planetFieldsEntity) {
         ActivationsEntity activationsEntity = new ActivationsEntity();
         activationsEntity.setActivationCode(AES.encrypt(usersEntity.getEmail()).getEncryptedPassword());
         activationsEntity.setPlanetFieldsByPlanetFieldId(planetFieldsEntity);
@@ -54,19 +53,14 @@ public class SignUpController extends BaseAbstractController {
         return activationsEntity;
     }
 
-    private PlanetFieldsEntity getPlanetFieldsEntity(SignUpData signUpData) throws IOException {
-        //TODO walidacja
+    private PlanetFieldsEntity getPlanetFieldsEntity(SignUpData signUpData) {
         PlanetFieldsEntity planetFieldsEntity = new PlanetFieldsEntity();
         planetFieldsEntity.setCoordinateX(signUpData.getCoordinateX());
         planetFieldsEntity.setCoordinateY(signUpData.getCoordinateY());
         return planetFieldsEntity;
     }
 
-    private UsersEntity getUsersEntity(SignUpData signUpData) throws IOException {
-        //TODO walidacja
-        if (usersDAO.getUserByNickname(signUpData.getNickname()) != null) {
-            throw new IOException(USER_EXISTS);
-        }
+    private UsersEntity getUsersEntity(SignUpData signUpData) {
         UsersEntity usersEntity = new UsersEntity();
         AES.EncryptionData encryptionData = AES.encrypt(signUpData.getRawPassword());
         usersEntity.setNickname(signUpData.getNickname());
@@ -74,6 +68,41 @@ public class SignUpController extends BaseAbstractController {
         usersEntity.setPassword(encryptionData.getEncryptedPassword());
         usersEntity.setSalt(encryptionData.getSalt());
         return usersEntity;
+    }
+
+    private void validate(SignUpData signUpData) throws IOException {
+        validateUser(signUpData);
+        validatePlanetField(signUpData);
+    }
+
+    private void validatePlanetField(SignUpData signUpData) throws IOException {
+        validateCoordinate(signUpData.getCoordinateX());
+        validateCoordinate(signUpData.getCoordinateY());
+        PlanetFieldsEntity planet =
+                planetFieldsDAO.getPlanetByXandY(signUpData.getCoordinateX(), signUpData.getCoordinateY());
+        if (planet != null) {
+            throw new IOException(PLANET_FIELD_NOT_EMPTY);
+        }
+    }
+
+    private void validateCoordinate(Integer coordinate) throws IOException {
+        if ((coordinate < 0) || (coordinate > 9))
+            throw new IOException(BAD_COORDINATES);
+    }
+
+    private void validateUser(SignUpData signUpData) throws IOException {
+        if (usersDAO.getUserByNickname(signUpData.getNickname()) != null) {
+            throw new IOException(USER_EXISTS);
+        }
+        if (usersDAO.getUserByEmail(signUpData.getEmail()) != null) {
+            throw new IOException(EMAIL_EXISTS);
+        }
+        if ((signUpData.getNickname().length() < 3) || (signUpData.getNickname().length() > 16)) {
+            throw new IOException(WRONG_NICK_LENGTH);
+        }
+        if ((signUpData.getRawPassword().length() < 6) || (signUpData.getRawPassword().length() > 32)) {
+            throw new IOException(WRONG_PASSWORD_LENGTH);
+        }
     }
 
     /*
