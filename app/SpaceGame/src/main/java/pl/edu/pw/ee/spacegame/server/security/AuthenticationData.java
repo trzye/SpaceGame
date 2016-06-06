@@ -3,7 +3,7 @@ package pl.edu.pw.ee.spacegame.server.security;
 import java.io.Serializable;
 
 /**
- * Created by Micha≥ on 2016-05-19.
+ * Created by Micha≈Ç on 2016-05-19.
  */
 public class AuthenticationData implements Serializable {
     private String token;

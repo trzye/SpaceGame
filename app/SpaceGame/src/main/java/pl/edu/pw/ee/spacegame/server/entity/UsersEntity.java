@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by Micha≥ on 2016-06-04.
+ * Created by Micha≈Ç on 2016-06-04.
  */
 @Entity
 @Table(name = "users", schema = "", catalog = "spacegame")
@@ -14,7 +14,7 @@ public class UsersEntity {
     private String salt;
     private String email;
     private String password;
-    private Byte isActivated = 0;
+    private Boolean isActivated = false;
     private Collection<ActivationsEntity> activationsesByUserId;
     private Collection<AllianceHistoriesEntity> allianceHistoriesByUserId;
     private Collection<AttackHistoriesEntity> attackHistoriesByUserId;
@@ -73,11 +73,11 @@ public class UsersEntity {
 
     @Basic
     @Column(name = "is_activated")
-    public Byte getIsActivated() {
+    public Boolean getIsActivated() {
         return isActivated;
     }
 
-    public void setIsActivated(Byte isActivated) {
+    public void setIsActivated(Boolean isActivated) {
         this.isActivated = isActivated;
     }
 

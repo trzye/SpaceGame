@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- * Created by Micha≥ on 2016-06-05.
+ * Created by Micha≈Ç on 2016-06-05.
  */
 public class LoggedUsersTest {
 

@@ -3,28 +3,29 @@ package pl.edu.pw.ee.spacegame.server.controller.signup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.AutowiredController;
+import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.security.AES;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.*;
 
 /**
- * Created by Micha≥ on 2016-06-05.
- * //TODO: dodanie timestamp do BD aktywacji (nie odliczymy 10 minut :P )
- * http://docs.michaljereczek.apiary.io/#reference/0/rejestracja/zarejestruj-uzytkownika
+ * Created by Micha≈Ç on 2016-06-05.
  */
 @RestController
+@CrossOrigin
 @RequestMapping(SIGN_UP_PATH)
-public class SignUpController extends AutowiredController {
+public class SignUpController extends BaseAbstractController {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> signUp(@RequestBody SignUpData signUpData) {
@@ -33,14 +34,13 @@ public class SignUpController extends AutowiredController {
             UsersEntity usersEntity = getUsersEntity(signUpData);
             PlanetFieldsEntity planetFieldsEntity = getPlanetFieldsEntity(signUpData);
             ActivationsEntity activationsEntity = getActivationsEntity(usersEntity, planetFieldsEntity);
-            saveUser(usersEntity, planetFieldsEntity, activationsEntity);
-            //TODO wys≥anie maila
+            saveUserAndSendMail(usersEntity, planetFieldsEntity, activationsEntity);
             databaseLogger.info(String.format(USER_ADDED_LOG, signUpData.getNickname()));
             return new ResponseEntity<>(String.format(USER_ADDED, signUpData.getEmail()), HttpStatus.OK);
         } catch (IOException e) {
-            return getResponseEntity(e);
+            return handleBadRequest(e);
         } catch (Exception e) {
-            return getResponseEntity(e);
+            return handleServerError(e);
         }
     }
 
@@ -77,13 +77,18 @@ public class SignUpController extends AutowiredController {
     }
 
     /*
-        Transactional cofa zmiany na bazie danych w razie jakiegoú b≥Ídu.
+        Transactional cofa zmiany na bazie danych w razie jakiego≈õ b≈Çƒôdu.
      */
     @Transactional
-    private void saveUser(UsersEntity usersEntity, PlanetFieldsEntity planetFieldsEntity, ActivationsEntity activationsEntity) {
+    private void saveUserAndSendMail(UsersEntity usersEntity, PlanetFieldsEntity planetFieldsEntity, ActivationsEntity activationsEntity) throws IOException {
         usersDAO.save(usersEntity);
         planetFieldsDAO.save(planetFieldsEntity);
         activationsDAO.save(activationsEntity);
+        try {
+            Mail.sent(usersEntity.getEmail(), activationsEntity.getActivationCode());
+        } catch (MessagingException e) {
+            throw new IOException(MAIL_ERROR, e);
+        }
     }
 
 }

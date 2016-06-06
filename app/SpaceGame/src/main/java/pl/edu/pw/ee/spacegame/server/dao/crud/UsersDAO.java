@@ -14,4 +14,7 @@ public interface UsersDAO extends CrudRepository<UsersEntity, Integer> {
     @Query("SELECT u FROM UsersEntity u WHERE u.nickname = :nickname")
     UsersEntity getUserByNickname(@Param("nickname") String nickname);
 
+    @Query("SELECT u FROM UsersEntity u WHERE u.email = :email")
+    UsersEntity getUserByEmail(@Param("email") String email);
+
 }

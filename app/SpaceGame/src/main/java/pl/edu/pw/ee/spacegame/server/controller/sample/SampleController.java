@@ -1,9 +1,10 @@
 package pl.edu.pw.ee.spacegame.server.controller.sample;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.AutowiredController;
+import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -16,8 +17,9 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
  * </p>
  */
 @RestController
+@CrossOrigin
 @RequestMapping(SAMPLE_PATH)
-public class SampleController extends AutowiredController {
+public class SampleController extends BaseAbstractController {
 
 
     @RequestMapping(method = GET)
@@ -27,7 +29,7 @@ public class SampleController extends AutowiredController {
             databaseLogger.info("Getting GET request in sample controller");
             return new ResponseEntity<>(OK);
         } catch (Exception e) {
-            return getResponseEntity(e);
+            return handleServerError(e);
         }
     }
 
