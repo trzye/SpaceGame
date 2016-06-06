@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * Created by Michał on 2016-06-06.
  */
-public class TextResponceEntity<T> extends ResponseEntity<T> {
+public class TextResponseEntity<T> extends ResponseEntity<T> {
 
     private static HttpHeaders getTextHeadersContentType() {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -15,11 +15,11 @@ public class TextResponceEntity<T> extends ResponseEntity<T> {
         return responseHeaders;
     }
 
-    public TextResponceEntity(HttpStatus statusCode) {
+    public TextResponseEntity(HttpStatus statusCode) {
         super(getTextHeadersContentType(), statusCode);
     }
 
-    public TextResponceEntity(T body, HttpStatus statusCode) {
+    public TextResponseEntity(T body, HttpStatus statusCode) {
         super(body, getTextHeadersContentType(), statusCode);
     }
 }
