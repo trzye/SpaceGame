@@ -73,17 +73,16 @@
 
                 <table class="table-map">
                     <tr ng-repeat="n in [] | range:10">
-                        <td ng-repeat="i in [] | range:10" ng-click="choosePlanet(n,i)" data-dismiss="modal">
+                        <td ng-repeat="i in [] | range:10" ng-click="choosePlanet(n,i)" data-dismiss="modal" class="planet">
                             {{n}},{{i}}
                         </td>
                     </tr>
                 </table>
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" disabled="disabled">Wybierz</button>
-            </div>
         </div>
 
     </div>
 </div>
+
+<div class="loading"></div>

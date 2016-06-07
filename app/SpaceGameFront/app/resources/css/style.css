@@ -28,21 +28,39 @@ html, body {
 }
 
 .table-map {
-    border: 1px solid red;
     width: 100%;
 }
 
-.table-map td {
-    border: 1px solid #8b8f94;
+.planet {
+    background-color: black;
+    border: 1px solid #3d3d3d;
     text-align: center;
-    width: 25px;
+    padding: 15px 10px;
 }
 
-.table-map tr {
-    height: 25px;
-}
-
-.table-map td:hover {
-    background-color: #516264;
+.planet:hover {
+    background-color: #344233;
+    font-weight:bold;
     cursor: pointer;
+}
+
+.locked-planet {
+    text-align: center;
+
+    background: black url("../img/planet.png") no-repeat center;
+    background-size: 70% 80%;
+}
+
+.loading {
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7) url(../img/loading.gif) no-repeat center;
+    background-size: 10%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
 }
