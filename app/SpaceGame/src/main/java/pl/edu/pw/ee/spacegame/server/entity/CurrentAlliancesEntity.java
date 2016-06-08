@@ -75,4 +75,10 @@ public class CurrentAlliancesEntity {
     public void setFleetsByFleetId(FleetsEntity fleetsByFleetId) {
         this.fleetsByFleetId = fleetsByFleetId;
     }
+
+    public static CurrentAlliancesEntity getStartingState(FleetsEntity fleetsEntity) {
+        CurrentAlliancesEntity currentAlliancesEntity = new CurrentAlliancesEntity();
+        currentAlliancesEntity.setFleetsByFleetId(fleetsEntity);
+        return currentAlliancesEntity;
+    }
 }

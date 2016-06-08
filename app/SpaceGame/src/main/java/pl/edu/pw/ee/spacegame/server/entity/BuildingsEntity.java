@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.dao.crud.BuildingsDicDAO;
+
 import javax.persistence.*;
 
 /**
@@ -8,10 +10,44 @@ import javax.persistence.*;
 @Entity
 @Table(name = "buildings", schema = "", catalog = "spacegame")
 public class BuildingsEntity {
+
+    public static final String GADOLIN_MINE = "Gadolin mine";
+    public static final String UNUNTRIUM_MINE = "Ununtrium mine";
+    public static final String HANGAR = "Hangar";
+    public static final String DEFENCE_SYSTEMS = "Defence systems";
+
     private Integer buildingId;
     private Integer level;
     private BuildingsDicEntity buildingsDicByBuildingsDicId;
     private PlanetsEntity planetsByPlanetId;
+
+    public static BuildingsEntity getUnuntriumMine(BuildingsDicDAO buildingsDicDAO) {
+        BuildingsEntity building = new BuildingsEntity();
+        building.setLevel(1);
+        building.setBuildingsDicByBuildingsDicId(buildingsDicDAO.findOne(0));
+        return building;
+    }
+
+    public static BuildingsEntity getGadolinMine(BuildingsDicDAO buildingsDicDAO) {
+        BuildingsEntity building = new BuildingsEntity();
+        building.setLevel(1);
+        building.setBuildingsDicByBuildingsDicId(buildingsDicDAO.findOne(1));
+        return building;
+    }
+
+    public static BuildingsEntity getHangar(BuildingsDicDAO buildingsDicDAO) {
+        BuildingsEntity building = new BuildingsEntity();
+        building.setLevel(1);
+        building.setBuildingsDicByBuildingsDicId(buildingsDicDAO.findOne(2));
+        return building;
+    }
+
+    public static BuildingsEntity getDefenceSystems(BuildingsDicDAO buildingsDicDAO) {
+        BuildingsEntity building = new BuildingsEntity();
+        building.setLevel(1);
+        building.setBuildingsDicByBuildingsDicId(buildingsDicDAO.findOne(3));
+        return building;
+    }
 
     @Id
     @GeneratedValue

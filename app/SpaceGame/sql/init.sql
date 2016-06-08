@@ -52,7 +52,7 @@ CREATE TABLE buildings_dic (
 );
 
 INSERT INTO buildings_dic VALUES (0, 'Gadolin mine');
-INSERT INTO buildings_dic VALUES (1, 'Ununtrum mine');
+INSERT INTO buildings_dic VALUES (1, 'Ununtrium mine');
 INSERT INTO buildings_dic VALUES (2, 'Hangar');
 INSERT INTO buildings_dic VALUES (3, 'Defence systems');
 

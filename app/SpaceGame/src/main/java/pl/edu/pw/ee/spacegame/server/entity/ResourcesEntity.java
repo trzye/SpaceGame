@@ -17,6 +17,13 @@ public class ResourcesEntity {
     private Timestamp lastUpdate = new Timestamp(Calendar.getInstance().getTime().getTime());
     private Collection<PlanetsEntity> planetsesByResourceId;
 
+    public static ResourcesEntity getStartingState() {
+        ResourcesEntity resourcesEntity = new ResourcesEntity();
+        resourcesEntity.setGadolin(0);
+        resourcesEntity.setUnuntrium(0);
+        return resourcesEntity;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "resource_id")

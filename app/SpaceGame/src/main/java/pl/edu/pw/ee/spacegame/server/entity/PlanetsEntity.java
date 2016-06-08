@@ -127,4 +127,37 @@ public class PlanetsEntity {
     public void setPlanetFieldsByPlanetFieldId(PlanetFieldsEntity planetFieldsByPlanetFieldId) {
         this.planetFieldsByPlanetFieldId = planetFieldsByPlanetFieldId;
     }
+
+    @Transient
+    public BuildingsEntity getUnuntriumMine() {
+        return getBuildingsEntity(BuildingsEntity.UNUNTRIUM_MINE);
+    }
+
+    @Transient
+    public BuildingsEntity getGadolinMine() {
+        return getBuildingsEntity(BuildingsEntity.GADOLIN_MINE);
+    }
+
+    @Transient
+    public BuildingsEntity getHangar() {
+        return getBuildingsEntity(BuildingsEntity.HANGAR);
+    }
+
+    @Transient
+    public BuildingsEntity getDefenceSystems() {
+        return getBuildingsEntity(BuildingsEntity.DEFENCE_SYSTEMS);
+    }
+
+	/*
+	Dzięki temu JPA nie będzie próbować "zamapować" tej metody
+	*/
+    @Transient
+    private BuildingsEntity getBuildingsEntity(String name) {
+        for (BuildingsEntity buildingsEntity : getBuildingsesByPlanetId()) {
+            if (buildingsEntity.getBuildingsDicByBuildingsDicId().getName().equals(name)) {
+                return buildingsEntity;
+            }
+        }
+        return null;
+    }
 }

@@ -17,6 +17,14 @@ public class FleetsEntity {
     private Collection<CurrentAttacksEntity> currentAttacksesByFleetId;
     private Collection<PlanetsEntity> planetsesByFleetId;
 
+    public static FleetsEntity getStartingState() {
+        FleetsEntity fleets = new FleetsEntity();
+        fleets.setWarships(0);
+        fleets.setIronclads(0);
+        fleets.setBombers(0);
+        return fleets;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "fleet_id")

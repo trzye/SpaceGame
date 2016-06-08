@@ -77,4 +77,10 @@ public class CurrentAttacksEntity {
     public void setFleetsByFleetId(FleetsEntity fleetsByFleetId) {
         this.fleetsByFleetId = fleetsByFleetId;
     }
+
+    public static CurrentAttacksEntity getStartingState(FleetsEntity fleetsEntity) {
+        CurrentAttacksEntity currentAttacksEntity = new CurrentAttacksEntity();
+        currentAttacksEntity.setFleetsByFleetId(fleetsEntity);
+        return currentAttacksEntity;
+    }
 }

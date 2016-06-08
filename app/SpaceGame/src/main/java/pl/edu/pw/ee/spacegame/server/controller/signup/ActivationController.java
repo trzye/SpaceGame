@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
-import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
-import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
+import pl.edu.pw.ee.spacegame.server.entity.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -57,8 +57,8 @@ public class ActivationController extends BaseAbstractController {
         if (isActivationTimeCorrect(activationsEntity)) {
             activationsEntity.getUsersByUserId().setIsActivated(true);
             activationsEntity.getPlanetFieldsByPlanetFieldId().setStatus(PlanetFieldsEntity.Status.USED);
-            //TODO: Stworzenie pozostałych tabelek dla aktywowanego gracza
             activationsDAO.save(activationsEntity);
+            createActivatedUserData(activationsEntity);
         } else {
             throw new IOException(ACTIVATION_TIMEOUT);
         }
@@ -72,5 +72,68 @@ public class ActivationController extends BaseAbstractController {
         return timeDiffer < tenMinutes;
     }
 
+
+    private void createActivatedUserData(ActivationsEntity activationsEntity) {
+        PlanetsEntity planetsEntity = getPlanetsEntity(activationsEntity);
+        ResourcesEntity resourcesEntity = getResourcesEntity(planetsEntity);
+        FleetsEntity fleetsEntity = getFleetsEntity(planetsEntity);
+        CurrentAttacksEntity currentAttacksEntity = CurrentAttacksEntity.getStartingState(fleetsEntity);
+        CurrentAlliancesEntity currentAlliancesEntity = CurrentAlliancesEntity.getStartingState(fleetsEntity);
+        ArrayList<BuildingsEntity> buildingsEntities = getBuildingsEntities(planetsEntity);
+        save(planetsEntity, resourcesEntity, fleetsEntity, currentAttacksEntity, currentAlliancesEntity, buildingsEntities);
+    }
+
+    private PlanetsEntity getPlanetsEntity(ActivationsEntity activationsEntity) {
+        UsersEntity usersEntity = activationsEntity.getUsersByUserId();
+        PlanetFieldsEntity planetFieldsEntity = activationsEntity.getPlanetFieldsByPlanetFieldId();
+        PlanetsEntity planetsEntity = new PlanetsEntity();
+        planetsEntity.setUsersByUserId(usersEntity);
+        planetsEntity.setPlanetFieldsByPlanetFieldId(planetFieldsEntity);
+        planetsEntity.setName(
+                "X" + planetFieldsEntity.getCoordinateX()
+                        + "Y" + planetFieldsEntity.getCoordinateY()
+        );
+        return planetsEntity;
+    }
+
+    private ResourcesEntity getResourcesEntity(PlanetsEntity planetsEntity) {
+        ResourcesEntity resourcesEntity = ResourcesEntity.getStartingState();
+        planetsEntity.setResourcesByResourceId(resourcesEntity);
+        return resourcesEntity;
+    }
+
+    private FleetsEntity getFleetsEntity(PlanetsEntity planetsEntity) {
+        FleetsEntity fleetsEntity = FleetsEntity.getStartingState();
+        planetsEntity.setFleetsByFleetId(fleetsEntity);
+        return fleetsEntity;
+    }
+
+    private ArrayList<BuildingsEntity> getBuildingsEntities(PlanetsEntity planetsEntity) {
+        BuildingsEntity ununtriumMine = BuildingsEntity.getUnuntriumMine(buildingsDicDAO);
+        BuildingsEntity gadolinMine = BuildingsEntity.getGadolinMine(buildingsDicDAO);
+        BuildingsEntity hangar = BuildingsEntity.getHangar(buildingsDicDAO);
+        BuildingsEntity defenceSystems = BuildingsEntity.getDefenceSystems(buildingsDicDAO);
+
+        ununtriumMine.setPlanetsByPlanetId(planetsEntity);
+        gadolinMine.setPlanetsByPlanetId(planetsEntity);
+        hangar.setPlanetsByPlanetId(planetsEntity);
+        defenceSystems.setPlanetsByPlanetId(planetsEntity);
+
+        ArrayList<BuildingsEntity> buildingsEntities = new ArrayList<>();
+        buildingsEntities.add(ununtriumMine);
+        buildingsEntities.add(gadolinMine);
+        buildingsEntities.add(hangar);
+        buildingsEntities.add(defenceSystems);
+        return buildingsEntities;
+    }
+
+    private void save(PlanetsEntity planetsEntity, ResourcesEntity resourcesEntity, FleetsEntity fleetsEntity, CurrentAttacksEntity currentAttacksEntity, CurrentAlliancesEntity currentAlliancesEntity, ArrayList<BuildingsEntity> buildingsEntities) {
+        resourcesDAO.save(resourcesEntity);
+        fleetsDAO.save(fleetsEntity);
+        currentAttacksDAO.save(currentAttacksEntity);
+        currentAlliancesDAO.save(currentAlliancesEntity);
+        planetsDAO.save(planetsEntity);
+        buildingsDAO.save(buildingsEntities);
+    }
 
 }
