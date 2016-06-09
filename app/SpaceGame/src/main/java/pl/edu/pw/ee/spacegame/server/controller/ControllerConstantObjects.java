@@ -12,6 +12,8 @@ public class ControllerConstantObjects {
     public static final String ACTIVATION_PATH = "/activation";
     public static final String SIGN_IN_PATH = "/signIn";
     public static final String MY_RESOURCES_PATH = "/myResources";
+    public static final String ATTACK_HISTORY_PATH = "/attackHistory";
+    public static final String ASSIST_HISTORY_PATH = "/assistHistory";
 
 
     //400 errors
@@ -45,6 +47,7 @@ public class ControllerConstantObjects {
     public static final String GET_MAP_LOG = "Wysłano informacje o mapie galaktyki";
     public static final String NOT_AUTHORIZED_LOG = "Błąd autoryzacji użytkownika %s";
     public static final String NOT_ACTIVATED_LOG = "Użytkownik %s nie został aktywowany";
+    public static final String GET_ATTACK_HISTORY_LOG = "Wysłano informacje o historii ataków";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";

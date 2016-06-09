@@ -110,6 +110,7 @@ CREATE TABLE attack_histories (
   bombers            INT     NOT NULL,
   ironclads          INT     NOT NULL,
   attacked_planet_id INT     NULL,
+  FOREIGN KEY (attacked_planet_id) REFERENCES planets (planet_id),
   result             BOOLEAN NOT NULL, -- 0 - LOSE, 1 - WIN
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -121,6 +122,7 @@ CREATE TABLE alliance_histories (
   bombers             INT     NOT NULL,
   ironclads           INT     NOT NULL,
   helped_planet_id    INT     NULL,
+  FOREIGN KEY (helped_planet_id) REFERENCES planets (planet_id),
   result              BOOLEAN NOT NULL, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
