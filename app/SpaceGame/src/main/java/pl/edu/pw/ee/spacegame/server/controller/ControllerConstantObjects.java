@@ -11,6 +11,8 @@ public class ControllerConstantObjects {
     public static final String MAP_PATH = "/map";
     public static final String ACTIVATION_PATH = "/activation";
     public static final String SIGN_IN_PATH = "/signIn";
+    public static final String MY_RESOURCES_PATH = "/myResources";
+
 
     //400 errors
     public static final String USER_EXISTS = "Użytkownik o podanym nicku już isnieje.";
@@ -28,6 +30,12 @@ public class ControllerConstantObjects {
     public static final String USER_ARLEADY_ACTIVATED = "Użytkownik został już aktywowany";
     public static final String ACTIVATION_TIMEOUT = "Przekroczono czas aktywacji";
 
+    //401
+    public static final String NOT_LOGGED = "Nie jesteś zalogowany";
+
+    //403
+    public static final String NOT_ACTIVATED = "Twoje konto nie zostało aktywowane";
+
     //logs
     public static final String UNEXPECTED_ERROR_LOG = "Nastąpił niespodziwany błąd: ";
     public static final String REQUEST_ERROR_LOG = "Błąd wysłanych danych: ";
@@ -35,6 +43,8 @@ public class ControllerConstantObjects {
     public static final String USER_ADDED_LOG = "Użytkownik %s został dodany. Oczekiwanie na aktywację konta.";
     public static final String USER_LOGGED_LOG = "Zalogowano użytkownika: %s";
     public static final String GET_MAP_LOG = "Wysłano informacje o mapie galaktyki";
+    public static final String NOT_AUTHORIZED_LOG = "Błąd autoryzacji użytkownika %s";
+    public static final String NOT_ACTIVATED_LOG = "Użytkownik %s nie został aktywowany";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";

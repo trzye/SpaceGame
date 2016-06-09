@@ -14,6 +14,16 @@ public class AuthenticationData implements Serializable {
         this.nickname = nickname;
     }
 
+    public AuthenticationData(){}
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getNickname() {
         return nickname;
     }

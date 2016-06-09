@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.controller.resource.ResourceData;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -95,5 +97,13 @@ public class ResourcesEntity {
 
     public void setPlanetsesByResourceId(Collection<PlanetsEntity> planetsesByResourceId) {
         this.planetsesByResourceId = planetsesByResourceId;
+    }
+
+    @Transient
+    public ResourceData getResourceData() {
+        ResourceData resourceData = new ResourceData();
+        resourceData.setGadolin(gadolin);
+        resourceData.setUnuntrium(ununtrium);
+        return resourceData;
     }
 }

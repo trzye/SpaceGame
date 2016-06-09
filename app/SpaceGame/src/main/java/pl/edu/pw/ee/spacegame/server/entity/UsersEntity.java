@@ -143,4 +143,12 @@ public class UsersEntity {
     public void setPlanetsesByUserId(Collection<PlanetsEntity> planetsesByUserId) {
         this.planetsesByUserId = planetsesByUserId;
     }
+
+    @Transient
+    public PlanetsEntity getPlanet() {
+        for (PlanetsEntity planet : planetsesByUserId) {
+            return planet;
+        }
+        return null;
+    }
 }
