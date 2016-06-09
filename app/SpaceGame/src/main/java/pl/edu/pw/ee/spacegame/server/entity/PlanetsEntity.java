@@ -14,6 +14,8 @@ public class PlanetsEntity {
     private Collection<BuildingsEntity> buildingsesByPlanetId;
     private Collection<CurrentAlliancesEntity> currentAlliancesByPlanetId;
     private Collection<CurrentAttacksEntity> currentAttacksesByPlanetId;
+    private Collection<AllianceHistoriesEntity> allianceHistoriesByPlanetId;
+    private Collection<AttackHistoriesEntity> attackHistoriesByPlanetId;
     private UsersEntity usersByUserId;
     private ResourcesEntity resourcesByResourceId;
     private FleetsEntity fleetsByFleetId;
@@ -126,6 +128,24 @@ public class PlanetsEntity {
 
     public void setPlanetFieldsByPlanetFieldId(PlanetFieldsEntity planetFieldsByPlanetFieldId) {
         this.planetFieldsByPlanetFieldId = planetFieldsByPlanetFieldId;
+    }
+
+    @OneToMany(mappedBy = "planetsByHelpedPlanetId")
+    public Collection<AllianceHistoriesEntity> getAllianceHistoriesByPlanetId() {
+        return allianceHistoriesByPlanetId;
+    }
+
+    public void setAllianceHistoriesByPlanetId(Collection<AllianceHistoriesEntity> allianceHistoriesByPlanetId) {
+        this.allianceHistoriesByPlanetId = allianceHistoriesByPlanetId;
+    }
+
+    @OneToMany(mappedBy = "planetsByAttackedPlanetId")
+    public Collection<AttackHistoriesEntity> getAttackHistoriesByPlanetId() {
+        return attackHistoriesByPlanetId;
+    }
+
+    public void setAttackHistoriesByPlanetId(Collection<AttackHistoriesEntity> attackHistoriesByPlanetId) {
+        this.attackHistoriesByPlanetId = attackHistoriesByPlanetId;
     }
 
     @Transient

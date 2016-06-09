@@ -14,7 +14,7 @@ public class AttackHistoriesEntity {
     private Integer warships;
     private Integer bombers;
     private Integer ironclads;
-    private Integer attackedPlanetId;
+    private PlanetsEntity planetsByAttackedPlanetId;
     private Byte result;
     private UsersEntity usersByUserId;
 
@@ -60,16 +60,6 @@ public class AttackHistoriesEntity {
     }
 
     @Basic
-    @Column(name = "attacked_planet_id")
-    public Integer getAttackedPlanetId() {
-        return attackedPlanetId;
-    }
-
-    public void setAttackedPlanetId(Integer attackedPlanetId) {
-        this.attackedPlanetId = attackedPlanetId;
-    }
-
-    @Basic
     @Column(name = "result")
     public Byte getResult() {
         return result;
@@ -91,8 +81,6 @@ public class AttackHistoriesEntity {
         if (warships != null ? !warships.equals(that.warships) : that.warships != null) return false;
         if (bombers != null ? !bombers.equals(that.bombers) : that.bombers != null) return false;
         if (ironclads != null ? !ironclads.equals(that.ironclads) : that.ironclads != null) return false;
-        if (attackedPlanetId != null ? !attackedPlanetId.equals(that.attackedPlanetId) : that.attackedPlanetId != null)
-            return false;
         return !(result != null ? !result.equals(that.result) : that.result != null);
 
     }
@@ -103,7 +91,6 @@ public class AttackHistoriesEntity {
         result1 = 31 * result1 + (warships != null ? warships.hashCode() : 0);
         result1 = 31 * result1 + (bombers != null ? bombers.hashCode() : 0);
         result1 = 31 * result1 + (ironclads != null ? ironclads.hashCode() : 0);
-        result1 = 31 * result1 + (attackedPlanetId != null ? attackedPlanetId.hashCode() : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
         return result1;
     }
@@ -112,6 +99,16 @@ public class AttackHistoriesEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     public UsersEntity getUsersByUserId() {
         return usersByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "attacked_planet_id", referencedColumnName = "planet_id")
+    public PlanetsEntity getPlanetsByAttackedPlanetId() {
+        return planetsByAttackedPlanetId;
+    }
+
+    public void setPlanetsByAttackedPlanetId(PlanetsEntity planetsByAttackedPlanetId) {
+        this.planetsByAttackedPlanetId = planetsByAttackedPlanetId;
     }
 
     public void setUsersByUserId(UsersEntity usersByUserId) {

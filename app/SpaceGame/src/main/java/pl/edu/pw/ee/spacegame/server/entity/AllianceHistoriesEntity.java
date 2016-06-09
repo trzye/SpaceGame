@@ -12,9 +12,9 @@ public class AllianceHistoriesEntity {
     private Integer warships;
     private Integer bombers;
     private Integer ironclads;
-    private Integer helpedPlanetId;
     private Byte result;
     private UsersEntity usersByUserId;
+    private PlanetsEntity planetsByHelpedPlanetId;
 
     @Id
     @GeneratedValue
@@ -58,16 +58,6 @@ public class AllianceHistoriesEntity {
     }
 
     @Basic
-    @Column(name = "helped_planet_id")
-    public Integer getHelpedPlanetId() {
-        return helpedPlanetId;
-    }
-
-    public void setHelpedPlanetId(Integer helpedPlanetId) {
-        this.helpedPlanetId = helpedPlanetId;
-    }
-
-    @Basic
     @Column(name = "result")
     public Byte getResult() {
         return result;
@@ -89,8 +79,6 @@ public class AllianceHistoriesEntity {
         if (warships != null ? !warships.equals(that.warships) : that.warships != null) return false;
         if (bombers != null ? !bombers.equals(that.bombers) : that.bombers != null) return false;
         if (ironclads != null ? !ironclads.equals(that.ironclads) : that.ironclads != null) return false;
-        if (helpedPlanetId != null ? !helpedPlanetId.equals(that.helpedPlanetId) : that.helpedPlanetId != null)
-            return false;
         return !(result != null ? !result.equals(that.result) : that.result != null);
 
     }
@@ -101,7 +89,6 @@ public class AllianceHistoriesEntity {
         result1 = 31 * result1 + (warships != null ? warships.hashCode() : 0);
         result1 = 31 * result1 + (bombers != null ? bombers.hashCode() : 0);
         result1 = 31 * result1 + (ironclads != null ? ironclads.hashCode() : 0);
-        result1 = 31 * result1 + (helpedPlanetId != null ? helpedPlanetId.hashCode() : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
         return result1;
     }
@@ -114,5 +101,15 @@ public class AllianceHistoriesEntity {
 
     public void setUsersByUserId(UsersEntity usersByUserId) {
         this.usersByUserId = usersByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "helped_planet_id", referencedColumnName = "planet_id")
+    public PlanetsEntity getPlanetsByHelpedPlanetId() {
+        return planetsByHelpedPlanetId;
+    }
+
+    public void setPlanetsByHelpedPlanetId(PlanetsEntity planetsByHelpedPlanetId) {
+        this.planetsByHelpedPlanetId = planetsByHelpedPlanetId;
     }
 }
