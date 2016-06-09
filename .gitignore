@@ -21,6 +21,7 @@ app/SpaceGame/gradle/
 app/SpaceGame/.gradle/
 app/SpaceGame/gradlew
 app/SpaceGame/gradlew.bat
+app/SpaceGameFront/.idea/
 
 *.iml
 *.log
