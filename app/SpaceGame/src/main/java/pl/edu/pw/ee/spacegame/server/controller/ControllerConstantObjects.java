@@ -14,6 +14,8 @@ public class ControllerConstantObjects {
     public static final String MY_RESOURCES_PATH = "/myResources";
     public static final String MY_PLANET_PATH = "/myPlanet";
     public static final String MY_BUILDINGS_PATH = "/myBuildings";
+    public static final String ATTACK_HISTORY_PATH = "/attackHistory";
+    public static final String ASSIST_HISTORY_PATH = "/assistHistory";
     public static final String MY_FLEET_PATH = "/myFleet";
 
 
@@ -48,6 +50,7 @@ public class ControllerConstantObjects {
     public static final String GET_MAP_LOG = "Wysłano informacje o mapie galaktyki";
     public static final String NOT_AUTHORIZED_LOG = "Błąd autoryzacji użytkownika %s";
     public static final String NOT_ACTIVATED_LOG = "Użytkownik %s nie został aktywowany";
+    public static final String GET_ATTACK_HISTORY_LOG = "Wysłano informacje o historii ataków";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";

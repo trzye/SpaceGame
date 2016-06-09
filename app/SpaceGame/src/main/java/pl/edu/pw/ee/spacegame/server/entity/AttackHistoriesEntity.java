@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.controller.history.AttackHistoryData;
+
 import javax.persistence.*;
 
 /**
@@ -114,5 +116,17 @@ public class AttackHistoriesEntity {
 
     public void setUsersByUserId(UsersEntity usersByUserId) {
         this.usersByUserId = usersByUserId;
+    }
+
+    @Transient
+    public AttackHistoryData getAttackHistoryData() {
+        AttackHistoryData attackHistoryData = new AttackHistoryData();
+        attackHistoryData.setResult(result);
+        //attackHistoryData.setAttackedPlanetX();
+        //attackHistoryData.setAttackedPlanetY();
+        attackHistoryData.setBombers(bombers);
+        attackHistoryData.setIronclads(ironclads);
+        attackHistoryData.setWarships(warships);
+        return attackHistoryData;
     }
 }
