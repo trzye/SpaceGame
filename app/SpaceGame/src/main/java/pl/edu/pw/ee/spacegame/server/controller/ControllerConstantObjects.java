@@ -12,6 +12,9 @@ public class ControllerConstantObjects {
     public static final String ACTIVATION_PATH = "/activation";
     public static final String SIGN_IN_PATH = "/signIn";
     public static final String MY_RESOURCES_PATH = "/myResources";
+    public static final String MY_PLANET_PATH = "/myPlanet";
+    public static final String MY_BUILDINGS_PATH = "/myBuildings";
+    public static final String MY_FLEET_PATH = "/myFleet";
 
 
     //400 errors

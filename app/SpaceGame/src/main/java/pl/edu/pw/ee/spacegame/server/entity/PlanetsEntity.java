@@ -148,15 +148,31 @@ public class PlanetsEntity {
         return getBuildingsEntity(BuildingsEntity.DEFENCE_SYSTEMS);
     }
 
-	/*
-	Dzięki temu JPA nie będzie próbować "zamapować" tej metody
-	*/
+    /*
+    Dzięki temu JPA nie będzie próbować "zamapować" tej metody
+    */
     @Transient
     private BuildingsEntity getBuildingsEntity(String name) {
         for (BuildingsEntity buildingsEntity : getBuildingsesByPlanetId()) {
             if (buildingsEntity.getBuildingsDicByBuildingsDicId().getName().equals(name)) {
                 return buildingsEntity;
             }
+        }
+        return null;
+    }
+
+    @Transient
+    public CurrentAlliancesEntity getCurrentAlliances() {
+        for (CurrentAlliancesEntity alliance : fleetsByFleetId.getCurrentAlliancesByFleetId()) {
+            return alliance;
+        }
+        return null;
+    }
+
+    @Transient
+    public CurrentAttacksEntity getCurrentAttacks() {
+        for (CurrentAttacksEntity attack : fleetsByFleetId.getCurrentAttacksesByFleetId()) {
+            return attack;
         }
         return null;
     }

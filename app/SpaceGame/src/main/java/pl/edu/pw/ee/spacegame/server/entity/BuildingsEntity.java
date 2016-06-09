@@ -11,10 +11,27 @@ import javax.persistence.*;
 @Table(name = "buildings", schema = "", catalog = "spacegame")
 public class BuildingsEntity {
 
+    public enum ID {
+        UNUNTRIUM_MINE_ID,
+        GADOLIN_MINE_ID,
+        HANGAR_ID,
+        DEFENCE_SYSTEMS_ID
+    }
+
     public static final String GADOLIN_MINE = "Gadolin mine";
     public static final String UNUNTRIUM_MINE = "Ununtrium mine";
     public static final String HANGAR = "Hangar";
     public static final String DEFENCE_SYSTEMS = "Defence systems";
+
+    public static final Integer UNUNTRIUM_MINE_MAX_LEVEL = 20;
+    public static final Integer GADOLIN_MINE_MAX_LEVEL = 20;
+    public static final Integer HANGAR_MAX_LEVEL = 15;
+    public static final Integer DEFENCE_SYSTEMS_MAX_LEVEL = 15;
+
+    public static final Integer UNUNTRIUM_COST = 120;
+    public static final Integer GADOLIN_COST = 150;
+    public static final Integer HANGAR_COST = 120;
+    public static final Integer DEFENCE_COST = 100;
 
     private Integer buildingId;
     private Integer level;
