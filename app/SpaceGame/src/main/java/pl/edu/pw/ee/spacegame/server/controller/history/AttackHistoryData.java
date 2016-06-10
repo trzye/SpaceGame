@@ -13,6 +13,15 @@ public class AttackHistoryData {
     private String attackedPlanetName;
     private Byte result;
     private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+    private String attackerNickname;
+
+    public String getAttackerNickname() {
+        return attackerNickname;
+    }
+
+    public void setAttackerNickname(String attackerNickname) {
+        this.attackerNickname = attackerNickname;
+    }
 
     public Timestamp getTime() {
         return time;

@@ -133,6 +133,7 @@ public class AttackHistoriesEntity {
     @Transient
     public AttackHistoryData getAttackHistoryData() {
         AttackHistoryData attackHistoryData = new AttackHistoryData();
+        attackHistoryData.setAttackerNickname(usersByUserId.getNickname());
         attackHistoryData.setResult(result);
         attackHistoryData.setAttackedPlanetName(getPlanetsByAttackedPlanetId().getName());
         attackHistoryData.setTime(time);
