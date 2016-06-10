@@ -2,7 +2,6 @@ package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -11,7 +10,7 @@ import java.util.Calendar;
 @Table(name = "current_attacks", schema = "", catalog = "spacegame")
 public class CurrentAttacksEntity {
     private Integer currentAttackId;
-    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+    private Timestamp timeOfSendingAttack;
     private PlanetsEntity planetsByAttackedPlanetId;
     private FleetsEntity fleetsByFleetId;
 
@@ -28,13 +27,13 @@ public class CurrentAttacksEntity {
 
 
     @Basic
-    @Column(name = "time")
-    public Timestamp getTime() {
-        return time;
+    @Column(name = "time_of_sending_attack")
+    public Timestamp getTimeOfSendingAttack() {
+        return timeOfSendingAttack;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setTimeOfSendingAttack(Timestamp timeOfSendingAttack) {
+        this.timeOfSendingAttack = timeOfSendingAttack;
     }
 
 
@@ -47,14 +46,15 @@ public class CurrentAttacksEntity {
 
         if (currentAttackId != null ? !currentAttackId.equals(that.currentAttackId) : that.currentAttackId != null)
             return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        if (timeOfSendingAttack != null ? !timeOfSendingAttack.equals(that.timeOfSendingAttack) : that.timeOfSendingAttack != null)
+            return false;
         return true;
     }
 
     @Override
     public int hashCode() {
         int result = currentAttackId != null ? currentAttackId.hashCode() : 0;
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (timeOfSendingAttack != null ? timeOfSendingAttack.hashCode() : 0);
         return result;
     }
 

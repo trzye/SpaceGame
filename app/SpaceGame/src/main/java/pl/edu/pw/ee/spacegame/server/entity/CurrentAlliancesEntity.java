@@ -2,7 +2,6 @@ package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -11,7 +10,7 @@ import java.util.Calendar;
 @Table(name = "current_alliances", schema = "", catalog = "spacegame")
 public class CurrentAlliancesEntity {
     private Integer currentAllianceId;
-    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+    private Timestamp timeOfSendingAlliance;
     private PlanetsEntity planetsByHelpedPlanetId;
     private FleetsEntity fleetsByFleetId;
 
@@ -27,13 +26,13 @@ public class CurrentAlliancesEntity {
     }
 
     @Basic
-    @Column(name = "time")
-    public Timestamp getTime() {
-        return time;
+    @Column(name = "time_of_sending_alliance")
+    public Timestamp getTimeOfSendingAlliance() {
+        return timeOfSendingAlliance;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setTimeOfSendingAlliance(Timestamp timeOfSendingAlliance) {
+        this.timeOfSendingAlliance = timeOfSendingAlliance;
     }
 
     @Override
@@ -45,14 +44,15 @@ public class CurrentAlliancesEntity {
 
         if (currentAllianceId != null ? !currentAllianceId.equals(that.currentAllianceId) : that.currentAllianceId != null)
             return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        if (timeOfSendingAlliance != null ? !timeOfSendingAlliance.equals(that.timeOfSendingAlliance) : that.timeOfSendingAlliance != null)
+            return false;
         return true;
     }
 
     @Override
     public int hashCode() {
         int result = currentAllianceId != null ? currentAllianceId.hashCode() : 0;
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (timeOfSendingAlliance != null ? timeOfSendingAlliance.hashCode() : 0);
         return result;
     }
 
