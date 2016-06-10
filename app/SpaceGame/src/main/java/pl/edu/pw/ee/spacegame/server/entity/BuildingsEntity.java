@@ -28,11 +28,6 @@ public class BuildingsEntity {
     public static final Integer HANGAR_MAX_LEVEL = 15;
     public static final Integer DEFENCE_SYSTEMS_MAX_LEVEL = 15;
 
-    public static final Integer UNUNTRIUM_COST = 120;
-    public static final Integer GADOLIN_COST = 150;
-    public static final Integer HANGAR_COST = 120;
-    public static final Integer DEFENCE_COST = 100;
-
     private Integer buildingId;
     private Integer level;
     private BuildingsDicEntity buildingsDicByBuildingsDicId;

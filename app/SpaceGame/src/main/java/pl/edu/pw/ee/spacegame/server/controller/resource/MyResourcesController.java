@@ -39,7 +39,7 @@ public class MyResourcesController extends BaseAbstractController {
             if (!usersEntity.getIsActivated()) {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
-            Refresher.refreshAllResources(planetsDAO, resourcesDAO);
+            Refresher.refreshAll(this);
             ResourceData resourceData = usersEntity.getPlanet().getResourcesByResourceId().getResourceData();
             //TODO: logi
             return new JsonResponseEntity<>(resourceData, HttpStatus.OK);

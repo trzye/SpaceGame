@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.pw.ee.spacegame.server.controller.building.UpgradeBuildingData;
 import pl.edu.pw.ee.spacegame.server.controller.signup.SignUpData;
 
 /**
@@ -16,7 +17,7 @@ public class JSONGenerator {
 
     @Before
     public void setUp() {
-        objectToParse = getSignUpData();
+        objectToParse = getUpgradeBuildingData();
     }
 
     @Test
@@ -35,5 +36,21 @@ public class JSONGenerator {
         signUpData.setEmail("sampleEmail@gmail.com");
         return signUpData;
     }
+
+    private UpgradeBuildingData getUpgradeBuildingData() {
+        UpgradeBuildingData upgradeBuildingData = new UpgradeBuildingData();
+        AuthenticationData authenticationData = getAuthenticationData();
+        upgradeBuildingData.setAuthenticationData(authenticationData);
+        upgradeBuildingData.setTypeId(1);
+        return upgradeBuildingData;
+    }
+
+    private AuthenticationData getAuthenticationData() {
+        AuthenticationData authenticationData = new AuthenticationData();
+        authenticationData.setNickname("nickname");
+        authenticationData.setToken("12345678910");
+        return authenticationData;
+    }
+
 
 }

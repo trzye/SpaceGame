@@ -72,4 +72,56 @@ public abstract class BaseAbstractController {
         e.printStackTrace();
         return new TextResponseEntity<>(INTERNAL_SERVER_ERROR);
     }
+
+    public ActivationsDAO getActivationsDAO() {
+        return activationsDAO;
+    }
+
+    public AllianceHistoriesDAO getAllianceHistoriesDAO() {
+        return allianceHistoriesDAO;
+    }
+
+    public AttackHistoriesDAO getAttackHistoriesDAO() {
+        return attackHistoriesDAO;
+    }
+
+    public BuildingsDAO getBuildingsDAO() {
+        return buildingsDAO;
+    }
+
+    public BuildingsDicDAO getBuildingsDicDAO() {
+        return buildingsDicDAO;
+    }
+
+    public CurrentAlliancesDAO getCurrentAlliancesDAO() {
+        return currentAlliancesDAO;
+    }
+
+    public CurrentAttacksDAO getCurrentAttacksDAO() {
+        return currentAttacksDAO;
+    }
+
+    public FleetsDAO getFleetsDAO() {
+        return fleetsDAO;
+    }
+
+    public LogsDAO getLogsDAO() {
+        return logsDAO;
+    }
+
+    public PlanetFieldsDAO getPlanetFieldsDAO() {
+        return planetFieldsDAO;
+    }
+
+    public PlanetsDAO getPlanetsDAO() {
+        return planetsDAO;
+    }
+
+    public ResourcesDAO getResourcesDAO() {
+        return resourcesDAO;
+    }
+
+    public UsersDAO getUsersDAO() {
+        return usersDAO;
+    }
 }

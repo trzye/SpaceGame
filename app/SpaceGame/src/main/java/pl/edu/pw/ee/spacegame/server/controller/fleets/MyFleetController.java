@@ -10,6 +10,7 @@ import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
 import pl.edu.pw.ee.spacegame.server.entity.*;
+import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
@@ -38,6 +39,7 @@ public class MyFleetController extends BaseAbstractController {
             if (!usersEntity.getIsActivated()) {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
+            Refresher.refreshAll(this);
             MyFleetData myFleet = getMyFleet(usersEntity.getPlanet());
             //TODO: Logi
             return new JsonResponseEntity<>(myFleet, HttpStatus.OK);

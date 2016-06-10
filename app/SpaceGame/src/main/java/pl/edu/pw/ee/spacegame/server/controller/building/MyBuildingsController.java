@@ -64,7 +64,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(UNUNTRIUM_MINE_MAX_LEVEL);
         myBuildingData.setTypeId(UNUNTRIUM_MINE_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(myBuildingData.getLevel() * UNUNTRIUM_COST);
+        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getUnuntriumMineCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -74,7 +74,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(GADOLIN_MINE_MAX_LEVEL);
         myBuildingData.setTypeId(GADOLIN_MINE_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(myBuildingData.getLevel() * GADOLIN_COST);
+        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getGadolinMineCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -84,7 +84,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(HANGAR_MAX_LEVEL);
         myBuildingData.setTypeId(HANGAR_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(myBuildingData.getLevel() * HANGAR_COST);
+        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getHangarCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -94,7 +94,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(DEFENCE_SYSTEMS_MAX_LEVEL);
         myBuildingData.setTypeId(DEFENCE_SYSTEMS_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(myBuildingData.getLevel() * DEFENCE_COST);
+        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getDefenceSystemsCost(buildingsEntity));
         return myBuildingData;
     }
 
