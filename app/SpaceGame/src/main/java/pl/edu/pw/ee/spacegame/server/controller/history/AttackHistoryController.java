@@ -41,11 +41,10 @@ public class AttackHistoryController extends BaseAbstractController {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
             databaseLogger.info(GET_ATTACK_HISTORY_LOG);
-            Iterable<AttackHistoriesEntity> attackHistory = attackHistoriesDAO.findAll();
+            Iterable<AttackHistoriesEntity> attackHistory = attackHistoriesDAO.getAttackHistoryByUserIdOrPlanetId(usersEntity.getUserId(), usersEntity.getPlanet().getPlanetId());
             ArrayList<AttackHistoryData> outputAttackHistory = new ArrayList<>();
             for (AttackHistoriesEntity attack : attackHistory) {
-                if (attack.getUsersByUserId().equals(usersEntity))
-                    outputAttackHistory.add(attack.getAttackHistoryData());
+                outputAttackHistory.add(attack.getAttackHistoryData());
             }
             return new JsonResponseEntity<>(outputAttackHistory, OK);
         } catch (Exception e) {
