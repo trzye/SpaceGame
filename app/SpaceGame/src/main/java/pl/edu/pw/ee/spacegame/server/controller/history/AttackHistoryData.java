@@ -9,6 +9,7 @@ public class AttackHistoryData {
     private Integer ironclads;
     private Integer attackedPlanetX;
     private Integer attackedPlanetY;
+    private Byte result;
 
     public void setWarships(Integer warships) {
         this.warships = warships;
@@ -57,8 +58,6 @@ public class AttackHistoryData {
     public Byte getResult() {
         return result;
     }
-
-    private Byte result;
 
     public AttackHistoryData() {
     }
