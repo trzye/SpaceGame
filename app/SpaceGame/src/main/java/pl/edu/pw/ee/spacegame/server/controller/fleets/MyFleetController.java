@@ -39,6 +39,7 @@ public class MyFleetController extends BaseAbstractController {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
             MyFleetData myFleet = getMyFleet(usersEntity.getPlanet());
+            //TODO: Logi
             return new JsonResponseEntity<>(myFleet, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);
@@ -57,16 +58,17 @@ public class MyFleetController extends BaseAbstractController {
     }
 
     private Integer getStatus(PlanetsEntity planetsEntity, CurrentAlliancesEntity currentAlliancesEntity, CurrentAttacksEntity currentAttacksEntity) {
+        //TODO wyciągnąć logikę ustalania statusu gdzieś na zewnątrz
         if (currentAttacksEntity.getTimeOfSendingAttack() != null) {
             if (currentAttacksEntity.getPlanetsByAttackedPlanetId() != planetsEntity) {
-                return FleetsEntity.FleetStatus.IN_THE_WAY_TO_ATTACK.ordinal();
+                return FleetsEntity.FleetStatus.ON_THE_WAY_TO_ATTACK.ordinal();
             } else {
                 return FleetsEntity.FleetStatus.COMMING_BACK_FROM_ATTACK.ordinal();
             }
         }
         if (currentAlliancesEntity.getTimeOfSendingAlliance() != null) {
             if (currentAlliancesEntity.getPlanetsByHelpedPlanetId() != planetsEntity) {
-                return FleetsEntity.FleetStatus.IN_THE_WAY_TO_HELP.ordinal();
+                return FleetsEntity.FleetStatus.ON_THE_WAY_TO_HELP.ordinal();
             } else {
                 return FleetsEntity.FleetStatus.COMMING_BACK_FROM_HELP.ordinal();
             }
@@ -89,6 +91,7 @@ public class MyFleetController extends BaseAbstractController {
         warships.setNumber(fleetsEntity.getWarships());
         bombers.setNumber(fleetsEntity.getBombers());
         ironcladses.setNumber(fleetsEntity.getIronclads());
+        //TODO wyciągnąć logikę ustalania ceny gdzieś na zewnątrz
         warships.setBuildInUnuntiumCost(FleetsEntity.BASE_WARSHIP_COST * (int) (1.0 - 0.05 * hangarLevel));
         bombers.setBuildInUnuntiumCost(FleetsEntity.BASE_BOMBER_COST * (int) (1.0 - 0.05 * hangarLevel));
         ironcladses.setBuildInUnuntiumCost(FleetsEntity.BASE_IRONCLADS_COST * (int) (1.0 - 0.05 * hangarLevel));

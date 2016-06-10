@@ -42,6 +42,7 @@ public class MyBuildingsController extends BaseAbstractController {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
             ArrayList<MyBuildingData> myBuildings = getMyBuildings(usersEntity);
+            //TODO: Logi
             return new JsonResponseEntity<>(myBuildings, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

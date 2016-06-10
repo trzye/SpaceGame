@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
+import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.MY_RESOURCES_PATH;
@@ -30,15 +32,16 @@ public class MyResourcesController extends BaseAbstractController {
     public ResponseEntity<?> getMyResources(@RequestBody AuthenticationData authenticationData) {
         databaseLogger.setClass(getClass());
         try {
-//            if (!LoggedUsers.isLogged(authenticationData)) {
-//                return TextResponseEntity.getNotAuthorizedResponseEntity(authenticationData, databaseLogger);
-//            }
+            if (!LoggedUsers.isLogged(authenticationData)) {
+                return TextResponseEntity.getNotAuthorizedResponseEntity(authenticationData, databaseLogger);
+            }
             UsersEntity usersEntity = usersDAO.getUserByNickname(authenticationData.getNickname());
-//            if (!usersEntity.getIsActivated()) {
-//                return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
-//            }
+            if (!usersEntity.getIsActivated()) {
+                return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
+            }
             Refresher.refreshAllResources(planetsDAO, resourcesDAO);
             ResourceData resourceData = usersEntity.getPlanet().getResourcesByResourceId().getResourceData();
+            //TODO: logi
             return new JsonResponseEntity<>(resourceData, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

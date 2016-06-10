@@ -38,6 +38,7 @@ public class MyPlanetController extends BaseAbstractController {
             MyPlanetData myPlanetData = new MyPlanetData();
             myPlanetData.setCoordinateX(usersEntity.getPlanet().getPlanetFieldsByPlanetFieldId().getCoordinateX());
             myPlanetData.setCoordinateY(usersEntity.getPlanet().getPlanetFieldsByPlanetFieldId().getCoordinateY());
+            //TODO: logi
             return new JsonResponseEntity<>(myPlanetData, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

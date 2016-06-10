@@ -33,6 +33,7 @@ public class MapController extends BaseAbstractController {
             for (PlanetFieldsEntity planetField : planetFields) {
                 outputPlanetFields.add(new PlanetFieldData(planetField));
             }
+            //TODO: logi
             return new JsonResponseEntity<>(outputPlanetFields, OK);
         } catch (Exception e) {
             return handleServerError(e);

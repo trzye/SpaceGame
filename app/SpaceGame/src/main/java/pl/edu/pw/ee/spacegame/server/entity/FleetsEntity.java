@@ -12,9 +12,9 @@ public class FleetsEntity {
 
     public enum FleetStatus {
         ON_THE_MOTHER_PLANET,
-        IN_THE_WAY_TO_ATTACK,
+        ON_THE_WAY_TO_ATTACK,
         COMMING_BACK_FROM_ATTACK,
-        IN_THE_WAY_TO_HELP,
+        ON_THE_WAY_TO_HELP,
         COMMING_BACK_FROM_HELP,
         ON_THE_OTHER_PLANET
     }
