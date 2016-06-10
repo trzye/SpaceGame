@@ -119,8 +119,8 @@ public class AttackHistoriesEntity {
     public AttackHistoryData getAttackHistoryData() {
         AttackHistoryData attackHistoryData = new AttackHistoryData();
         attackHistoryData.setResult(result);
-        //attackHistoryData.setAttackedPlanetX();
-        //attackHistoryData.setAttackedPlanetY();
+        attackHistoryData.setAttackedPlanetX(getPlanetsByAttackedPlanetId().getPlanetFieldsByPlanetFieldId().getCoordinateX());
+        attackHistoryData.setAttackedPlanetY(getPlanetsByAttackedPlanetId().getPlanetFieldsByPlanetFieldId().getCoordinateY());
         attackHistoryData.setBombers(bombers);
         attackHistoryData.setIronclads(ironclads);
         attackHistoryData.setWarships(warships);
