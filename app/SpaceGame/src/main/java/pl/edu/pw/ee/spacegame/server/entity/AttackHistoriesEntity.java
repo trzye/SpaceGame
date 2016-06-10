@@ -3,6 +3,8 @@ package pl.edu.pw.ee.spacegame.server.entity;
 import pl.edu.pw.ee.spacegame.server.controller.history.AttackHistoryData;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -17,6 +19,7 @@ public class AttackHistoriesEntity {
     private PlanetsEntity planetsByAttackedPlanetId;
     private Byte result;
     private UsersEntity usersByUserId;
+    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
 
     @Id
     @GeneratedValue
@@ -69,6 +72,16 @@ public class AttackHistoriesEntity {
         this.result = result;
     }
 
+    @Basic
+    @Column(name = "time")
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,6 +94,7 @@ public class AttackHistoriesEntity {
         if (warships != null ? !warships.equals(that.warships) : that.warships != null) return false;
         if (bombers != null ? !bombers.equals(that.bombers) : that.bombers != null) return false;
         if (ironclads != null ? !ironclads.equals(that.ironclads) : that.ironclads != null) return false;
+        if (time != null ? !time.equals(that.time) : that.time != null) return false;
         return !(result != null ? !result.equals(that.result) : that.result != null);
 
     }
@@ -92,6 +106,7 @@ public class AttackHistoriesEntity {
         result1 = 31 * result1 + (bombers != null ? bombers.hashCode() : 0);
         result1 = 31 * result1 + (ironclads != null ? ironclads.hashCode() : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+        result1 = 31 * result1 + (time != null ? time.hashCode() : 0);
         return result1;
     }
 
@@ -118,9 +133,10 @@ public class AttackHistoriesEntity {
     @Transient
     public AttackHistoryData getAttackHistoryData() {
         AttackHistoryData attackHistoryData = new AttackHistoryData();
+        attackHistoryData.setAttackerNickname(usersByUserId.getNickname());
         attackHistoryData.setResult(result);
-        attackHistoryData.setAttackedPlanetX(getPlanetsByAttackedPlanetId().getPlanetFieldsByPlanetFieldId().getCoordinateX());
-        attackHistoryData.setAttackedPlanetY(getPlanetsByAttackedPlanetId().getPlanetFieldsByPlanetFieldId().getCoordinateY());
+        attackHistoryData.setAttackedPlanetName(getPlanetsByAttackedPlanetId().getName());
+        attackHistoryData.setTime(time);
         attackHistoryData.setBombers(bombers);
         attackHistoryData.setIronclads(ironclads);
         attackHistoryData.setWarships(warships);
