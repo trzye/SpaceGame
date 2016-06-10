@@ -1,6 +1,8 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -15,6 +17,7 @@ public class AllianceHistoriesEntity {
     private Byte result;
     private UsersEntity usersByUserId;
     private PlanetsEntity planetsByHelpedPlanetId;
+    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
 
     @Id
     @GeneratedValue
@@ -67,6 +70,16 @@ public class AllianceHistoriesEntity {
         this.result = result;
     }
 
+    @Basic
+    @Column(name = "time")
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,6 +103,7 @@ public class AllianceHistoriesEntity {
         result1 = 31 * result1 + (bombers != null ? bombers.hashCode() : 0);
         result1 = 31 * result1 + (ironclads != null ? ironclads.hashCode() : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+        result1 = 31 * result1 + (time != null ? time.hashCode() : 0);
         return result1;
     }
 

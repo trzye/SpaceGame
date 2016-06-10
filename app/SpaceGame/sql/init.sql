@@ -88,7 +88,7 @@ CREATE TABLE buildings (
 CREATE TABLE current_attacks (
   current_attack_id      INT PRIMARY KEY AUTO_INCREMENT,
   fleet_id               INT UNIQUE NOT NULL,
-  time_of_sending_attack TIMESTAMP  NULL,
+  time TIMESTAMP  NULL,
   attacked_planet_id     INT        NULL,
   FOREIGN KEY (attacked_planet_id) REFERENCES planets (planet_id),
   FOREIGN KEY (fleet_id) REFERENCES fleets (fleet_id)
@@ -97,7 +97,7 @@ CREATE TABLE current_attacks (
 CREATE TABLE current_alliances (
   current_alliance_id      INT PRIMARY KEY AUTO_INCREMENT,
   fleet_id                 INT UNIQUE NOT NULL,
-  time_of_sending_alliance TIMESTAMP  NULL,
+  time TIMESTAMP  NULL,
   helped_planet_id         INT        NULL, -- IF PLANET IS SAME AS MOTHER PLANET FOR FLEET THAN IT'S THE RETURN
   FOREIGN KEY (helped_planet_id) REFERENCES planets (planet_id),
   FOREIGN KEY (fleet_id) REFERENCES fleets (fleet_id)
@@ -109,6 +109,7 @@ CREATE TABLE attack_histories (
   warships           INT     NOT NULL,
   bombers            INT     NOT NULL,
   ironclads          INT     NOT NULL,
+  time TIMESTAMP  NOT NULL,
   attacked_planet_id INT     NULL,
   FOREIGN KEY (attacked_planet_id) REFERENCES planets (planet_id),
   result             BOOLEAN NOT NULL, -- 0 - LOSE, 1 - WIN
@@ -121,6 +122,7 @@ CREATE TABLE alliance_histories (
   warships            INT     NOT NULL,
   bombers             INT     NOT NULL,
   ironclads           INT     NOT NULL,
+  time        TIMESTAMP NOT NULL,
   helped_planet_id    INT     NULL,
   FOREIGN KEY (helped_planet_id) REFERENCES planets (planet_id),
   result              BOOLEAN NOT NULL, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET

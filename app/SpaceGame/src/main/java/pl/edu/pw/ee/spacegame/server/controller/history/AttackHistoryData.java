@@ -1,5 +1,8 @@
 package pl.edu.pw.ee.spacegame.server.controller.history;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 /**
  * Created by KTamo_000 on 2016-06-09.
  */
@@ -7,9 +10,21 @@ public class AttackHistoryData {
     private Integer warships;
     private Integer bombers;
     private Integer ironclads;
-    private Integer attackedPlanetX;
-    private Integer attackedPlanetY;
+    private String attackedPlanetName;
     private Byte result;
+    private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public void setAttackedPlanetName(String attackedPlanetName) {
+        this.attackedPlanetName = attackedPlanetName;
+    }
 
     public void setWarships(Integer warships) {
         this.warships = warships;
@@ -23,16 +38,12 @@ public class AttackHistoryData {
         this.ironclads = ironclads;
     }
 
-    public void setAttackedPlanetX(Integer attackedPlanetX) {
-        this.attackedPlanetX = attackedPlanetX;
-    }
-
-    public void setAttackedPlanetY(Integer attackedPlanetY) {
-        this.attackedPlanetY = attackedPlanetY;
-    }
-
     public void setResult(Byte result) {
         this.result = result;
+    }
+
+    public String getAttackedPlanetName() {
+        return attackedPlanetName;
     }
 
     public Integer getWarships() {
@@ -45,14 +56,6 @@ public class AttackHistoryData {
 
     public Integer getIronclads() {
         return ironclads;
-    }
-
-    public Integer getAttackedPlanetX() {
-        return attackedPlanetX;
-    }
-
-    public Integer getAttackedPlanetY() {
-        return attackedPlanetY;
     }
 
     public Byte getResult() {
