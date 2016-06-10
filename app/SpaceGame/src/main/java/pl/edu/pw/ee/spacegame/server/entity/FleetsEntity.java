@@ -10,24 +10,11 @@ import java.util.Collection;
 @Table(name = "fleets", schema = "", catalog = "spacegame")
 public class FleetsEntity {
 
-    public enum FleetStatus {
-        ON_THE_MOTHER_PLANET,
-        ON_THE_WAY_TO_ATTACK,
-        COMMING_BACK_FROM_ATTACK,
-        ON_THE_WAY_TO_HELP,
-        COMMING_BACK_FROM_HELP,
-        ON_THE_OTHER_PLANET
-    }
-
     public enum FleetType {
         WARSHIP,
         BOMBER,
         IRONCLADS,
     }
-
-    public static final Integer BASE_WARSHIP_COST = 20;
-    public static final Integer BASE_BOMBER_COST = 40;
-    public static final Integer BASE_IRONCLADS_COST = 80;
 
     private Integer fleetId;
     private Integer warships;

@@ -5,7 +5,7 @@ import pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity;
 /**
  * Created by Michał on 2016-06-10.
  */
-public class BuildingLogic {
+public class BuildingCostsLogic {
 
     private static final Integer UNUNTRIUM_COST = 120;
     private static final Integer GADOLIN_COST = 150;

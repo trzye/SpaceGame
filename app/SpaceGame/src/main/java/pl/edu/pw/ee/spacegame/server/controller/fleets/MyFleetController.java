@@ -60,46 +60,26 @@ public class MyFleetController extends BaseAbstractController {
     }
 
     private Integer getStatus(PlanetsEntity planetsEntity, CurrentAlliancesEntity currentAlliancesEntity, CurrentAttacksEntity currentAttacksEntity) {
-        //TODO wyciągnąć logikę ustalania statusu gdzieś na zewnątrz
-        if (currentAttacksEntity.getTimeOfSendingAttack() != null) {
-            if (currentAttacksEntity.getPlanetsByAttackedPlanetId() != planetsEntity) {
-                return FleetsEntity.FleetStatus.ON_THE_WAY_TO_ATTACK.ordinal();
-            } else {
-                return FleetsEntity.FleetStatus.COMMING_BACK_FROM_ATTACK.ordinal();
-            }
-        }
-        if (currentAlliancesEntity.getTimeOfSendingAlliance() != null) {
-            if (currentAlliancesEntity.getPlanetsByHelpedPlanetId() != planetsEntity) {
-                return FleetsEntity.FleetStatus.ON_THE_WAY_TO_HELP.ordinal();
-            } else {
-                return FleetsEntity.FleetStatus.COMMING_BACK_FROM_HELP.ordinal();
-            }
-        }
-        if (currentAlliancesEntity.getCurrentAllianceId() != null) {
-            return FleetsEntity.FleetStatus.ON_THE_OTHER_PLANET.ordinal();
-        }
-        return FleetsEntity.FleetStatus.ON_THE_MOTHER_PLANET.ordinal();
+        return FleetLogic.getStatus(planetsEntity, currentAlliancesEntity, currentAttacksEntity).ordinal();
     }
 
     private ArrayList<ShipsData> getShips(FleetsEntity fleetsEntity, BuildingsEntity hangar) {
         ArrayList<ShipsData> ships = new ArrayList<>();
-        Integer hangarLevel = hangar.getLevel();
         ShipsData warships = new ShipsData();
         ShipsData bombers = new ShipsData();
-        ShipsData ironcladses = new ShipsData();
+        ShipsData ironclads = new ShipsData();
         warships.setTypeId(FleetsEntity.FleetType.WARSHIP.ordinal());
         bombers.setTypeId(FleetsEntity.FleetType.BOMBER.ordinal());
-        ironcladses.setTypeId(FleetsEntity.FleetType.IRONCLADS.ordinal());
+        ironclads.setTypeId(FleetsEntity.FleetType.IRONCLADS.ordinal());
         warships.setNumber(fleetsEntity.getWarships());
         bombers.setNumber(fleetsEntity.getBombers());
-        ironcladses.setNumber(fleetsEntity.getIronclads());
-        //TODO wyciągnąć logikę ustalania ceny gdzieś na zewnątrz
-        warships.setBuildInUnuntiumCost(FleetsEntity.BASE_WARSHIP_COST * (int) (1.0 - 0.05 * hangarLevel));
-        bombers.setBuildInUnuntiumCost(FleetsEntity.BASE_BOMBER_COST * (int) (1.0 - 0.05 * hangarLevel));
-        ironcladses.setBuildInUnuntiumCost(FleetsEntity.BASE_IRONCLADS_COST * (int) (1.0 - 0.05 * hangarLevel));
+        ironclads.setNumber(fleetsEntity.getIronclads());
+        warships.setBuildInUnuntiumCost(FleetLogic.getWarshipCost(hangar));
+        bombers.setBuildInUnuntiumCost(FleetLogic.getBomberCost(hangar));
+        ironclads.setBuildInUnuntiumCost(FleetLogic.getIroncladsCost(hangar));
         ships.add(warships);
         ships.add(bombers);
-        ships.add(ironcladses);
+        ships.add(ironclads);
         return ships;
     }
 

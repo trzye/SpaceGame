@@ -18,6 +18,7 @@ public class ControllerConstantObjects {
     public static final String ASSIST_HISTORY_PATH = "/assistHistory";
     public static final String MY_FLEET_PATH = "/myFleet";
     public static final String UPGRADE_BUILDING_PATH = "/upgradeBuilding";
+    public static final String BUILD_SHIPS_PATH = "/buildShips";
 
 
     //400 errors

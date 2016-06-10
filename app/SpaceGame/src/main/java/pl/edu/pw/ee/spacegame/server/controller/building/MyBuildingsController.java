@@ -64,7 +64,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(UNUNTRIUM_MINE_MAX_LEVEL);
         myBuildingData.setTypeId(UNUNTRIUM_MINE_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getUnuntriumMineCost(buildingsEntity));
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCostsLogic.getUnuntriumMineCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -74,7 +74,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(GADOLIN_MINE_MAX_LEVEL);
         myBuildingData.setTypeId(GADOLIN_MINE_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getGadolinMineCost(buildingsEntity));
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCostsLogic.getGadolinMineCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -84,7 +84,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(HANGAR_MAX_LEVEL);
         myBuildingData.setTypeId(HANGAR_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getHangarCost(buildingsEntity));
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCostsLogic.getHangarCost(buildingsEntity));
         return myBuildingData;
     }
 
@@ -94,7 +94,7 @@ public class MyBuildingsController extends BaseAbstractController {
         myBuildingData.setLevel(buildingsEntity.getLevel());
         myBuildingData.setMaxLevel(DEFENCE_SYSTEMS_MAX_LEVEL);
         myBuildingData.setTypeId(DEFENCE_SYSTEMS_ID.ordinal());
-        myBuildingData.setNextLevelInGadolinsCost(BuildingLogic.getDefenceSystemsCost(buildingsEntity));
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCostsLogic.getDefenceSystemsCost(buildingsEntity));
         return myBuildingData;
     }
 

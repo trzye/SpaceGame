@@ -63,22 +63,22 @@ public class UpgradeBuildingController extends BaseAbstractController {
         switch (id) {
             case DEFENCE_SYSTEMS_ID: {
                 BuildingsEntity buildingsEntity = planetsEntity.getDefenceSystems();
-                upgradeBuilding(buildingsEntity, DEFENCE_SYSTEMS_MAX_LEVEL, BuildingLogic.getDefenceSystemsCost(buildingsEntity), resourcesEntity);
+                upgradeBuilding(buildingsEntity, DEFENCE_SYSTEMS_MAX_LEVEL, BuildingCostsLogic.getDefenceSystemsCost(buildingsEntity), resourcesEntity);
                 break;
             }
             case HANGAR_ID: {
                 BuildingsEntity buildingsEntity = planetsEntity.getHangar();
-                upgradeBuilding(buildingsEntity, HANGAR_MAX_LEVEL, BuildingLogic.getHangarCost(buildingsEntity), resourcesEntity);
+                upgradeBuilding(buildingsEntity, HANGAR_MAX_LEVEL, BuildingCostsLogic.getHangarCost(buildingsEntity), resourcesEntity);
                 break;
             }
             case GADOLIN_MINE_ID: {
                 BuildingsEntity buildingsEntity = planetsEntity.getGadolinMine();
-                upgradeBuilding(buildingsEntity, GADOLIN_MINE_MAX_LEVEL, BuildingLogic.getGadolinMineCost(buildingsEntity), resourcesEntity);
+                upgradeBuilding(buildingsEntity, GADOLIN_MINE_MAX_LEVEL, BuildingCostsLogic.getGadolinMineCost(buildingsEntity), resourcesEntity);
                 break;
             }
             case UNUNTRIUM_MINE_ID: {
                 BuildingsEntity buildingsEntity = planetsEntity.getUnuntriumMine();
-                upgradeBuilding(buildingsEntity, UNUNTRIUM_MINE_MAX_LEVEL, BuildingLogic.getUnuntriumMineCost(buildingsEntity), resourcesEntity);
+                upgradeBuilding(buildingsEntity, UNUNTRIUM_MINE_MAX_LEVEL, BuildingCostsLogic.getUnuntriumMineCost(buildingsEntity), resourcesEntity);
                 break;
             }
             default: {
