@@ -1,0 +1,611 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# SpaceGame API
+
+API dla projektu studenckiego.
+
+## Rejestracja [/signUp]
+
+### Zarejestruj użytkownika [POST]
+Użytkownik dostaje link aktywacyjny na maila, jednak logowanie będzie możliwe (tylko tyle, że
+nie będzie można grać).
+
++ Request (application/json)
+
+        {
+          "rawPassword": "rawPassword",
+          "nickname": "nickname",
+          "email": "sampleEmail@gmail.com",
+          "coordinateX": 0,
+          "coordinateY": 1
+        }
+
++ Response 200 (text/plain)
+
+        Użytkownik został dodany. Link aktywacyjny został wysłany 
+        na adres sampleEmail@gmail.com i wygaśnie w ciągu dziesięciu minut.
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+
+## Mapa [/map]
+
+### Zwróc informację o mapie [GET]
+Mapa 10 na 10, indeksowana od zera. Możliwe statusy dla pól na mapie: "LOCKED", "USED" lub "EMPTY"
+(Jeżeli pole o okreslonych x/y nie zostanie zwrócone to ma status EMPTY).
+
++ Response 200
+
+        [
+          {
+            "coordinateX": 0,
+            "coordinateY": 0,
+            "status": "USED"
+          },
+          {
+            "coordinateX": 0,
+            "coordinateY": 1,
+            "status": "LOCKED"
+          }
+        ]
+        
+## Logowanie [/signIn]
+
+### Zaloguj się [POST]
+Jeżeli użytkownik zostanie pomyslnie zalogowany zostanie zwrócona para token + nickname,
+najlepiej ją sobie zapisać w jakims ciasteczku bo bedzie potrzebna do wiekszosci zapytań.
+
++ Request (application/json)
+
+        {
+          "rawPassword": "rawPassword",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+
+## Pobieranie danych własnych surowców [/myResources]
+
+
+### Pobierz dane własnych surowców [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie odswiezany jest stan czasowy gry
+(aspekty zwiazane z czasem: ataki, pomoce i ladowanie surowcow), a nastepnie zwracana informacja o ilosci
+gadolinu oraz ununtrium.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+         "gadolin": 10,
+         "ununtrium": 20
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+## Pobieranie danych o własnych budynkach [/myBuildings]
+
+
+### Pobierz dane własnych budynkow [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracana jest informacja o posiadanych 
+przez gracza budynkach. Lista zawsze zawiera 4 budynki. Parametry budynków:
+#### typeId: 0 - kopalnia Gadolinu, 1 - ekstraktor Ununtium, 2 - hangar, 3 - systemy obronne
+#### maxLevel: jeżeli level będzie równy maxLevel to nie powinno byc możliwosci budowania
+#### nextLevelInGadolinsCost: koszt nastepnego levelu w gadolinach (nawet jak bedzie lvl max, to tutaj nie bedzie zaden null, trzeba po prostu nie pokazywac kwoty)
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "typeId": 0,
+                "level": 1,
+                "maxLevel": 20,
+                "nextLevelInGadolinsCost": 120
+            },
+            {
+                "typeId": 1,
+                "level": 1,
+                "maxLevel": 20,
+                "nextLevelInGadolinsCost": 150
+            },
+            {
+                "typeId": 2,
+                "level": 1,
+                "maxLevel": 15,
+                "nextLevelInGadolinsCost": 120
+            },
+            {
+                "typeId": 3,
+                "level": 1,
+                "maxLevel": 15,
+                "nextLevelInGadolinsCost": 100
+            }
+        ]
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+
+
+## Pobieranie danych własnej floty [/myfleet]
+
+
+### Pobierz dane własnej floty [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie odswiezany jest stan czasowy gry
+(aspekty zwiazane z czasem: ataki, pomoce i ladowanie surowcow), a nastepnie zwracana informacja o flocie, 
+jej statusie oraz informacji o trzech typach statków.
+#### status: 
+#### 0 ON_THE_MOTHER_PLANET - tylko wtedy można budować statki oraz zaatakować( przy braku floty 0/0/0 też będzie ten status zawsze )
+#### 1 ON_THE_WAY_TO_ATTACK - nic nie można
+#### 2 COMMING_BACK_FROM_ATTACK - nic nie można
+#### 3 ON_THE_WAY_TO_HELP - nic nie można
+#### 4 COMMING_BACK_FROM_HELP - nic nie można
+#### 5 ON_THE_OTHER_PLANET - można cofnąć pomoc z powrotem na planete macierzystą
+#### Parametry statków:
+#### typeId: 0 - WARSHIP, 1 - BOMBER, 2 - IRONCLADS
+#### buildInUnuntiumCost - koszt budowy jednego statku w ununtrium
+#### number - ilosc statków danego typu
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "status": 5,
+            "ships":
+            [
+                {
+                    "typeId": 0,
+                    "buildInUnuntiumCost": 0,
+                    "number": 0
+                },
+                {
+                    "typeId": 1,
+                    "buildInUnuntiumCost": 0,
+                    "number": 0
+                },
+                {
+                    "typeId": 2,
+                    "buildInUnuntiumCost": 0,
+                    "number": 0
+                }
+            ]
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+## Pobieranie danych o wlasnej planecie [/myPlanet]
+
+
+### Pobierz dane o wlasnej planecie [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracane są koordynacje 
+X/Y planety gracza.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "coordinateX": 0,
+            "coordinateY": 3
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+## Pobieranie historii ataków [/attackHistory]
+
+
+### Pobierz historię swoich ataków [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracana jest lista wszystkich ataków
+zalogowanego gracza. Każdy atak zawiera nick atakującego, nazwę atakowanej planety,
+wielkosć atakującej wtedy floty, datę oraz wynik potyczki.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        [
+    {
+        "warships": 1,
+        "bombers": 2,
+        "ironclads": 3,
+        "attackedPlanetName": "X0Y1",
+        "result": 1,
+        "time": 1465731939000,
+        "attackerNickname": "karol"
+    },
+    {
+        "warships": 4,
+        "bombers": 5,
+        "ironclads": 6,
+        "attackedPlanetName": "X0Y1",
+        "result": 0,
+        "time": 1465731939000,
+        "attackerNickname": "karol"
+    }
+]
+
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+
+## Rozbudowa budynku na własnej planecie [/upgradeBuilding]
+
+
+### Podnies poziom budynku o jeden [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie aktualizowany jest stan gry.
+Jeżeli gracz ma odpowiednią ilosc gadolinium, to odpowiedni budynek zostanie rozbudowany (chyba,
+ze osiagnal maksymalny poziom).
+
++ Request (application/json)
+
+        {
+          "authenticationData": {
+            "token":"6e4196a07c5a2dbcac5e3c2b141261657e0abb6e5a89b044d530726fc056f341b1b0cb77f3a8db5a",
+            "nickname":"threexe"
+          },
+          "typeId": 0
+        }
+        
++ Response 200 (text/plain)
+
+        Zwiększono poziom budynku o 1
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat) 
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+## Kupowanie statków na własnej planecie [/buildShips]
+
+
+### Kup okresloną ilosć statków [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie aktualizowany jest stan gry.
+Jeżeli gracz ma odpowiednią ilosc ununtrium oraz status floty to ON_THE_MOTHER_PLANET, to statki zostaną wybudowane. 
+#### typeId: 0 - WARSHIP, 1 - BOMBER, 2 - IRONCLADS
+#### number: liczba statków do kupienia
+
++ Request (application/json)
+
+        {
+          "authenticationData": {
+            "token": "258a1411309ef6e41a6e8d19081d07afcc7d92f5a7a9813b6497f1021c0462131fb98a700c88cc73",
+            "nickname": "threexe"
+          },
+          "typeId": 1,
+          "number": 16
+        }
+        
++ Response 200 (text/plain)
+
+        Wybudowano statki
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat) 
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+ 
+       
+## NIEZAIMPLEMENTOWANE Atakowanie innej planety [/attack]
+
+
+### Zaatakuj inną planetę [POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry, nastepnie gdy:
+Status floty musi być na 0 (ON_THE_MOTHER_PLANET), wtedy można zaatakować
+wybraną planetę o parametrach X/Y (warunkiem ataku jest to, że atakowana planeta będzie miała
+status "USED"). Jeżeli się uda, to w odpowiedzi zwrócę czas (w sekundach) do nastąpienia ataku
+i teoretyczny czas powrotu - gdyby udało się wygrać. W tych czasach dodam sobie +1 sekundy w razie 
+jakbys chciał zaraz po skończeniu odliczania cos odswiezyc -> zeby jakis edge case sie nie zalapal.
+
++ Request (application/json)
+
+        {
+          "authenticationData": {
+            "token": "258a1411309ef6e41a6e8d19081d07afcc7d92f5a7a9813b6497f1021c0462131fb98a700c88cc73",
+            "nickname": "threexe"
+          },
+          "coordinateX": 0,
+          "coordinateY": 3
+        }
+        
++ Response 200 (application/json)
+
+        {
+         "secondsToAttack": 3600,
+         "secondsToComeBack": 7200
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+
+## NIEZAIMPLEMENTOWANE Cofnięcie floty z wsparcia [/getBackFleet]
+
+
+### Cofnij flotę z wsparcia[POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry, nastepnie gdy:
+Status floty musi być na 5 (ON_THE_OTHER_PLANET), wtedy można cofnąć flotę z powrotem do domu.
+W odpowiedzi powiem ile sekund potrzeba na ten powrót (+ sekunda w razie czego).
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+         "secondsToComeBack": 7200
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+
+        
+## NIEZAIMPLEMENTOWANE Nadchodzące ataki i sojusze [/incomingAttackAndAlliances]
+
+
+### Zwróć informację o nadchodzących atakach i sojuszach na twoją planetę [POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry. Zwracam nick atakującego/pomagającego
+i koordynacje jego planety oraz szas (w sekundach + 1) przybycia wsparcia/ataku. Jeżeli
+isAttack jest fałszem, to znaczy, że jest to informacja o nadchodzącej pomocy.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        [
+          {
+            "isAttack": false,
+            "secondsToCome": 120,
+            "coordinateX": 0,
+            "coordinateY": 3,
+            "nickname": "DobryAndrzej"
+          },
+          {
+            "isAttack": true,
+            "secondsToCome": 120,
+            "coordinateX": 0,
+            "coordinateY": 2,
+            "nickname": "WrogiAndrzej"
+          }
+        ]
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+
+## NIEZAIMPLEMENTOWANE Informacja o sojuszach na twojej planecie [/alliancesOnMyplanet]
+
+
+### Zwróć informację o sojuszniczych statkach na twojej planecie [POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry. Zwracam ilosc statków.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "warships": 1,
+            "bombers": 2,
+            "ironclads": 3
+        }
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+        
+## NIEZAIMPLEMENTOWANE zwróć informacje o innej planecie [/otherPlanet]
+
+
+### Zwróć informację o innej planecie [POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry. Na podstawie X/Y zwracam informację o: nicku gracza.
+budynkach i zasobach.
+#### typeId: 0 - kopalnia Gadolinu, 1 - ekstraktor Ununtium, 2 - hangar, 3 - systemy obronne
+
+
++ Request (application/json)
+
+        {
+          "authenticationData": {
+            "token": "258a1411309ef6e41a6e8d19081d07afcc7d92f5a7a9813b6497f1021c0462131fb98a700c88cc73",
+            "nickname": "threexe"
+          },
+          "coordinateX": 0,
+          "coordinateY": 3
+        }
+        
++ Response 200 (application/json)
+
+        {
+          "nickname": "Andrzej",
+          "gadolin": 10,
+          "ununtrium": 20,
+          "buildingsData": [
+            {
+              "typeId": 0,
+              "level": 1
+            },
+            {
+              "typeId": 1,
+              "level": 1
+            },
+            {
+              "typeId": 2,
+              "level": 1
+            },
+            {
+              "typeId": 3,
+              "level": 1
+            }
+          ]
+        }
+        
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
