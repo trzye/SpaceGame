@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.controller.history.AllianceHistoryData;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -125,5 +127,18 @@ public class AllianceHistoriesEntity {
 
     public void setPlanetsByHelpedPlanetId(PlanetsEntity planetsByHelpedPlanetId) {
         this.planetsByHelpedPlanetId = planetsByHelpedPlanetId;
+    }
+
+    @Transient
+    public AllianceHistoryData getAllianceHistoryData() {
+        AllianceHistoryData allianceHistoryData = new AllianceHistoryData();
+        allianceHistoryData.setAllyNickname(getUsersByUserId().getNickname());
+        allianceHistoryData.setResult(result);
+        allianceHistoryData.setHelpedPlanetName(getPlanetsByHelpedPlanetId().getName());
+        allianceHistoryData.setTime(time);
+        allianceHistoryData.setBombers(bombers);
+        allianceHistoryData.setIronclads(ironclads);
+        allianceHistoryData.setWarships(warships);
+        return allianceHistoryData;
     }
 }
