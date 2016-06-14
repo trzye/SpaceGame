@@ -15,7 +15,7 @@ var spaceGameApp = angular.module('SpaceGame', [
         $stateProvider
             .state('root', {
                 resolve: {
-                    'auth': function ($stat, $cookies) {
+                    'auth': function ($state, $cookies) {
                         console.log('root state')
                     }
                 }
