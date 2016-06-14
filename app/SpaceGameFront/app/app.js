@@ -42,7 +42,7 @@ var spaceGameApp = angular.module('SpaceGame', [
                     "message": ""
                 }
             })
-            .state('register', {
+            .state('root.register', {
                 url: "/register",
                 views: {
                     'content@': {

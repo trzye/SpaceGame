@@ -12,7 +12,7 @@ angular.module("SpaceGame.InfoModule", [])
         $scope.message = $stateParams.message;
         $scope.panel_class = "panel-default";
 
-        if($scope.message == "") $state.go("login");
+        if($scope.message == "") $state.go("root.login");
         
         switch ($stateParams.type) {
             case "OK":
