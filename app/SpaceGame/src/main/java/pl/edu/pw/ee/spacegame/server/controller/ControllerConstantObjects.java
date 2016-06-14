@@ -19,6 +19,7 @@ public class ControllerConstantObjects {
     public static final String MY_FLEET_PATH = "/myFleet";
     public static final String UPGRADE_BUILDING_PATH = "/upgradeBuilding";
     public static final String BUILD_SHIPS_PATH = "/buildShips";
+    public static final String OTHER_PLANET_PATH = "/otherPlanet";
 
 
     //400 errors
@@ -54,6 +55,7 @@ public class ControllerConstantObjects {
     public static final String NOT_ACTIVATED_LOG = "Użytkownik %s nie został aktywowany";
     public static final String GET_ATTACK_HISTORY_LOG = "Wysłano informacje o historii ataków";
     public static final String GET_ALLIANCE_HISTORY_LOG = "Wysłano informacje o historii sprzymierzeń";
+    public static final String GET_OTHER_PLANET_LOG = "Wyświetlono planetę innego gracza";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";
