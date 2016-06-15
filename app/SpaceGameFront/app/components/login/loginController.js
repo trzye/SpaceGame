@@ -21,7 +21,7 @@ angular.module("SpaceGame.LoginModule", [])
             }).then(function success(response) {
                 $cookies.put("token", response.data.token);
                 $cookies.put("username", response.data.nickname);
-                $state.go("header.home");
+                $state.go("root.home");
             }, function error(response) {
 
             });

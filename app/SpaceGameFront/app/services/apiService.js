@@ -6,6 +6,7 @@ angular.module("SpaceGame.ApiModule", [])
         return {
             "register" : domain + "/signUp",
             "login" : domain + "/signIn",
-            "map" : domain + "/map"
+            "map" : domain + "/map",
+            "resources" : domain + "/myResources"
         }
     }]);
