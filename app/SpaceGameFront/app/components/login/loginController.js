@@ -1,19 +1,31 @@
 angular.module("SpaceGame.LoginModule", [])
-    .controller("LoginController", ["$scope", function ($scope) {
-
-        $.backstretch([
-            "resources/img/bg-login-1.jpg",
-            "resources/img/bg-login-2.jpg"
-        ], {
-            fade: 1000,
-            duration: 7000
-        });
+    .controller("LoginController", ["$scope", "$http", "ApiService", '$state', "$cookies", function ($scope, $http, ApiService, $state, $cookies) {
 
         $scope.username = "";
         $scope.password = "";
 
         $scope.login = function() {
-            console.log($scope.username);
+
+            var data = {
+                "rawPassword": $scope.password,
+                "nickname": $scope.username
+            };
+
+            $http({
+                method: 'POST',
+                url: ApiService.login,
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function success(response) {
+                $cookies.put("token", response.data.token);
+                $cookies.put("username", response.data.nickname);
+                $state.go("header.home");
+            }, function error(response) {
+
+            });
+
         }
 
     }]);
