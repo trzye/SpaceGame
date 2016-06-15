@@ -81,3 +81,19 @@ html, body {
     height: 100%;
     display: none;
 }
+
+:root{
+    --main-color: #6f76a0;
+}
+
+.my-class{
+    border: 2px solid var(--main-color);
+}
+
+.my-class > thead > tr > th {
+    border: 2px solid var(--main-color);
+}
+
+.my-class > tbody > tr > td {
+    border: 2px solid var(--main-color);
+}
