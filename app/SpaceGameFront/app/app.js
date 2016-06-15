@@ -4,6 +4,7 @@ var spaceGameApp = angular.module('SpaceGame', [
         'ui.router',
         'ngCookies',
         'SpaceGame.ApiModule',
+        'SpaceGame.AuthModule',
         'SpaceGame.HeaderModule',
         'SpaceGame.LoginModule',
         'SpaceGame.RegisterModule',
@@ -14,13 +15,14 @@ var spaceGameApp = angular.module('SpaceGame', [
     .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('root', {
-                resolve: {
-                    'auth': function ($state, $cookies) {
-                        console.log('root state')
+                views: {
+                    'header@': {
+                        templateUrl: "components/header/header.html",
+                        controller: "HeaderController"
                     }
                 }
             })
-            .state('root.login', {
+            .state('login', {
                 url: "/login",
                 views: {
                     'content@': {
@@ -42,7 +44,7 @@ var spaceGameApp = angular.module('SpaceGame', [
                     "message": ""
                 }
             })
-            .state('root.register', {
+            .state('register', {
                 url: "/register",
                 views: {
                     'content@': {
@@ -51,15 +53,7 @@ var spaceGameApp = angular.module('SpaceGame', [
                     }
                 }
             })
-            .state('header', {
-                views: {
-                    'header@': {
-                        templateUrl: "components/header/header.html",
-                        controller: "HeaderController"
-                    }
-                }
-            })
-            .state('header.home', {
+            .state('root.home', {
                 url: "/",
                 views: {
                     'content@': {

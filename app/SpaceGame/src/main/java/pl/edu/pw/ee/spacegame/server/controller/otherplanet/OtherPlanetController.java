@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.spacegame.server.controller.otherplanet;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +45,9 @@ public class OtherPlanetController extends BaseAbstractController {
             }
             Refresher.refreshAll(this);
             PlanetViewData outputPlanetView = createPlanetViewData(otherPlanetData);
+            if (outputPlanetView == null){
+                return new TextResponseEntity<>("Nie ma na tym polu planety", HttpStatus.OK);
+            }
             databaseLogger.info(GET_OTHER_PLANET_LOG);
             return new JsonResponseEntity<>(outputPlanetView, OK);
         } catch (Exception e) {
@@ -53,7 +57,10 @@ public class OtherPlanetController extends BaseAbstractController {
 
     private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData) {
         PlanetViewData pvd = new PlanetViewData();
-        PlanetFieldsEntity planetFieldEntity = planetFieldsDAO.getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
+        PlanetFieldsEntity planetFieldEntity = getPlanetFieldsDAO().getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
+        if(planetFieldEntity == null){
+            return null;
+        }
         PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
         pvd.setNickname(planetsEntity.getUsersByUserId().getNickname());
         pvd.setGadolin(planetsEntity.getResourcesByResourceId().getGadolin());
