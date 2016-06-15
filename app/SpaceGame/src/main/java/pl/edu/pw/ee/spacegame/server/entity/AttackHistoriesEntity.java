@@ -16,6 +16,8 @@ public class AttackHistoriesEntity {
     private Integer warships;
     private Integer bombers;
     private Integer ironclads;
+    private Integer gadolin;
+    private Integer ununtrium;
     private PlanetsEntity planetsByAttackedPlanetId;
     private Byte result;
     private UsersEntity usersByUserId;
@@ -80,6 +82,26 @@ public class AttackHistoriesEntity {
 
     public void setTime(Timestamp time) {
         this.time = time;
+    }
+
+    @Basic
+    @Column(name = "ununtrium")
+    public Integer getUnuntrium() {
+        return ununtrium;
+    }
+
+    public void setUnuntrium(Integer ununtrium) {
+        this.ununtrium = ununtrium;
+    }
+
+    @Basic
+    @Column(name = "gadolin")
+    public Integer getGadolin() {
+        return gadolin;
+    }
+
+    public void setGadolin(Integer gadolin) {
+        this.gadolin = gadolin;
     }
 
     @Override

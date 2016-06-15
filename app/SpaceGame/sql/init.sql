@@ -105,27 +105,29 @@ CREATE TABLE current_alliances (
 
 CREATE TABLE attack_histories (
   attack_history_id  INT PRIMARY KEY AUTO_INCREMENT,
-  user_id            INT     NOT NULL,
-  warships           INT     NOT NULL,
-  bombers            INT     NOT NULL,
-  ironclads          INT     NOT NULL,
-  time TIMESTAMP  NOT NULL,
-  attacked_planet_id INT     NULL,
+  user_id            INT       NOT NULL,
+  warships           INT       NOT NULL,
+  bombers            INT       NOT NULL,
+  ironclads          INT       NOT NULL,
+  gadolin            INT,
+  ununtrium          INT,
+  time               TIMESTAMP NOT NULL,
+  attacked_planet_id INT       NULL,
   FOREIGN KEY (attacked_planet_id) REFERENCES planets (planet_id),
-  result             BOOLEAN NOT NULL, -- 0 - LOSE, 1 - WIN
+  result             BOOLEAN   NOT NULL, -- 0 - LOSE, 1 - WIN
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE alliance_histories (
   alliance_history_id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id             INT     NOT NULL,
-  warships            INT     NOT NULL,
-  bombers             INT     NOT NULL,
-  ironclads           INT     NOT NULL,
-  time        TIMESTAMP NOT NULL,
-  helped_planet_id    INT     NULL,
+  user_id             INT       NOT NULL,
+  warships            INT       NOT NULL,
+  bombers             INT       NOT NULL,
+  ironclads           INT       NOT NULL,
+  time                TIMESTAMP NOT NULL,
+  helped_planet_id    INT       NULL,
   FOREIGN KEY (helped_planet_id) REFERENCES planets (planet_id),
-  result              BOOLEAN NOT NULL, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET
+  result              BOOLEAN   NOT NULL, -- 0 - LOSE , 1 - BACK ON MOTHER PLANET
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
