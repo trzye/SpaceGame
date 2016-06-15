@@ -1,7 +1,10 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -20,6 +23,7 @@ public class PlanetsEntity {
     private ResourcesEntity resourcesByResourceId;
     private FleetsEntity fleetsByFleetId;
     private PlanetFieldsEntity planetFieldsByPlanetFieldId;
+    private PlanetsEntity lastHelpedPlanet;
 
     @Id
     @GeneratedValue
@@ -195,5 +199,21 @@ public class PlanetsEntity {
             return attack;
         }
         return null;
+    }
+
+    @Transient
+    public long getTimeDistanceFromOtherPlanet(PlanetsEntity otherPlanet) {
+        long oneFieldTime = 60 * 1000; //one minute per field
+        double a = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateX() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateX());
+        double b = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateY() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateY());
+        double d = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)); //obliczyłem przekątną prostokąta odległości między planetami
+        return (long) (d * oneFieldTime);
+    }
+
+    @Transient
+    public PlanetsEntity getLastHelpedPlanet() {
+        List<AllianceHistoriesEntity> allianceHistories = new ArrayList<>(getAllianceHistoriesByPlanetId());
+        Collections.sort(allianceHistories, (o1, o2) -> o2.getTime().compareTo(o1.getTime()));
+        return allianceHistories.get(0).getPlanetsByHelpedPlanetId();
     }
 }
