@@ -14,6 +14,7 @@ import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
 import pl.edu.pw.ee.spacegame.server.entity.AllianceHistoriesEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
+import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
@@ -40,12 +41,13 @@ public class AllianceHistoryConroller extends BaseAbstractController {
             if (!usersEntity.getIsActivated()) {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
-            databaseLogger.info(GET_ALLIANCE_HISTORY_LOG);
+            Refresher.refreshAll(this);
             Iterable<AllianceHistoriesEntity> allianceHistory = allianceHistoriesDAO.getAllianceHistoryByUserIdOrPlanetId(usersEntity.getUserId(), usersEntity.getPlanet().getPlanetId());
             ArrayList<AllianceHistoryData> outputAllianceHistory = new ArrayList<>();
             for (AllianceHistoriesEntity alliance : allianceHistory) {
                 outputAllianceHistory.add(alliance.getAllianceHistoryData());
             }
+            databaseLogger.info(GET_ALLIANCE_HISTORY_LOG);
             return new JsonResponseEntity<>(outputAllianceHistory, OK);
         } catch (Exception e) {
             return handleServerError(e);
