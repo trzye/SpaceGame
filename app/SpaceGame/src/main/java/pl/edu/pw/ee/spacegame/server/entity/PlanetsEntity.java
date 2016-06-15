@@ -23,7 +23,6 @@ public class PlanetsEntity {
     private ResourcesEntity resourcesByResourceId;
     private FleetsEntity fleetsByFleetId;
     private PlanetFieldsEntity planetFieldsByPlanetFieldId;
-    private PlanetsEntity lastHelpedPlanet;
 
     @Id
     @GeneratedValue
@@ -212,8 +211,15 @@ public class PlanetsEntity {
 
     @Transient
     public PlanetsEntity getLastHelpedPlanet() {
-        List<AllianceHistoriesEntity> allianceHistories = new ArrayList<>(getAllianceHistoriesByPlanetId());
+        List<AllianceHistoriesEntity> allianceHistories = new ArrayList<>(getUsersByUserId().getAllianceHistoriesByUserId());
         Collections.sort(allianceHistories, (o1, o2) -> o2.getTime().compareTo(o1.getTime()));
         return allianceHistories.get(0).getPlanetsByHelpedPlanetId();
+    }
+
+    @Transient
+    public PlanetsEntity getLastAttackedPlanet() {
+        List<AttackHistoriesEntity> historiesEntities = new ArrayList<>(getUsersByUserId().getAttackHistoriesByUserId());
+        Collections.sort(historiesEntities, (o1, o2) -> o2.getTime().compareTo(o1.getTime()));
+        return historiesEntities.get(0).getPlanetsByAttackedPlanetId();
     }
 }

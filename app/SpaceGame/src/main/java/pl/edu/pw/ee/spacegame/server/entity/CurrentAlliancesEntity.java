@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 public class CurrentAlliancesEntity {
     private Integer currentAllianceId;
     private Timestamp timeOfSendingAlliance;
+    private Timestamp timeOfComing;
     private PlanetsEntity planetsByHelpedPlanetId;
     private FleetsEntity fleetsByFleetId;
 
@@ -33,6 +34,16 @@ public class CurrentAlliancesEntity {
 
     public void setTimeOfSendingAlliance(Timestamp timeOfSendingAlliance) {
         this.timeOfSendingAlliance = timeOfSendingAlliance;
+    }
+
+    @Basic
+    @Column(name = "time_of_coming")
+    public Timestamp getTimeOfComing() {
+        return timeOfComing;
+    }
+
+    public void setTimeOfComing(Timestamp timeOfComing) {
+        this.timeOfComing = timeOfComing;
     }
 
     @Override
@@ -81,4 +92,6 @@ public class CurrentAlliancesEntity {
         currentAlliancesEntity.setFleetsByFleetId(fleetsEntity);
         return currentAlliancesEntity;
     }
+
+
 }

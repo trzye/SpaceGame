@@ -98,6 +98,7 @@ CREATE TABLE current_alliances (
   current_alliance_id      INT PRIMARY KEY AUTO_INCREMENT,
   fleet_id                 INT UNIQUE NOT NULL,
   time_of_sending_alliance TIMESTAMP  NULL,
+  time_of_coming           TIMESTAMP  NULL,
   helped_planet_id         INT        NULL, -- IF PLANET IS SAME AS MOTHER PLANET FOR FLEET THAN IT'S THE RETURN
   FOREIGN KEY (helped_planet_id) REFERENCES planets (planet_id),
   FOREIGN KEY (fleet_id) REFERENCES fleets (fleet_id)

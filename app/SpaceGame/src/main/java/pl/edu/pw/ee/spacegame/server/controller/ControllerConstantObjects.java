@@ -74,4 +74,9 @@ public class ControllerConstantObjects {
     //TODO: zaprojektować ładniejszą wiadomość
     public static final String EMAIL_CONTENT = "<a href=\"%s\">Kliknij aby aktywować swoje konto w SpaceGame</a>";
     public static final String ACTIVATION_LINK = "http://" + REST_SERVER + ":" + REST_PORT + "/activation?email=%s&activationCode=%s";
+
+    //byte
+    public static final Byte ZERO_BYTE = 0;
+    public static final Byte ONE_BYTE = 1;
+
 }
