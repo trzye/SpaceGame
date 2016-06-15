@@ -83,7 +83,7 @@ html, body {
 }
 
 :root{
-    --main-color: #6f76a0;
+    --main-color: #6f76a0; /* tu zmieniamy kolor obramowania tabelki z historią */
 }
 
 .my-class{
