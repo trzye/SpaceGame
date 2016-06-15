@@ -105,4 +105,12 @@ public class PlanetFieldsEntity {
         EMPTY,
         USED
     }
+
+    @Transient
+    public PlanetsEntity getPlanetsEntity() {
+        for (PlanetsEntity planetsEntity : getPlanetsesByPlanetFieldId()) {
+                return planetsEntity;
+        }
+        return null;
+    }
 }

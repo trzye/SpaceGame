@@ -54,43 +54,47 @@ public class OtherPlanetController extends BaseAbstractController {
     private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData) {
         PlanetViewData pvd = new PlanetViewData();
         PlanetFieldsEntity planetFieldEntity = planetFieldsDAO.getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
-        //TODO wypełnienie danych
+        PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
+        pvd.setNickname(planetsEntity.getUsersByUserId().getNickname());
+        pvd.setGadolin(planetsEntity.getResourcesByResourceId().getGadolin());
+        pvd.setUnuntrium(planetsEntity.getResourcesByResourceId().getUnuntrium());
+        pvd.setBuildings(getBuildings(planetsEntity));
         return pvd;
     }
-    private ArrayList<BuildingData> getBuildings(UsersEntity usersEntity) {
+    private ArrayList<BuildingData> getBuildings(PlanetsEntity planetsEntity) {
         ArrayList<BuildingData> buildings = new ArrayList<>();
-        buildings.add(getUnuntriumMine(usersEntity));
-        buildings.add(getGadolinMine(usersEntity));
-        buildings.add(getHangar(usersEntity));
-        buildings.add(getDefenceSystems(usersEntity));
+        buildings.add(getUnuntriumMine(planetsEntity));
+        buildings.add(getGadolinMine(planetsEntity));
+        buildings.add(getHangar(planetsEntity));
+        buildings.add(getDefenceSystems(planetsEntity));
         return buildings;
     }
-    private BuildingData getUnuntriumMine(UsersEntity usersEntity) {
-        BuildingsEntity buildingsEntity = usersEntity.getPlanet().getUnuntriumMine();
+    private BuildingData getUnuntriumMine(PlanetsEntity planetsEntity) {
+        BuildingsEntity buildingsEntity = planetsEntity.getUnuntriumMine();
         BuildingData buildingData = new BuildingData();
         buildingData.setLevel(buildingsEntity.getLevel());
         buildingData.setTypeId(UNUNTRIUM_MINE_ID.ordinal());
         return buildingData;
     }
 
-    private BuildingData getGadolinMine(UsersEntity usersEntity) {
-        BuildingsEntity buildingsEntity = usersEntity.getPlanet().getGadolinMine();
+    private BuildingData getGadolinMine(PlanetsEntity planetsEntity) {
+        BuildingsEntity buildingsEntity = planetsEntity.getGadolinMine();
         BuildingData buildingData = new BuildingData();
         buildingData.setLevel(buildingsEntity.getLevel());
         buildingData.setTypeId(GADOLIN_MINE_ID.ordinal());
         return buildingData;
     }
 
-    private BuildingData getHangar(UsersEntity usersEntity) {
-        BuildingsEntity buildingsEntity = usersEntity.getPlanet().getHangar();
+    private BuildingData getHangar(PlanetsEntity planetsEntity) {
+        BuildingsEntity buildingsEntity = planetsEntity.getHangar();
         BuildingData buildingData = new BuildingData();
         buildingData.setLevel(buildingsEntity.getLevel());
         buildingData.setTypeId(HANGAR_ID.ordinal());
         return buildingData;
     }
 
-    private BuildingData getDefenceSystems(UsersEntity usersEntity) {
-        BuildingsEntity buildingsEntity = usersEntity.getPlanet().getDefenceSystems();
+    private BuildingData getDefenceSystems(PlanetsEntity planetsEntity) {
+        BuildingsEntity buildingsEntity = planetsEntity.getDefenceSystems();
         BuildingData buildingData = new BuildingData();
         buildingData.setLevel(buildingsEntity.getLevel());
         buildingData.setTypeId(DEFENCE_SYSTEMS_ID.ordinal());
