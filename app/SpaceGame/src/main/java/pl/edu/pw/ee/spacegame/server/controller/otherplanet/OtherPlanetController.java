@@ -45,7 +45,7 @@ public class OtherPlanetController extends BaseAbstractController {
             }
             Refresher.refreshAll(this);
             PlanetViewData outputPlanetView = createPlanetViewData(otherPlanetData);
-            if (otherPlanetData.equals(null)){
+            if (outputPlanetView == null){
                 return new TextResponseEntity<>("Nie ma na tym polu planety", HttpStatus.OK);
             }
             databaseLogger.info(GET_OTHER_PLANET_LOG);
@@ -57,11 +57,11 @@ public class OtherPlanetController extends BaseAbstractController {
 
     private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData) {
         PlanetViewData pvd = new PlanetViewData();
-        PlanetFieldsEntity planetFieldEntity = planetFieldsDAO.getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
-        PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
-        if(planetsEntity.equals(null)){
+        PlanetFieldsEntity planetFieldEntity = getPlanetFieldsDAO().getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
+        if(planetFieldEntity == null){
             return null;
         }
+        PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
         pvd.setNickname(planetsEntity.getUsersByUserId().getNickname());
         pvd.setGadolin(planetsEntity.getResourcesByResourceId().getGadolin());
         pvd.setUnuntrium(planetsEntity.getResourcesByResourceId().getUnuntrium());
