@@ -35,7 +35,9 @@ public class FleetLogic {
         return BASE_IRONCLADS_COST * (int) (1.0 - 0.05 * hangar.getLevel());
     }
 
-    public static FleetStatus getStatus(PlanetsEntity planetsEntity, CurrentAlliancesEntity currentAlliancesEntity, CurrentAttacksEntity currentAttacksEntity) {
+    public static FleetStatus getStatus(PlanetsEntity planetsEntity) {
+        CurrentAlliancesEntity currentAlliancesEntity = planetsEntity.getCurrentAlliances();
+        CurrentAttacksEntity currentAttacksEntity = planetsEntity.getCurrentAttacks();
         if (currentAttacksEntity.getTimeOfSendingAttack() != null) {
             if (currentAttacksEntity.getPlanetsByAttackedPlanetId() != planetsEntity) {
                 return FleetStatus.ON_THE_WAY_TO_ATTACK;
