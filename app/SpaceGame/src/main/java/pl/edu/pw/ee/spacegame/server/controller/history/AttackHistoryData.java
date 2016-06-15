@@ -11,6 +11,8 @@ public class AttackHistoryData {
     private Integer bombers;
     private Integer ironclads;
     private String attackedPlanetName;
+    private Integer gadolin;
+    private Integer ununtrium;
     private Byte result;
     private Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
     private String attackerNickname;
@@ -72,5 +74,21 @@ public class AttackHistoryData {
     }
 
     public AttackHistoryData() {
+    }
+
+    public Integer getGadolin() {
+        return gadolin;
+    }
+
+    public void setGadolin(Integer gadolin) {
+        this.gadolin = gadolin;
+    }
+
+    public Integer getUnuntrium() {
+        return ununtrium;
+    }
+
+    public void setUnuntrium(Integer ununtrium) {
+        this.ununtrium = ununtrium;
     }
 }

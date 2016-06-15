@@ -159,6 +159,8 @@ public class AttackHistoriesEntity {
         attackHistoryData.setResult(result);
         attackHistoryData.setAttackedPlanetName(getPlanetsByAttackedPlanetId().getName());
         attackHistoryData.setTime(time);
+        attackHistoryData.setGadolin(gadolin);
+        attackHistoryData.setUnuntrium(ununtrium);
         attackHistoryData.setBombers(bombers);
         attackHistoryData.setIronclads(ironclads);
         attackHistoryData.setWarships(warships);
