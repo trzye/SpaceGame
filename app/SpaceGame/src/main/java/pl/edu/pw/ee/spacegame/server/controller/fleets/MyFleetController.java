@@ -60,7 +60,7 @@ public class MyFleetController extends BaseAbstractController {
     }
 
     private Integer getStatus(PlanetsEntity planetsEntity, CurrentAlliancesEntity currentAlliancesEntity, CurrentAttacksEntity currentAttacksEntity) {
-        return FleetLogic.getStatus(planetsEntity, currentAlliancesEntity, currentAttacksEntity).ordinal();
+        return FleetLogic.getStatus(planetsEntity).ordinal();
     }
 
     private ArrayList<ShipsData> getShips(FleetsEntity fleetsEntity, BuildingsEntity hangar) {

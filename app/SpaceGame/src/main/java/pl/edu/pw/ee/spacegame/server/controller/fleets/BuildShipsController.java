@@ -60,8 +60,7 @@ public class BuildShipsController extends BaseAbstractController {
         CurrentAttacksEntity currentAttacksEntity = planetsEntity.getCurrentAttacks();
         CurrentAlliancesEntity currentAlliancesEntity = planetsEntity.getCurrentAlliances();
         FleetsEntity.FleetType fleetType = FleetsEntity.FleetType.values()[buildingShipsData.getTypeId()];
-        FleetLogic.FleetStatus fleetStatus
-                = FleetLogic.getStatus(planetsEntity, currentAlliancesEntity, currentAttacksEntity);
+        FleetLogic.FleetStatus fleetStatus = FleetLogic.getStatus(planetsEntity);
         if (!fleetStatus.equals(ON_THE_MOTHER_PLANET)) {
             throw new IOException("Nie można zbudować statków, flota nie jest na planecie macierzystej");
         }
