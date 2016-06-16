@@ -3,7 +3,6 @@ package pl.edu.pw.ee.spacegame.server.realtime;
 import com.google.common.collect.Lists;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
-import pl.edu.pw.ee.spacegame.server.controller.fleets.FleetLogic;
 import pl.edu.pw.ee.spacegame.server.dao.crud.AllianceHistoriesDAO;
 import pl.edu.pw.ee.spacegame.server.dao.crud.CurrentAlliancesDAO;
 import pl.edu.pw.ee.spacegame.server.dao.crud.PlanetsDAO;
@@ -54,12 +53,12 @@ public class Refresher {
 
     private static void refreshAllAlliances(PlanetsDAO planetsDAO, CurrentAlliancesDAO currentAlliancesDAO, AllianceHistoriesDAO allianceHistoriesDAO) {
         for (PlanetsEntity planet : planetsDAO.findAll()) {
-            FleetLogic.FleetStatus status = FleetLogic.getStatus(planet);
-            if (status.equals(FleetLogic.FleetStatus.ON_THE_WAY_TO_HELP)) {
+            PlanetsEntity.FleetStatus status = planet.getFleetStatus();
+            if (status.equals(PlanetsEntity.FleetStatus.ON_THE_WAY_TO_HELP)) {
                 CurrentAlliancesEntity currentAlliancesEntity = AlliancesRefresher.refreshOnTheWayToHelp(planet, planet.getCurrentAlliances());
                 currentAlliancesDAO.save(currentAlliancesEntity);
             }
-            if (status.equals(FleetLogic.FleetStatus.COMMING_BACK_FROM_HELP)) {
+            if (status.equals(PlanetsEntity.FleetStatus.COMING_BACK_FROM_HELP)) {
                 CurrentAlliancesEntity currentAlliancesEntity = AlliancesRefresher.refreshComingBackFromHelp(planet, planet.getCurrentAlliances(), allianceHistoriesDAO);
                 currentAlliancesDAO.save(currentAlliancesEntity);
             }

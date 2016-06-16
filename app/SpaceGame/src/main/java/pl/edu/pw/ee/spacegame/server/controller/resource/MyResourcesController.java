@@ -15,6 +15,7 @@ import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.GET_MY_RESOURCES;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.MY_RESOURCES_PATH;
 
 /**
@@ -41,7 +42,7 @@ public class MyResourcesController extends BaseAbstractController {
             }
             Refresher.refreshAll(this);
             ResourceData resourceData = usersEntity.getPlanet().getResourcesByResourceId().getResourceData();
-            //TODO: logi
+            databaseLogger.info(String.format(GET_MY_RESOURCES, usersEntity.getNickname()));
             return new JsonResponseEntity<>(resourceData, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

@@ -14,6 +14,7 @@ import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.GET_MY_PLANET_LOG;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.MY_PLANET_PATH;
 
 /**
@@ -38,7 +39,7 @@ public class MyPlanetController extends BaseAbstractController {
             MyPlanetData myPlanetData = new MyPlanetData();
             myPlanetData.setCoordinateX(usersEntity.getPlanet().getPlanetFieldsByPlanetFieldId().getCoordinateX());
             myPlanetData.setCoordinateY(usersEntity.getPlanet().getPlanetFieldsByPlanetFieldId().getCoordinateY());
-            //TODO: logi
+            databaseLogger.info(String.format(GET_MY_PLANET_LOG, usersEntity.getNickname()));
             return new JsonResponseEntity<>(myPlanetData, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

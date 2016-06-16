@@ -11,10 +11,10 @@ import pl.edu.pw.ee.spacegame.server.entity.AttackHistoriesEntity;
  */
 public interface AttackHistoriesDAO extends CrudRepository<AttackHistoriesEntity, Integer> {
     @Query("SELECT a " +
-            "from AttackHistoriesEntity a " +
-            "   join a.usersByUserId u " +
+            "from AttackHistoriesEntity a          " +
+            "   join a.usersByUserId u             " +
             "   join a.planetsByAttackedPlanetId p " +
-            "   where u.userId = :userId " +
-            "   or p.planetId = :planetId ")
-    Iterable<AttackHistoriesEntity> getAttackHistoryByUserIdOrPlanetId (@Param("userId") Integer userId, @Param("planetId") Integer planetId);
+            "   where u.userId = :userId           " +
+            "   or p.planetId = :planetId          ")
+    Iterable<AttackHistoriesEntity> getAttackHistoryByUserIdOrPlanetId(@Param("userId") Integer userId, @Param("planetId") Integer planetId);
 }

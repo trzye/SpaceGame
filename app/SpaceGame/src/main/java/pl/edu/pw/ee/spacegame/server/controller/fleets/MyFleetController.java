@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
-import pl.edu.pw.ee.spacegame.server.entity.*;
+import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
-import java.util.ArrayList;
-
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.GET_MY_FLEET_LOG;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.MY_FLEET_PATH;
 
 /**
@@ -40,47 +39,12 @@ public class MyFleetController extends BaseAbstractController {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
             Refresher.refreshAll(this);
-            MyFleetData myFleet = getMyFleet(usersEntity.getPlanet());
-            //TODO: Logi
+            MyFleetData myFleet = usersEntity.getPlanet().getMyFleetData();
+            databaseLogger.info(String.format(GET_MY_FLEET_LOG, usersEntity.getNickname()));
             return new JsonResponseEntity<>(myFleet, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);
         }
-    }
-
-    private MyFleetData getMyFleet(PlanetsEntity planetsEntity) {
-        MyFleetData fleetData = new MyFleetData();
-        FleetsEntity fleetsEntity = planetsEntity.getFleetsByFleetId();
-        CurrentAlliancesEntity currentAlliancesEntity = planetsEntity.getCurrentAlliances();
-        CurrentAttacksEntity currentAttacksEntity = planetsEntity.getCurrentAttacks();
-        fleetData.setStatus(getStatus(planetsEntity, currentAlliancesEntity, currentAttacksEntity));
-        ArrayList<ShipsData> ships = getShips(fleetsEntity, planetsEntity.getHangar());
-        fleetData.setShips(ships);
-        return fleetData;
-    }
-
-    private Integer getStatus(PlanetsEntity planetsEntity, CurrentAlliancesEntity currentAlliancesEntity, CurrentAttacksEntity currentAttacksEntity) {
-        return FleetLogic.getStatus(planetsEntity).ordinal();
-    }
-
-    private ArrayList<ShipsData> getShips(FleetsEntity fleetsEntity, BuildingsEntity hangar) {
-        ArrayList<ShipsData> ships = new ArrayList<>();
-        ShipsData warships = new ShipsData();
-        ShipsData bombers = new ShipsData();
-        ShipsData ironclads = new ShipsData();
-        warships.setTypeId(FleetsEntity.FleetType.WARSHIP.ordinal());
-        bombers.setTypeId(FleetsEntity.FleetType.BOMBER.ordinal());
-        ironclads.setTypeId(FleetsEntity.FleetType.IRONCLADS.ordinal());
-        warships.setNumber(fleetsEntity.getWarships());
-        bombers.setNumber(fleetsEntity.getBombers());
-        ironclads.setNumber(fleetsEntity.getIronclads());
-        warships.setBuildInUnuntiumCost(FleetLogic.getWarshipCost(hangar));
-        bombers.setBuildInUnuntiumCost(FleetLogic.getBomberCost(hangar));
-        ironclads.setBuildInUnuntiumCost(FleetLogic.getIroncladsCost(hangar));
-        ships.add(warships);
-        ships.add(bombers);
-        ships.add(ironclads);
-        return ships;
     }
 
 }

@@ -2,24 +2,19 @@ package pl.edu.pw.ee.spacegame.server.realtime;
 
 import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects;
-import pl.edu.pw.ee.spacegame.server.controller.fleets.FleetLogic;
 import pl.edu.pw.ee.spacegame.server.entity.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.ZERO_BYTE;
-import static pl.edu.pw.ee.spacegame.server.controller.fleets.FleetLogic.FleetStatus.*;
+import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.*;
+import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.*;
 
 /**
  * Created by Michał on 2016-06-15.
  */
 public class AllAttackRefresher {
-
-    private final Integer WARSHIP_ATTACK = 20;
-    private final Integer BOMBER_ATTACK = 2 * WARSHIP_ATTACK;
-    private final Integer IRONCLADS_ATTACK = 2 * BOMBER_ATTACK;
-    private final Integer DEFENCE_SYSTEMS_ATTACK = 150;
 
     private BaseAbstractController daoContainer;
     private long attackTime;
@@ -31,10 +26,10 @@ public class AllAttackRefresher {
     }
 
     public void refreshAndSaveByPlanet(PlanetsEntity planetsEntity) {
-        if (FleetLogic.getStatus(planetsEntity).equals(ON_THE_WAY_TO_ATTACK)) {
+        if (planetsEntity.getFleetStatus().equals(ON_THE_WAY_TO_ATTACK)) {
             refreshByOnTheWayToAttack(planetsEntity);
         }
-        if (FleetLogic.getStatus(planetsEntity).equals(COMMING_BACK_FROM_ATTACK)) {
+        if (planetsEntity.getFleetStatus().equals(COMING_BACK_FROM_ATTACK)) {
             refreshByComingBackFromAttack(planetsEntity);
         }
     }
@@ -53,7 +48,7 @@ public class AllAttackRefresher {
     private void resolveAttack(PlanetsEntity attacker, PlanetsEntity defender) {
         ArrayList<PlanetsEntity> defenderCurrentAlliances = daoContainer.getPlanetsDAO().getCurrentAlliances(defender.getPlanetId());
         filterByAttackTime(defenderCurrentAlliances); //to że jacyś sojusznicy są na planecie, nie znaczy, że byli w czasie ataku z przeszłości
-        if (FleetLogic.getStatus(defender).equals(ON_THE_MOTHER_PLANET))
+        if (defender.getFleetStatus().equals(ON_THE_MOTHER_PLANET))
             defenderCurrentAlliances.add(defender);
         int defence = calculateDefence(defender.getDefenceSystems(), defenderCurrentAlliances);
         attack = calculateAttack(attacker.getFleetsByFleetId());

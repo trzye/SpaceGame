@@ -35,8 +35,14 @@ public class ControllerConstantObjects {
     public static final String ACTIVATION_LOG = "Aktywowano konto dla email: %s";
     public static final String USER_WITH_SUCH_EMAIL_NOT_EXISTS = "Nie istnieje użytkownik o takim adresie email";
     public static final String BAD_ACTIVATION_CODE = "Błędny kod aktywacyjny";
-    public static final String USER_ARLEADY_ACTIVATED = "Użytkownik został już aktywowany";
+    public static final String USER_ALREADY_ACTIVATED = "Użytkownik został już aktywowany";
     public static final String ACTIVATION_TIMEOUT = "Przekroczono czas aktywacji";
+    public static final String WRONG_BUILDING_TYPE_ID = "Niepoprawny typ budynku do rozbudowania";
+    public static final String MAX_BUILDING_LEVEL_UPGRADE = "Maksymalny poziom jest już osiągnięty, nie można rozbudować budynku.";
+    public static final String NOT_ENOUGH_GADOLINIUM_FOR_BUILDING = "Za mało gadolinium aby rozbudować ten budynek";
+    public static final String NOT_ENOUGH_UNUNTRIUM_FOR_BUILDING = "Nie masz wystarczająco ununtrium do wybudowania statków";
+    public static final String CANT_BUILD_FLEET = "Nie można zbudować statków, flota nie jest na planecie macierzystej";
+    public static final String CANT_BUILD_ZERO_FLEET = "Nie można wybudować zera lub mniej statków!";
 
     //401
     public static final String NOT_LOGGED = "Nie jesteś zalogowany";
@@ -56,10 +62,18 @@ public class ControllerConstantObjects {
     public static final String GET_ATTACK_HISTORY_LOG = "Wysłano informacje o historii ataków";
     public static final String GET_ALLIANCE_HISTORY_LOG = "Wysłano informacje o historii sprzymierzeń";
     public static final String GET_OTHER_PLANET_LOG = "Wyświetlono planetę innego gracza";
+    public static final String MY_BUILDINGS_LOG = "Zwróciłem dane o budynkach dla użytkownika %s";
+    public static final String UPGRADE_BUILDING_LOG = "Zwiększono poziom budynku [id: %d] o 1";
+    public static final String BUILD_FLEET = "Użytkownik %s wybudował statki [id: %d, ilość: %d]";
+    public static final String GET_MY_FLEET_LOG = "Pobrano dane o flocie dla użytkownika %s";
+    public static final String GET_MY_PLANET_LOG = "Pograno dane o planecie dla gracza %s";
+    public static final String GET_MY_RESOURCES = "Pobranie danych o surowcach dla gracza %s";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";
     public static final String ACTIVATION_SUCCESS = "Pomyślnie aktywowano konto";
+    public static final String FLEET_BUILT = "Wybudowano statki";
+    public static final String UPGRADE_BUILDING = "Zwiększono poziom budynku o 1";
 
     //others
     public static final String REST_SERVER = "localhost";

@@ -52,7 +52,7 @@ public class ActivationController extends BaseAbstractController {
         }
 
         if (activationsEntity.getUsersByUserId().getIsActivated())
-            throw new IOException(USER_ARLEADY_ACTIVATED);
+            throw new IOException(USER_ALREADY_ACTIVATED);
 
         if (isActivationTimeCorrect(activationsEntity)) {
             activationsEntity.getUsersByUserId().setIsActivated(true);
@@ -89,10 +89,7 @@ public class ActivationController extends BaseAbstractController {
         PlanetsEntity planetsEntity = new PlanetsEntity();
         planetsEntity.setUsersByUserId(usersEntity);
         planetsEntity.setPlanetFieldsByPlanetFieldId(planetFieldsEntity);
-        planetsEntity.setName(
-                "X" + planetFieldsEntity.getCoordinateX()
-                        + "Y" + planetFieldsEntity.getCoordinateY()
-        );
+        planetsEntity.setCoordinateName();
         return planetsEntity;
     }
 

@@ -6,10 +6,13 @@ import pl.edu.pw.ee.spacegame.server.entity.ResourcesEntity;
 
 import java.sql.Timestamp;
 
+import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.RESOURCE_REFRESH_ACCURACY;
+
 /**
  * Created by Michał on 2016-06-07.
  */
 public class ResourceRefresher {
+
     //TODO: zmienić na minuty
     //TODO: co gdy odświeżenie ataku nastąpi bardzo późno względem faktycznego czasu ataku?
     //TODO: tzn. gdyby faktyczny czas ataku był wtedy gdy planeta nie miała surowców, to atakujący by nic nie ukradł
@@ -21,11 +24,10 @@ public class ResourceRefresher {
         BuildingsEntity ununtriumMine = planet.getUnuntriumMine();
         BuildingsEntity gadolinMine = planet.getGadolinMine();
         long now = System.currentTimeMillis();
-        //  long minutesBeetween = (now - resource.getLastUpdate().getTime()) / 1000 / 60;
-        long minutesBeetween = (now - resource.getLastUpdate().getTime()) / 1000; //traktujemy jako sekundy aby przyspieszyc gre pod debug
-        if (minutesBeetween > 0) {
-            resource.setUnuntrium(resource.getUnuntrium() + (int) minutesBeetween * ununtriumMine.getLevel());
-            resource.setGadolin(resource.getGadolin() + (int) minutesBeetween * gadolinMine.getLevel());
+        long timeBetween = (now - resource.getLastUpdate().getTime()) / RESOURCE_REFRESH_ACCURACY;
+        if (timeBetween > 0) {
+            resource.setUnuntrium(resource.getUnuntrium() + (int) timeBetween * ununtriumMine.getLevel());
+            resource.setGadolin(resource.getGadolin() + (int) timeBetween * gadolinMine.getLevel());
             resource.setLastUpdate(new Timestamp(now));
         }
     }

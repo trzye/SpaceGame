@@ -1,11 +1,11 @@
-package pl.edu.pw.ee.spacegame.server.controller.building;
+package pl.edu.pw.ee.spacegame.server.game;
 
 import pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity;
 
 /**
  * Created by Michał on 2016-06-10.
  */
-public class BuildingCostsLogic {
+public class BuildingCosts {
 
     private static final Integer UNUNTRIUM_COST = 120;
     private static final Integer GADOLIN_COST = 150;

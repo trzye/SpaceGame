@@ -1,10 +1,16 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.controller.fleets.MyFleetData;
+import pl.edu.pw.ee.spacegame.server.controller.fleets.ShipsData;
+import pl.edu.pw.ee.spacegame.server.game.FleetCosts;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.TIME_PER_FIELD;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -44,6 +50,13 @@ public class PlanetsEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Transient
+    public void setCoordinateName() {
+        this.name =
+                "X" + getPlanetFieldsByPlanetFieldId().getCoordinateX() +
+                        "Y" + getPlanetFieldsByPlanetFieldId().getCoordinateY();
     }
 
 
@@ -202,7 +215,7 @@ public class PlanetsEntity {
 
     @Transient
     public long getTimeDistanceFromOtherPlanet(PlanetsEntity otherPlanet) {
-        long oneFieldTime = 60 * 1000; //one minute per field
+        long oneFieldTime = TIME_PER_FIELD;
         double a = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateX() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateX());
         double b = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateY() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateY());
         double d = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)); //obliczyłem przekątną prostokąta odległości między planetami
@@ -221,5 +234,69 @@ public class PlanetsEntity {
         List<AttackHistoriesEntity> historiesEntities = new ArrayList<>(getUsersByUserId().getAttackHistoriesByUserId());
         Collections.sort(historiesEntities, (o1, o2) -> o2.getTime().compareTo(o1.getTime()));
         return historiesEntities.get(0).getPlanetsByAttackedPlanetId();
+    }
+
+    public enum FleetStatus {
+        ON_THE_MOTHER_PLANET,
+        ON_THE_WAY_TO_ATTACK,
+        COMING_BACK_FROM_ATTACK,
+        ON_THE_WAY_TO_HELP,
+        COMING_BACK_FROM_HELP,
+        ON_THE_OTHER_PLANET
+    }
+
+    @Transient
+    public FleetStatus getFleetStatus() {
+        CurrentAlliancesEntity currentAlliancesEntity = getCurrentAlliances();
+        CurrentAttacksEntity currentAttacksEntity = getCurrentAttacks();
+        if (currentAttacksEntity.getTimeOfSendingAttack() != null) {
+            if (currentAttacksEntity.getPlanetsByAttackedPlanetId() != this) {
+                return FleetStatus.ON_THE_WAY_TO_ATTACK;
+            } else {
+                return FleetStatus.COMING_BACK_FROM_ATTACK;
+            }
+        }
+        if (currentAlliancesEntity.getTimeOfSendingAlliance() != null) {
+            if (currentAlliancesEntity.getPlanetsByHelpedPlanetId() != this) {
+                return FleetStatus.ON_THE_WAY_TO_HELP;
+            } else {
+                return FleetStatus.COMING_BACK_FROM_HELP;
+            }
+        }
+        if (currentAlliancesEntity.getPlanetsByHelpedPlanetId() != null) {
+            return FleetStatus.ON_THE_OTHER_PLANET;
+        }
+        return FleetStatus.ON_THE_MOTHER_PLANET;
+    }
+
+    @Transient
+    public MyFleetData getMyFleetData() {
+        MyFleetData fleetData = new MyFleetData();
+        FleetsEntity fleetsEntity = getFleetsByFleetId();
+        fleetData.setStatus(getFleetStatus().ordinal());
+        ArrayList<ShipsData> ships = getShips(fleetsEntity);
+        fleetData.setShips(ships);
+        return fleetData;
+    }
+
+    @Transient
+    private ArrayList<ShipsData> getShips(FleetsEntity fleetsEntity) {
+        ArrayList<ShipsData> ships = new ArrayList<>();
+        ShipsData warships = new ShipsData();
+        ShipsData bombers = new ShipsData();
+        ShipsData ironclads = new ShipsData();
+        warships.setTypeId(FleetsEntity.FleetType.WARSHIP.ordinal());
+        bombers.setTypeId(FleetsEntity.FleetType.BOMBER.ordinal());
+        ironclads.setTypeId(FleetsEntity.FleetType.IRONCLADS.ordinal());
+        warships.setNumber(fleetsEntity.getWarships());
+        bombers.setNumber(fleetsEntity.getBombers());
+        ironclads.setNumber(fleetsEntity.getIronclads());
+        warships.setBuildInUnuntiumCost(FleetCosts.getWarshipCost(getHangar()));
+        bombers.setBuildInUnuntiumCost(FleetCosts.getBomberCost(getHangar()));
+        ironclads.setBuildInUnuntiumCost(FleetCosts.getIroncladsCost(getHangar()));
+        ships.add(warships);
+        ships.add(bombers);
+        ships.add(ironclads);
+        return ships;
     }
 }

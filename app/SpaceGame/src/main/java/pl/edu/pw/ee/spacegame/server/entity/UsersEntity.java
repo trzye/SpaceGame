@@ -1,7 +1,14 @@
 package pl.edu.pw.ee.spacegame.server.entity;
 
+import pl.edu.pw.ee.spacegame.server.controller.building.MyBuildingData;
+import pl.edu.pw.ee.spacegame.server.game.BuildingCosts;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+
+import static pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity.ID.*;
+import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.*;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -150,5 +157,59 @@ public class UsersEntity {
             return planet;
         }
         return null;
+    }
+
+    @Transient
+    public ArrayList<MyBuildingData> getMyBuildingsData() {
+        ArrayList<MyBuildingData> myBuildings = new ArrayList<>();
+        myBuildings.add(getUnuntriumMine());
+        myBuildings.add(getGadolinMine());
+        myBuildings.add(getHangar());
+        myBuildings.add(getDefenceSystems());
+        return myBuildings;
+    }
+
+    @Transient
+    private MyBuildingData getUnuntriumMine() {
+        BuildingsEntity buildingsEntity = getPlanet().getUnuntriumMine();
+        MyBuildingData myBuildingData = new MyBuildingData();
+        myBuildingData.setLevel(buildingsEntity.getLevel());
+        myBuildingData.setMaxLevel(UNUNTRIUM_MINE_MAX_LEVEL);
+        myBuildingData.setTypeId(UNUNTRIUM_MINE_ID.ordinal());
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCosts.getUnuntriumMineCost(buildingsEntity));
+        return myBuildingData;
+    }
+
+    @Transient
+    private MyBuildingData getGadolinMine() {
+        BuildingsEntity buildingsEntity = getPlanet().getGadolinMine();
+        MyBuildingData myBuildingData = new MyBuildingData();
+        myBuildingData.setLevel(buildingsEntity.getLevel());
+        myBuildingData.setMaxLevel(GADOLIN_MINE_MAX_LEVEL);
+        myBuildingData.setTypeId(GADOLIN_MINE_ID.ordinal());
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCosts.getGadolinMineCost(buildingsEntity));
+        return myBuildingData;
+    }
+
+    @Transient
+    private MyBuildingData getHangar() {
+        BuildingsEntity buildingsEntity = getPlanet().getHangar();
+        MyBuildingData myBuildingData = new MyBuildingData();
+        myBuildingData.setLevel(buildingsEntity.getLevel());
+        myBuildingData.setMaxLevel(HANGAR_MAX_LEVEL);
+        myBuildingData.setTypeId(HANGAR_ID.ordinal());
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCosts.getHangarCost(buildingsEntity));
+        return myBuildingData;
+    }
+
+    @Transient
+    private MyBuildingData getDefenceSystems() {
+        BuildingsEntity buildingsEntity = getPlanet().getDefenceSystems();
+        MyBuildingData myBuildingData = new MyBuildingData();
+        myBuildingData.setLevel(buildingsEntity.getLevel());
+        myBuildingData.setMaxLevel(DEFENCE_SYSTEMS_MAX_LEVEL);
+        myBuildingData.setTypeId(DEFENCE_SYSTEMS_ID.ordinal());
+        myBuildingData.setNextLevelInGadolinsCost(BuildingCosts.getDefenceSystemsCost(buildingsEntity));
+        return myBuildingData;
     }
 }

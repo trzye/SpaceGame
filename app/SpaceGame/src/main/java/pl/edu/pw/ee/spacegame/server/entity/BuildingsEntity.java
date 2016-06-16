@@ -23,11 +23,6 @@ public class BuildingsEntity {
     public static final String HANGAR = "Hangar";
     public static final String DEFENCE_SYSTEMS = "Defence systems";
 
-    public static final Integer UNUNTRIUM_MINE_MAX_LEVEL = 20;
-    public static final Integer GADOLIN_MINE_MAX_LEVEL = 20;
-    public static final Integer HANGAR_MAX_LEVEL = 15;
-    public static final Integer DEFENCE_SYSTEMS_MAX_LEVEL = 15;
-
     private Integer buildingId;
     private Integer level;
     private BuildingsDicEntity buildingsDicByBuildingsDicId;
