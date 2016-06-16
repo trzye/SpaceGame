@@ -20,7 +20,9 @@ public class ControllerConstantObjects {
     public static final String UPGRADE_BUILDING_PATH = "/upgradeBuilding";
     public static final String BUILD_SHIPS_PATH = "/buildShips";
     public static final String OTHER_PLANET_PATH = "/otherPlanet";
-    public static final String GET_BACK_FLEET = "/getBackFleet";
+    public static final String GET_BACK_FLEET_PATH = "/getBackFleet";
+    public static final String INCOMING_ATTACKS_AND_ALLIANCES_PATH = "/incomingAttacksAndAlliances";
+
 
     //400 errors
     public static final String USER_EXISTS = "Użytkownik o podanym nicku już isnieje.";
@@ -70,6 +72,7 @@ public class ControllerConstantObjects {
     public static final String GET_MY_PLANET_LOG = "Pograno dane o planecie dla gracza %s";
     public static final String GET_MY_RESOURCES = "Pobranie danych o surowcach dla gracza %s";
     public static final String GET_BACK_FLEET_LOG = "Flota użytkownika %s dostała rozkaz powrotu";
+    public static final String INCOMMING_ATTACKS_AND_ALLIANCES_LOG = "Zwrócono informacje o nadchodzących flotach dla użytkownika %s";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";

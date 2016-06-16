@@ -30,7 +30,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
  */
 @RestController
 @CrossOrigin
-@RequestMapping(GET_BACK_FLEET)
+@RequestMapping(GET_BACK_FLEET_PATH)
 public class GetBackFleetController extends BaseAbstractController {
 
 
