@@ -20,7 +20,7 @@ public class ControllerConstantObjects {
     public static final String UPGRADE_BUILDING_PATH = "/upgradeBuilding";
     public static final String BUILD_SHIPS_PATH = "/buildShips";
     public static final String OTHER_PLANET_PATH = "/otherPlanet";
-
+    public static final String GET_BACK_FLEET = "/getBackFleet";
 
     //400 errors
     public static final String USER_EXISTS = "Użytkownik o podanym nicku już isnieje.";
@@ -43,6 +43,7 @@ public class ControllerConstantObjects {
     public static final String NOT_ENOUGH_UNUNTRIUM_FOR_BUILDING = "Nie masz wystarczająco ununtrium do wybudowania statków";
     public static final String CANT_BUILD_FLEET = "Nie można zbudować statków, flota nie jest na planecie macierzystej";
     public static final String CANT_BUILD_ZERO_FLEET = "Nie można wybudować zera lub mniej statków!";
+    public static final String CANT_GET_BACK_FLEET = "Flota nie przebywa aktualnie na innej planecie, więc nie można jej cofnąć z wsparcia";
 
     //401
     public static final String NOT_LOGGED = "Nie jesteś zalogowany";
@@ -68,6 +69,7 @@ public class ControllerConstantObjects {
     public static final String GET_MY_FLEET_LOG = "Pobrano dane o flocie dla użytkownika %s";
     public static final String GET_MY_PLANET_LOG = "Pograno dane o planecie dla gracza %s";
     public static final String GET_MY_RESOURCES = "Pobranie danych o surowcach dla gracza %s";
+    public static final String GET_BACK_FLEET_LOG = "Flota użytkownika %s dostała rozkaz powrotu";
 
     //200 information
     public static final String USER_ADDED = "Użytkownik został dodany. Link aktywacyjny został wysłany na adres %s i wygaśnie w ciągu dziesięciu minut.";
