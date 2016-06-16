@@ -16,7 +16,7 @@ public class ScheduleRefresherComponent extends BaseAbstractComponent {
 
     @Scheduled(fixedRate = REFRESH_GAME_TIME)
     @Transactional
-    public void reportCurrentTime() {
+    public void refreshGameState() {
         Refresher.refreshAll(this);
     }
 
