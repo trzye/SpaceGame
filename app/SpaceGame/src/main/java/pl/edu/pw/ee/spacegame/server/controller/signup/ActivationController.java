@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.*;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RestController
 @CrossOrigin
 @RequestMapping(path = ACTIVATION_PATH)
-public class ActivationController extends BaseAbstractController {
+public class ActivationController extends BaseAbstractComponent {
 
     @RequestMapping(method = GET)
     public ResponseEntity<?> activate(@RequestParam(name = "email") String email,

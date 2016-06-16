@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.CurrentAlliancesEntity;
 import pl.edu.pw.ee.spacegame.server.entity.CurrentAttacksEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity;
@@ -36,7 +36,7 @@ import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.ON_
 @RestController
 @CrossOrigin
 @RequestMapping(INCOMING_ATTACKS_AND_ALLIANCES_PATH)
-public class IncomingAttacksAndAlliancesController extends BaseAbstractController {
+public class IncomingAttacksAndAlliancesController extends BaseAbstractComponent {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> getIncomingData(@RequestBody AuthenticationData authenticationData) {

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.AllianceHistoriesEntity;
 import pl.edu.pw.ee.spacegame.server.entity.CurrentAlliancesEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity;
@@ -31,7 +31,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RestController
 @CrossOrigin
 @RequestMapping(GET_BACK_FLEET_PATH)
-public class GetBackFleetController extends BaseAbstractController {
+public class GetBackFleetController extends BaseAbstractComponent {
 
 
     @RequestMapping(method = POST)

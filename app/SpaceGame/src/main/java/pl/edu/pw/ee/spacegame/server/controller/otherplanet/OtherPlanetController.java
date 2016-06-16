@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
-import pl.edu.pw.ee.spacegame.server.entity.*;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
+import pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity;
+import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
+import pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity;
+import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
@@ -29,7 +32,7 @@ import static pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity.ID.*;
 @RestController
 @CrossOrigin
 @RequestMapping(OTHER_PLANET_PATH)
-public class OtherPlanetController extends BaseAbstractController {
+public class OtherPlanetController extends BaseAbstractComponent {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> test(@RequestBody OtherPlanetData otherPlanetData) {
@@ -45,7 +48,7 @@ public class OtherPlanetController extends BaseAbstractController {
             }
             Refresher.refreshAll(this);
             PlanetViewData outputPlanetView = createPlanetViewData(otherPlanetData);
-            if (outputPlanetView == null){
+            if (outputPlanetView == null) {
                 return new TextResponseEntity<>("Nie ma na tym polu planety", HttpStatus.OK);
             }
             databaseLogger.info(GET_OTHER_PLANET_LOG);
@@ -58,7 +61,7 @@ public class OtherPlanetController extends BaseAbstractController {
     private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData) {
         PlanetViewData pvd = new PlanetViewData();
         PlanetFieldsEntity planetFieldEntity = getPlanetFieldsDAO().getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
-        if(planetFieldEntity == null){
+        if (planetFieldEntity == null) {
             return null;
         }
         PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
@@ -68,6 +71,7 @@ public class OtherPlanetController extends BaseAbstractController {
         pvd.setBuildings(getBuildings(planetsEntity));
         return pvd;
     }
+
     private ArrayList<BuildingData> getBuildings(PlanetsEntity planetsEntity) {
         ArrayList<BuildingData> buildings = new ArrayList<>();
         buildings.add(getUnuntriumMine(planetsEntity));
@@ -76,6 +80,7 @@ public class OtherPlanetController extends BaseAbstractController {
         buildings.add(getDefenceSystems(planetsEntity));
         return buildings;
     }
+
     private BuildingData getUnuntriumMine(PlanetsEntity planetsEntity) {
         BuildingsEntity buildingsEntity = planetsEntity.getUnuntriumMine();
         BuildingData buildingData = new BuildingData();

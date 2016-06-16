@@ -1,9 +1,9 @@
-package pl.edu.pw.ee.spacegame.server.controller;
+package pl.edu.pw.ee.spacegame.server.dao.crud;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import pl.edu.pw.ee.spacegame.server.dao.crud.*;
+import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
 import pl.edu.pw.ee.spacegame.server.utils.DatabaseLogger;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
  * Created by Michał on 2016-06-04.
  */
 @Component
-public abstract class BaseAbstractController {
+public abstract class BaseAbstractComponent {
 
     @Autowired
     protected DatabaseLogger databaseLogger;

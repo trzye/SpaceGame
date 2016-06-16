@@ -1,7 +1,7 @@
 package pl.edu.pw.ee.spacegame.server.realtime;
 
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.*;
 
 import java.sql.Timestamp;
@@ -16,12 +16,12 @@ import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.*;
  */
 public class AllAttackRefresher {
 
-    private BaseAbstractController daoContainer;
+    private BaseAbstractComponent daoContainer;
     private long attackTime;
     private int attack;
 
 
-    public AllAttackRefresher(BaseAbstractController daoContainer) {
+    public AllAttackRefresher(BaseAbstractComponent daoContainer) {
         this.daoContainer = daoContainer;
     }
 
