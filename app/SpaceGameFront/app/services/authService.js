@@ -1,18 +1,43 @@
 angular.module("SpaceGame.AuthModule", [])
-    .service("AuthService", ["$state", "$cookies", function($state, $cookies) {
+    .service("AuthService", ["$state", "$cookies", "$http", "ApiService", function ($state, $cookies, $http, ApiService) {
 
         return {
-            "auth" : function () {
-                if(typeof $cookies.get("token") == "undefined") $state.go("login");
+            "auth": function () {
+                if (typeof this.getToken() === "undefined" || this.getUsername() === "undefined") {
+                    $state.go("login");
+                }
+                else {
+                    var data = {
+                        "token": this.getToken(),
+                        "nickname": this.getUsername()
+                    };
+
+                    $http({
+                        method: "POST",
+                        url: ApiService.resources,
+                        data: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(function () {
+                    }, function () {
+                        $state.go("login");
+                    });
+                }
             },
-            "notLogged" : function() {
+            "notLogged": function () {
                 $state.go("login");
-            },
-            "getToken" : function () {
+            }
+
+            ,
+            "getToken": function () {
                 return $cookies.get("token");
-            },
-            "getUsername" : function () {
+            }
+
+            ,
+            "getUsername": function () {
                 return $cookies.get("username");
             }
         }
-    }]);
+    }
+    ]);

@@ -7,6 +7,19 @@ angular.module("SpaceGame.ApiModule", [])
             "register" : domain + "/signUp",
             "login" : domain + "/signIn",
             "map" : domain + "/map",
-            "resources" : domain + "/myResources"
+            "myResources" : domain + "/myResources",
+            "myBuildings" : domain + "/myBuildings",
+            "myFleet" : domain + "/myfleet",
+            "myPlanet" : domain + "/myPlanet",
+            "attackHistory" : domain + "/attackHistory",
+            "allianceHistory" : domain + "/allianceHistory",
+            "upgradeBuilding" : domain + "/upgradeBuilding",
+            "buildShips" : domain + "/buildShips",
+            "attack" : domain + "/attack",
+            "help" : domain + "/help",
+            "getBackFleet" : domain + "/getBackFleet",
+            "incomingAttacksAndAlliances" : domain + "/incomingAttacksAndAlliances",
+            "alliancesOnMyPlanet" : domain + "/alliancesOnMyPlanet",
+            "otherPlanet" : domain + "/otherPlanet"
         }
     }]);

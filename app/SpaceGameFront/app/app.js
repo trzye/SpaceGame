@@ -5,6 +5,7 @@ var spaceGameApp = angular.module('SpaceGame', [
         'ngCookies',
         'SpaceGame.ApiModule',
         'SpaceGame.AuthModule',
+        'SpaceGame.DataModule',
         'SpaceGame.HeaderModule',
         'SpaceGame.LoginModule',
         'SpaceGame.RegisterModule',
@@ -20,6 +21,18 @@ var spaceGameApp = angular.module('SpaceGame', [
                         templateUrl: "components/header/header.html",
                         controller: "HeaderController"
                     }
+                },
+                resolve: {
+                    "resources": ['DataService', '$q', '$state', function(DataService, $q, $state) {
+                        var deferred = $q.defer();
+                        DataService.getResources().then(function(response) {
+                            deferred.resolve(response.data);
+                        }, function() {
+                            $state.go("login");
+                            deferred.reject("Error");
+                        });
+                        return deferred.promise;
+                    }]
                 }
             })
             .state('login', {
