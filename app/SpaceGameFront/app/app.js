@@ -3,9 +3,12 @@
 var spaceGameApp = angular.module('SpaceGame', [
         'ui.router',
         'ngCookies',
+        'ui.bootstrap',
         'SpaceGame.ApiModule',
         'SpaceGame.AuthModule',
         'SpaceGame.DataModule',
+        'SpaceGame.ModalModule',
+        'SpaceGame.ModalCtrlModule',
         'SpaceGame.HeaderModule',
         'SpaceGame.LoginModule',
         'SpaceGame.RegisterModule',
@@ -23,11 +26,11 @@ var spaceGameApp = angular.module('SpaceGame', [
                     }
                 },
                 resolve: {
-                    "resources": ['DataService', '$q', '$state', function(DataService, $q, $state) {
+                    "resources": ['DataService', '$q', '$state', function (DataService, $q, $state) {
                         var deferred = $q.defer();
-                        DataService.getResources().then(function(response) {
+                        DataService.getResources().then(function (response) {
                             deferred.resolve(response.data);
-                        }, function() {
+                        }, function (reponse) {
                             $state.go("login");
                             deferred.reject("Error");
                         });
