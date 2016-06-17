@@ -6,7 +6,7 @@ package pl.edu.pw.ee.spacegame.server.game;
 public class GameBalanceSettings {
 
     //odświeżanie stanu gry
-    public static final long REFRESH_GAME_TIME = 15000; //co 15 sekund
+    public static final long REFRESH_GAME_TIME = 1500; //co 1.5 sekundy
 
     //maksymalne poziomy budynków
     public static final Integer UNUNTRIUM_MINE_MAX_LEVEL = 20;
