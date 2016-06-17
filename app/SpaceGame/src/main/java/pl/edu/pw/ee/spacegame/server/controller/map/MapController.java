@@ -27,13 +27,12 @@ public class MapController extends BaseAbstractComponent {
     public ResponseEntity<?> getMap() {
         databaseLogger.setClass(getClass());
         try {
-            databaseLogger.info(GET_MAP_LOG);
             Iterable<PlanetFieldsEntity> planetFields = planetFieldsDAO.findAll();
             ArrayList<PlanetFieldData> outputPlanetFields = new ArrayList<>();
             for (PlanetFieldsEntity planetField : planetFields) {
                 outputPlanetFields.add(new PlanetFieldData(planetField));
             }
-            //TODO: logi
+            databaseLogger.info(GET_MAP_LOG);
             return new JsonResponseEntity<>(outputPlanetFields, OK);
         } catch (Exception e) {
             return handleServerError(e);

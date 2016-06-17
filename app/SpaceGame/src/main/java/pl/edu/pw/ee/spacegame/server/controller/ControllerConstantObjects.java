@@ -103,8 +103,6 @@ public class ControllerConstantObjects {
     public static final String SMTP_SERVER = "smtp.gmail.com";
     public static final Integer SMTP_PORT = 587;
     public static final String EMAIL_TITLE = "Link aktywacyjny do konta w SpaceGame";
-    //TODO: zaprojektować ładniejszą wiadomość
-    public static final String EMAIL_CONTENT = "<a href=\"%s\">Kliknij aby aktywować swoje konto w SpaceGame</a>";
     public static final String ACTIVATION_LINK = "http://" + REST_SERVER + ":" + REST_PORT + "/activation?email=%s&activationCode=%s";
 
     //byte

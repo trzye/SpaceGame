@@ -25,7 +25,6 @@ import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.ON_
 /**
  * Created by Michał on 2016-05-05.
  */
-//TODO: magic Strings
 @RestController
 @CrossOrigin
 @RequestMapping(BUILD_SHIPS_PATH)

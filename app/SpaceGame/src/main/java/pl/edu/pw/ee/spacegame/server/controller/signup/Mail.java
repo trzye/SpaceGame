@@ -1,8 +1,13 @@
 package pl.edu.pw.ee.spacegame.server.controller.signup;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.*;
@@ -26,7 +31,12 @@ public class Mail {
         message.setFrom(new InternetAddress(EMAIL));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
         message.setSubject(EMAIL_TITLE);
-        message.setContent(String.format(EMAIL_CONTENT, activationLink), contentType);
+        try {
+            message.setContent(getEmailContent().replace("ACTIVATION_LINK", activationLink), contentType);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new MessagingException("Problem with getting activation.html");
+        }
         return message;
     }
 
@@ -49,4 +59,8 @@ public class Mail {
         return props;
     }
 
+    public static String getEmailContent() throws IOException {
+        URL url = Resources.getResource("activation.html");
+        return Resources.toString(url, Charsets.UTF_8);
+    }
 }

@@ -25,7 +25,7 @@ public class GameBalanceSettings {
     // 1000 = 1g/s
     // 1000 * 60 = 1g/m
     // 1000 * 60 * 60 = 1g/h
-    public static final long RESOURCE_REFRESH_ACCURACY = 1000;
+    public static final long RESOURCE_REFRESH_ACCURACY = 60 * 1000;
 
     //czas jaki jest potrzebny do przebycia jednego pola na mapie
     public static final long TIME_PER_FIELD = 60 * 1000; //jedna minuta
