@@ -68,7 +68,7 @@ public class ActivationController extends BaseAbstractComponent {
         Date signUpTime = activationsEntity.getTime();
         Date currentTime = new Date();
         long timeDiffer = currentTime.getTime() - signUpTime.getTime();
-        long tenMinutes = 1000 * 60 * 10; //1000 millis * 60 seconds * 10 minutes
+        long tenMinutes = ACTIVATION_TIME_LIMIT;
         return timeDiffer < tenMinutes;
     }
 

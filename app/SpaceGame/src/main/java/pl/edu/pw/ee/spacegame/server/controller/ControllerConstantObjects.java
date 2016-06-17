@@ -38,7 +38,7 @@ public class ControllerConstantObjects {
     public static final String PLANET_FIELD_NOT_EMPTY = "Planeta o podanych współrzędnych jest już zajęta lub tymczasowo zablokowana";
     public static final String BAD_COORDINATES = "Podane współrzędne planety są niewłaściwe";
     public static final String ACTIVATION_LOG = "Aktywowano konto dla email: %s";
-    public static final String USER_WITH_SUCH_EMAIL_NOT_EXISTS = "Nie istnieje użytkownik o takim adresie email";
+    public static final String USER_WITH_SUCH_EMAIL_NOT_EXISTS = "Nie istnieje użytkownik o takim adresie email (prawdopodobnie przekroczyłeś czas na aktywację konta - 10 minut)";
     public static final String BAD_ACTIVATION_CODE = "Błędny kod aktywacyjny";
     public static final String USER_ALREADY_ACTIVATED = "Użytkownik został już aktywowany";
     public static final String ACTIVATION_TIMEOUT = "Przekroczono czas aktywacji";
@@ -96,6 +96,7 @@ public class ControllerConstantObjects {
     //others
     public static final String REST_SERVER = "localhost";
     public static final Integer REST_PORT = 8080;
+    public static final Integer ACTIVATION_TIME_LIMIT = 1000 * 60 * 10; //1000 millis * 60 * 10= 10 minutes
 
     //mail
     public static final String EMAIL = "space.game.noreply@gmail.com";
