@@ -1,6 +1,5 @@
 package pl.edu.pw.ee.spacegame.server.controller.otherplanet;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +16,12 @@ import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
 import pl.edu.pw.ee.spacegame.server.security.LoggedUsers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.GET_OTHER_PLANET_LOG;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.OTHER_PLANET_PATH;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.*;
 import static pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity.ID.*;
 
 /**
@@ -47,24 +46,26 @@ public class OtherPlanetController extends BaseAbstractComponent {
                 return TextResponseEntity.getNotActivatedResponseEntity(authenticationData, databaseLogger);
             }
             Refresher.refreshAll(this);
-            PlanetViewData outputPlanetView = createPlanetViewData(otherPlanetData);
-            if (outputPlanetView == null) {
-                return new TextResponseEntity<>("Nie ma na tym polu planety", HttpStatus.OK);
-            }
+            PlanetViewData outputPlanetView = createPlanetViewData(otherPlanetData, usersEntity.getPlanet());
             databaseLogger.info(GET_OTHER_PLANET_LOG);
             return new JsonResponseEntity<>(outputPlanetView, OK);
+        } catch (IOException e) {
+            return handleBadRequest(e);
         } catch (Exception e) {
             return handleServerError(e);
         }
     }
 
-    private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData) {
+    private PlanetViewData createPlanetViewData(OtherPlanetData otherPlanetData, PlanetsEntity planet) throws IOException {
         PlanetViewData pvd = new PlanetViewData();
         PlanetFieldsEntity planetFieldEntity = getPlanetFieldsDAO().getPlanetByXandY(otherPlanetData.getCoordinateX(), otherPlanetData.getCoordinateY());
         if (planetFieldEntity == null) {
-            return null;
+            throw new IOException(NO_PLANET_ON_FIELD);
         }
         PlanetsEntity planetsEntity = planetFieldEntity.getPlanetsEntity();
+        if (planet == planetsEntity) {
+            throw new IOException(CANT_CHOOSE_YOUR_PLANET);
+        }
         pvd.setNickname(planetsEntity.getUsersByUserId().getNickname());
         pvd.setGadolin(planetsEntity.getResourcesByResourceId().getGadolin());
         pvd.setUnuntrium(planetsEntity.getResourcesByResourceId().getUnuntrium());

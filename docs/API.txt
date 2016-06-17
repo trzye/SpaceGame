@@ -452,7 +452,7 @@ Jeżeli gracz ma odpowiednią ilosc ununtrium oraz status floty to ON_THE_MOTHER
         Twoje konto nie zostało aktywowane
  
        
-## NIEZAIMPLEMENTOWANE Atakowanie innej planety [/attack]
+## Atakowanie innej planety [/attack]
 
 
 ### Zaatakuj inną planetę [POST]
@@ -495,7 +495,7 @@ jakbys chciał zaraz po skończeniu odliczania cos odswiezyc -> zeby jakis edge 
         Twoje konto nie zostało aktywowane
 
 
-## NIEZAIMPLEMENTOWANE Wysłanie wsparcia na inną planetę [/help]
+## Wysłanie wsparcia na inną planetę [/help]
 
 
 ### Wesprzyj inną planetę [POST]
@@ -618,7 +618,7 @@ isAttack jest fałszem, to znaczy, że jest to informacja o nadchodzącej pomocy
 
         Twoje konto nie zostało aktywowane
 
-## Informacja o sojuszach na twojej planecie [/alliancesOnMyplanet]
+## Informacja o sojuszach na twojej planecie [/alliancesOnMyPlanet]
 
 
 ### Zwróć informację o sojuszniczych statkach na twojej planecie [POST]

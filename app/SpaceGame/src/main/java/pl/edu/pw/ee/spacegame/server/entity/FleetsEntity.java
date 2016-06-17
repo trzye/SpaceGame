@@ -130,4 +130,9 @@ public class FleetsEntity {
         }
         return null;
     }
+
+    @Transient
+    public Integer sumofAllShips() {
+        return warships + ironclads + bombers;
+    }
 }

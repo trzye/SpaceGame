@@ -63,7 +63,6 @@ public abstract class BaseAbstractComponent {
 
     protected ResponseEntity<?> handleBadRequest(IOException e) {
         databaseLogger.info(REQUEST_ERROR_LOG + e.getMessage());
-        e.printStackTrace();
         return new TextResponseEntity<>(e.getMessage(), BAD_REQUEST);
     }
 

@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.INCOMING_ATTACKS_AND_ALLIANCES_LOG;
 import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.INCOMING_ATTACKS_AND_ALLIANCES_PATH;
-import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.INCOMMING_ATTACKS_AND_ALLIANCES_LOG;
 import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.ON_THE_WAY_TO_ATTACK;
 import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.ON_THE_WAY_TO_HELP;
 
@@ -51,7 +51,7 @@ public class IncomingAttacksAndAlliancesController extends BaseAbstractComponent
             }
             Refresher.refreshAll(this);
             ArrayList<IncomingData> incoming = getIncomingData(usersEntity.getPlanet());
-            databaseLogger.info(String.format(INCOMMING_ATTACKS_AND_ALLIANCES_LOG, usersEntity.getNickname()));
+            databaseLogger.info(String.format(INCOMING_ATTACKS_AND_ALLIANCES_LOG, usersEntity.getNickname()));
             return new JsonResponseEntity<>(incoming, HttpStatus.OK);
         } catch (Exception e) {
             return handleServerError(e);

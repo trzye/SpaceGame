@@ -22,7 +22,9 @@ public class ControllerConstantObjects {
     public static final String OTHER_PLANET_PATH = "/otherPlanet";
     public static final String GET_BACK_FLEET_PATH = "/getBackFleet";
     public static final String INCOMING_ATTACKS_AND_ALLIANCES_PATH = "/incomingAttacksAndAlliances";
-    public static final String ALLIANCES_ON_MY_PLANET_PATH = "/alliancesOnMyplanet";
+    public static final String ALLIANCES_ON_MY_PLANET_PATH = "/alliancesOnMyPlanet";
+    public static final String ATTACK_PATH = "/attack";
+    public static final String HELP_PATH = "/help";
 
 
     //400 errors
@@ -47,6 +49,12 @@ public class ControllerConstantObjects {
     public static final String CANT_BUILD_FLEET = "Nie można zbudować statków, flota nie jest na planecie macierzystej";
     public static final String CANT_BUILD_ZERO_FLEET = "Nie można wybudować zera lub mniej statków!";
     public static final String CANT_GET_BACK_FLEET = "Flota nie przebywa aktualnie na innej planecie, więc nie można jej cofnąć z wsparcia";
+    public static final String NO_PLANET_ON_FIELD = "Nie ma na tym polu planety";
+    public static final String CANT_CHOOSE_YOUR_PLANET = "Nie można wybrać własnej planety";
+    public static final String CANT_ATTACK = "Nie można zaatakować, flota nie jest na planecie macierzystej";
+    public static final String CANT_HELP = "Nie można wysłać pomocy, flota nie jest na planecie macierzystej";
+    public static final String ZERO_FLEET = "Nie masz żadnych statków";
+
 
     //401
     public static final String NOT_LOGGED = "Nie jesteś zalogowany";
@@ -73,8 +81,10 @@ public class ControllerConstantObjects {
     public static final String GET_MY_PLANET_LOG = "Pograno dane o planecie dla gracza %s";
     public static final String GET_MY_RESOURCES = "Pobranie danych o surowcach dla gracza %s";
     public static final String GET_BACK_FLEET_LOG = "Flota użytkownika %s dostała rozkaz powrotu";
-    public static final String INCOMMING_ATTACKS_AND_ALLIANCES_LOG = "Zwrócono informacje o nadchodzących flotach dla użytkownika %s";
+    public static final String INCOMING_ATTACKS_AND_ALLIANCES_LOG = "Zwrócono informacje o nadchodzących flotach dla użytkownika %s";
     public static final String ALLIANCES_ON_MY_PLANET_LOG = "Zwrócono informację o sojuszniczej flocie na planecie gracza %s";
+    public static final String ATTACK_PLANET_LOG = "Użytkownik %s zaatakował użytkownika %s";
+    public static final String HELP_PLANET_LOG = "Użytkownik %s wysłał wsparcie do użytkownika %s";
 
 
     //200 information
