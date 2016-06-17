@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.ActivationsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetFieldsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
@@ -26,7 +26,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RestController
 @CrossOrigin
 @RequestMapping(SIGN_UP_PATH)
-public class SignUpController extends BaseAbstractController {
+public class SignUpController extends BaseAbstractComponent {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> signUp(@RequestBody SignUpData signUpData) {

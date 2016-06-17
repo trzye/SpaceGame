@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.BuildingsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity;
 import pl.edu.pw.ee.spacegame.server.entity.ResourcesEntity;
@@ -30,7 +30,7 @@ import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.*;
 @RestController
 @CrossOrigin
 @RequestMapping(UPGRADE_BUILDING_PATH)
-public class UpgradeBuildingController extends BaseAbstractController {
+public class UpgradeBuildingController extends BaseAbstractComponent {
 
 
     @RequestMapping(method = POST)

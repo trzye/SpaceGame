@@ -2,17 +2,13 @@ package pl.edu.pw.ee.spacegame.server.realtime;
 
 import com.google.common.collect.Lists;
 import org.springframework.transaction.annotation.Transactional;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
-import pl.edu.pw.ee.spacegame.server.dao.crud.AllianceHistoriesDAO;
-import pl.edu.pw.ee.spacegame.server.dao.crud.CurrentAlliancesDAO;
-import pl.edu.pw.ee.spacegame.server.dao.crud.PlanetsDAO;
-import pl.edu.pw.ee.spacegame.server.dao.crud.ResourcesDAO;
-import pl.edu.pw.ee.spacegame.server.entity.CurrentAlliancesEntity;
-import pl.edu.pw.ee.spacegame.server.entity.CurrentAttacksEntity;
-import pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.*;
+import pl.edu.pw.ee.spacegame.server.entity.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects.ACTIVATION_TIME_LIMIT;
 
 /**
  * Created by Michał on 2016-06-07.
@@ -20,25 +16,43 @@ import java.util.Collections;
 public class Refresher {
 
     @Transactional
-    public static void refreshAll(BaseAbstractController baseAbstractController) {
+    public static void refreshAll(BaseAbstractComponent baseAbstractComponent) {
+        //Usuwanie graczy, którzy przekroczyli czas aktywacji
+        refreshActivations(baseAbstractComponent.getActivationsDAO(), baseAbstractComponent.getPlanetFieldsDAO(), baseAbstractComponent.getUsersDAO());
         //Najpierw odśwież zasoby wszystkich graczy
-        refreshAllResources(baseAbstractController.getPlanetsDAO(), baseAbstractController.getResourcesDAO());
+        refreshAllResources(baseAbstractComponent.getPlanetsDAO(), baseAbstractComponent.getResourcesDAO());
         //Teraz odśwież wsparcia, aby wiedzieć gdzie przebywają wszystkie floty (poza tymi w drodze do ataku/wsparcia)
-        refreshAllAlliances(baseAbstractController.getPlanetsDAO(), baseAbstractController.getCurrentAlliancesDAO(), baseAbstractController.getAllianceHistoriesDAO());
+        refreshAllAlliances(baseAbstractComponent.getPlanetsDAO(), baseAbstractComponent.getCurrentAlliancesDAO(), baseAbstractComponent.getAllianceHistoriesDAO());
         //Teraz clue wszystkiego -> czas na walkę
-        refreshAllAttacks(baseAbstractController);
+        refreshAllAttacks(baseAbstractComponent);
     }
 
-    private static void refreshAllAttacks(BaseAbstractController baseAbstractController) {
-        AllAttackRefresher allAttackRefresher = new AllAttackRefresher(baseAbstractController);
-        ArrayList<PlanetsEntity> planets = getPlanetsSortedByAttackTime(baseAbstractController);
+    private static void refreshActivations(ActivationsDAO activationsDAO, PlanetFieldsDAO planetFieldsDAO, UsersDAO usersDAO) {
+        for (ActivationsEntity activationsEntity : activationsDAO.findAll()) {
+            PlanetFieldsEntity fieldsEntity = activationsEntity.getPlanetFieldsByPlanetFieldId();
+            UsersEntity usersEntity = activationsEntity.getUsersByUserId();
+            if (fieldsEntity.getStatus().equals(PlanetFieldsEntity.Status.LOCKED)) {
+                long now = System.currentTimeMillis();
+                long between = now - activationsEntity.getTime().getTime();
+                if (between > ACTIVATION_TIME_LIMIT) {
+                    activationsDAO.delete(activationsEntity);
+                    planetFieldsDAO.delete(fieldsEntity);
+                    usersDAO.delete(usersEntity);
+                }
+            }
+        }
+    }
+
+    private static void refreshAllAttacks(BaseAbstractComponent baseAbstractComponent) {
+        AllAttackRefresher allAttackRefresher = new AllAttackRefresher(baseAbstractComponent);
+        ArrayList<PlanetsEntity> planets = getPlanetsSortedByAttackTime(baseAbstractComponent);
         for (PlanetsEntity planetsEntity : planets) {
             allAttackRefresher.refreshAndSaveByPlanet(planetsEntity);
         }
     }
 
-    private static ArrayList<PlanetsEntity> getPlanetsSortedByAttackTime(BaseAbstractController baseAbstractController) {
-        ArrayList<PlanetsEntity> planets = Lists.newArrayList(baseAbstractController.getPlanetsDAO().findAll());
+    private static ArrayList<PlanetsEntity> getPlanetsSortedByAttackTime(BaseAbstractComponent baseAbstractComponent) {
+        ArrayList<PlanetsEntity> planets = Lists.newArrayList(baseAbstractComponent.getPlanetsDAO().findAll());
         Collections.sort(planets, (o1, o2) -> {
             CurrentAttacksEntity c1 = o1.getCurrentAttacks();
             CurrentAttacksEntity c2 = o2.getCurrentAttacks();

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.security.AES;
 import pl.edu.pw.ee.spacegame.server.security.AuthenticationData;
@@ -25,7 +25,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RestController
 @CrossOrigin
 @RequestMapping(SIGN_IN_PATH)
-public class SignInController extends BaseAbstractController {
+public class SignInController extends BaseAbstractComponent {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> signIn(@RequestBody SignInData signInData) {

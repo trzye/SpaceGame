@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.JsonResponseEntity;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.AllianceHistoriesEntity;
 import pl.edu.pw.ee.spacegame.server.entity.UsersEntity;
 import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
@@ -28,7 +28,7 @@ import static pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects
 @RestController
 @CrossOrigin
 @RequestMapping(ALLIANCE_HISTORY_PATH)
-public class AllianceHistoryConroller extends BaseAbstractController {
+public class AllianceHistoryConroller extends BaseAbstractComponent {
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> test(@RequestBody AuthenticationData authenticationData) {

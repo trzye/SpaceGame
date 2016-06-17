@@ -122,4 +122,17 @@ public class FleetsEntity {
     public void setPlanetsesByFleetId(Collection<PlanetsEntity> planetsesByFleetId) {
         this.planetsesByFleetId = planetsesByFleetId;
     }
+
+    @Transient
+    public PlanetsEntity getPlanet() {
+        for (PlanetsEntity planetsEntity : getPlanetsesByFleetId()) {
+            return planetsEntity;
+        }
+        return null;
+    }
+
+    @Transient
+    public Integer sumofAllShips() {
+        return warships + ironclads + bombers;
+    }
 }

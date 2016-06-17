@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pw.ee.spacegame.server.controller.BaseAbstractController;
 import pl.edu.pw.ee.spacegame.server.controller.ControllerConstantObjects;
 import pl.edu.pw.ee.spacegame.server.controller.TextResponseEntity;
+import pl.edu.pw.ee.spacegame.server.dao.crud.BaseAbstractComponent;
 import pl.edu.pw.ee.spacegame.server.entity.*;
 import pl.edu.pw.ee.spacegame.server.game.FleetCosts;
 import pl.edu.pw.ee.spacegame.server.realtime.Refresher;
@@ -25,11 +25,10 @@ import static pl.edu.pw.ee.spacegame.server.entity.PlanetsEntity.FleetStatus.ON_
 /**
  * Created by Michał on 2016-05-05.
  */
-//TODO: magic Strings
 @RestController
 @CrossOrigin
 @RequestMapping(BUILD_SHIPS_PATH)
-public class BuildShipsController extends BaseAbstractController {
+public class BuildShipsController extends BaseAbstractComponent {
 
 
     @RequestMapping(method = POST)

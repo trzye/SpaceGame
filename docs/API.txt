@@ -272,9 +272,10 @@ X/Y planety gracza.
 
 
 ### Pobierz historię swoich ataków [POST]
-Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracana jest lista wszystkich ataków
-zalogowanego gracza. Każdy atak zawiera nick atakującego, nazwę atakowanej planety,
-wielkosć atakującej wtedy floty, datę oraz wynik potyczki.
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracana jest 
+lista wszystkich ataków z udziałem zalogowanego gracza. Każdy atak zawiera
+nick atakującego, nazwę atakowanej planety, wielkosć atakującej wtedy floty,
+datę oraz wynik potyczki.
 
 + Request (application/json)
 
@@ -286,25 +287,83 @@ wielkosć atakującej wtedy floty, datę oraz wynik potyczki.
 + Response 200 (application/json)
 
         [
-    {
-        "warships": 1,
-        "bombers": 2,
-        "ironclads": 3,
-        "attackedPlanetName": "X0Y1",
-        "result": 1,
-        "time": 1465731939000,
-        "attackerNickname": "karol"
-    },
-    {
-        "warships": 4,
-        "bombers": 5,
-        "ironclads": 6,
-        "attackedPlanetName": "X0Y1",
-        "result": 0,
-        "time": 1465731939000,
-        "attackerNickname": "karol"
-    }
-]
+            {
+                "warships": 1,
+                "bombers": 2,
+                "ironclads": 3,
+                "attackedPlanetName": "X0Y1",
+                "result": true,
+                "gadolin": 10,
+                "ununtrium": 20,
+                "time": 1465731939000,
+                "attackerNickname": "karol"
+            },
+            {
+                "warships": 4,
+                "bombers": 5,
+                "ironclads": 6,
+                "attackedPlanetName": "X0Y1",
+                "result": false,
+                "gadolin": null,
+                "ununtrium": null,
+                "time": 1465731939000,
+                "attackerNickname": "karol"
+            }
+        ]
+
+
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane
+
+ 
+## Pobieranie historii sojuszy [/allianceHistory]
+
+       
+### Pobierz historię swoich sojuszy [POST]
+Jeżeli konto jest aktywne oraz uwierzytelnianie przebiegnie pomyslnie to zwracana jest 
+lista wszystkich sojuszy z udziałem zalogowanego gracza. Każdy sojusz zawiera nick pomagającego,
+nazwę planety, której pomagamy, wielkosć pomagającej wtedy floty,
+datę oraz wynik pomocy.
+
++ Request (application/json)
+
+        {
+          "token": "f47ac135b6e76762868c379de7b2ddf63390acaf7f2bfdfae906f59a6b2a9ae1d77e39330f55e102",
+          "nickname": "nickname"
+        }
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "warships": 1,
+                "bombers": 2,
+                "ironclads": 3,
+                "helpedPlanetName": "X0Y1",
+                "result": true,
+                "time": 1465737345000,
+                "allyNickname": "karol"
+            },
+            {
+                "warships": 4,
+                "bombers": 5,
+                "ironclads": 6,
+                "helpedPlanetName": "X0Y1",
+                "result": false,
+                "time": 1465737345000,
+                "allyNickname": "karol"
+            }
+        ]
+
 
         
 
@@ -393,7 +452,7 @@ Jeżeli gracz ma odpowiednią ilosc ununtrium oraz status floty to ON_THE_MOTHER
         Twoje konto nie zostało aktywowane
  
        
-## NIEZAIMPLEMENTOWANE Atakowanie innej planety [/attack]
+## Atakowanie innej planety [/attack]
 
 
 ### Zaatakuj inną planetę [POST]
@@ -434,9 +493,50 @@ jakbys chciał zaraz po skończeniu odliczania cos odswiezyc -> zeby jakis edge 
 + Response 403 (text/plain)
 
         Twoje konto nie zostało aktywowane
+
+
+## Wysłanie wsparcia na inną planetę [/help]
+
+
+### Wesprzyj inną planetę [POST]
+Sprawdzam autoryzację + aktywację + odwieżam stan gry, nastepnie gdy:
+Status floty musi być na 0 (ON_THE_MOTHER_PLANET), wtedy można wesprzeć
+wybraną planetę o parametrach X/Y (warunkiem wparcia jest to, że wspierana planeta będzie miała
+status "USED"). Jeżeli się uda, to w odpowiedzi zwrócę czas (w sekundach) do nastąpienia wsparcia.
+Dodam sobie +1 sekundy w razie 
+jakbys chciał zaraz po skończeniu odliczania cos odswiezyc -> zeby jakis edge case sie nie zalapal.
+
++ Request (application/json)
+
+        {
+          "authenticationData": {
+            "token": "258a1411309ef6e41a6e8d19081d07afcc7d92f5a7a9813b6497f1021c0462131fb98a700c88cc73",
+            "nickname": "threexe"
+          },
+          "coordinateX": 0,
+          "coordinateY": 3
+        }
+        
++ Response 200 (application/json)
+
+        {
+         "secondsToHelp": 3600
+        }
         
 
-## NIEZAIMPLEMENTOWANE Cofnięcie floty z wsparcia [/getBackFleet]
++ Response 400 (text/plain)
+
+        Wystąpił jakiś błąd (odpowiedni komunikat)
+        
++ Response 401 (text/plain)
+        
+        Nie jesteś zalogowany
+        
++ Response 403 (text/plain)
+
+        Twoje konto nie zostało aktywowane        
+
+## Cofnięcie floty z wsparcia [/getBackFleet]
 
 
 ### Cofnij flotę z wsparcia[POST]
@@ -471,12 +571,12 @@ W odpowiedzi powiem ile sekund potrzeba na ten powrót (+ sekunda w razie czego)
         Twoje konto nie zostało aktywowane
 
         
-## NIEZAIMPLEMENTOWANE Nadchodzące ataki i sojusze [/incomingAttackAndAlliances]
+## Nadchodzące ataki i sojusze [/incomingAttacksAndAlliances]
 
 
 ### Zwróć informację o nadchodzących atakach i sojuszach na twoją planetę [POST]
 Sprawdzam autoryzację + aktywację + odwieżam stan gry. Zwracam nick atakującego/pomagającego
-i koordynacje jego planety oraz szas (w sekundach + 1) przybycia wsparcia/ataku. Jeżeli
+i koordynacje jego planety oraz czas (w sekundach + 1) przybycia wsparcia/ataku. Jeżeli
 isAttack jest fałszem, to znaczy, że jest to informacja o nadchodzącej pomocy.
 
 + Request (application/json)
@@ -518,7 +618,7 @@ isAttack jest fałszem, to znaczy, że jest to informacja o nadchodzącej pomocy
 
         Twoje konto nie zostało aktywowane
 
-## NIEZAIMPLEMENTOWANE Informacja o sojuszach na twojej planecie [/alliancesOnMyplanet]
+## Informacja o sojuszach na twojej planecie [/alliancesOnMyPlanet]
 
 
 ### Zwróć informację o sojuszniczych statkach na twojej planecie [POST]
@@ -551,7 +651,7 @@ Sprawdzam autoryzację + aktywację + odwieżam stan gry. Zwracam ilosc statków
 
         Twoje konto nie zostało aktywowane
         
-## NIEZAIMPLEMENTOWANE zwróć informacje o innej planecie [/otherPlanet]
+## Zwróć informacje o innej planecie [/otherPlanet]
 
 
 ### Zwróć informację o innej planecie [POST]
@@ -564,38 +664,40 @@ budynkach i zasobach.
 
         {
           "authenticationData": {
-            "token": "258a1411309ef6e41a6e8d19081d07afcc7d92f5a7a9813b6497f1021c0462131fb98a700c88cc73",
-            "nickname": "threexe"
+            "token": "c6492cb1ee0c94ccf153a346770698d5179f4ec9fe9d622f17ba493212d163b5762bf9b9fa042813",
+            "nickname": "karol"
           },
           "coordinateX": 0,
-          "coordinateY": 3
+          "coordinateY": 1
         }
         
 + Response 200 (application/json)
-
+        
         {
-          "nickname": "Andrzej",
-          "gadolin": 10,
-          "ununtrium": 20,
-          "buildingsData": [
-            {
-              "typeId": 0,
-              "level": 1
-            },
-            {
-              "typeId": 1,
-              "level": 1
-            },
-            {
-              "typeId": 2,
-              "level": 1
-            },
-            {
-              "typeId": 3,
-              "level": 1
-            }
-          ]
+            "nickname": "karol",
+            "gadolin": 284654,
+            "ununtrium": 284654,
+            "buildings": [
+                {
+                    "typeId": 0,
+                    "level": 1
+                },
+                {
+                    "typeId": 1,
+                    "level": 1
+                },
+                {
+                    "typeId": 2,
+                    "level": 1
+                },
+                {
+                    "typeId": 3,
+                    "level": 1
+                }
+            ]
         }
+
+
         
 
 + Response 400 (text/plain)

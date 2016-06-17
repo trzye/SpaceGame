@@ -5,6 +5,9 @@ package pl.edu.pw.ee.spacegame.server.game;
  */
 public class GameBalanceSettings {
 
+    //odświeżanie stanu gry
+    public static final long REFRESH_GAME_TIME = 1500; //co 15 sekund
+
     //maksymalne poziomy budynków
     public static final Integer UNUNTRIUM_MINE_MAX_LEVEL = 20;
     public static final Integer GADOLIN_MINE_MAX_LEVEL = 20;
@@ -22,8 +25,8 @@ public class GameBalanceSettings {
     // 1000 = 1g/s
     // 1000 * 60 = 1g/m
     // 1000 * 60 * 60 = 1g/h
-    public static final long RESOURCE_REFRESH_ACCURACY = 1000;
+    public static final long MILLISECONDS_FOR_ONE_RESOURCE_UNIT = 60 * 1000;
 
     //czas jaki jest potrzebny do przebycia jednego pola na mapie
-    public static final long TIME_PER_FIELD = 60 * 1000; //jedna minuta
+    public static final long MILLISECONDS_PER_FIELD = 60 * 1000; //jedna minuta
 }
