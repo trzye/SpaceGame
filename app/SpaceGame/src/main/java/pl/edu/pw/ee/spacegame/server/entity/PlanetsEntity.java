@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.TIME_PER_FIELD;
+import static pl.edu.pw.ee.spacegame.server.game.GameBalanceSettings.MILLISECONDS_PER_FIELD;
 
 /**
  * Created by Michał on 2016-06-04.
@@ -215,7 +215,7 @@ public class PlanetsEntity {
 
     @Transient
     public long getTimeDistanceFromOtherPlanet(PlanetsEntity otherPlanet) {
-        long oneFieldTime = TIME_PER_FIELD;
+        long oneFieldTime = MILLISECONDS_PER_FIELD;
         double a = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateX() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateX());
         double b = Math.abs(getPlanetFieldsByPlanetFieldId().getCoordinateY() - otherPlanet.getPlanetFieldsByPlanetFieldId().getCoordinateY());
         double d = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)); //obliczyłem przekątną prostokąta odległości między planetami
