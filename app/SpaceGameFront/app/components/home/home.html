@@ -5,10 +5,17 @@
                 <div class="panel-heading my-class">Dowództwo</div>
                 <div class="panel-body" style="text-align: center;">
                     <p>
-                        <button style="margin-left: 10px;" type="button" class="btn btn-danger" data-toggle="modal"
+                        <button style="margin-left: 10px;" type="button" class="btn btn-warning" data-toggle="modal"
                                 data-target="#selectPlanetModal">Zaatakuj planetę
                         </button>
                     </p>
+                    <div ng-show="selectedTargetFlag">
+                        <table class="table table-hover">
+                            <td>Wybrany cel: </td><td><b><span ng-bind="selectedTargetPlanet.name"></span></b></td>
+                        </table>
+
+                        <a ng-click="attack()" class="btn btn-danger"><i class="fa fa-rocket" aria-hidden="true"></i> Atakuj</a>
+                    </div>
 
                 </div>
             </div>

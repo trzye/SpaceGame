@@ -10,6 +10,7 @@ angular.module("SpaceGame.HomeModule", [])
             $scope.name = "";
             $scope.map = [];
             $scope.selectedTargetPlanet = {};
+            $scope.selectedTargetFlag = false;
 
             DataService.getBuildings().then(function (response) {
                 $scope.buildings = response.data;
@@ -60,6 +61,7 @@ angular.module("SpaceGame.HomeModule", [])
 
                     if ($scope.planetInfo.coordinateX == planet.coordinateX && $scope.planetInfo.coordinateY == planet.coordinateY) {
                         $(td).addClass("user-planet");
+                        $(td).removeAttr("data-dismiss");
                     } else {
                         $(td).attr("data-dismiss", "modal");
                     }
@@ -78,10 +80,19 @@ angular.module("SpaceGame.HomeModule", [])
                 return false;
             };
 
+            $scope.attack = function () {
+                DataService.attack($scope.selectedTargetPlanet.x, $scope.selectedTargetPlanet.y)
+                    .then(function(response) {
+                        $scope.selectedTargetPlanet.attackInfo = response.data;
+                        console.log();
+                    })
+            };
+
             $scope.choosePlanet = function (x, y) {
 
                 if (!$scope.canAttack(x, y)) return;
 
+                $scope.selectedTargetFlag = true;
                 $scope.selectedTargetPlanet.x = x;
                 $scope.selectedTargetPlanet.y = y;
                 $scope.selectedTargetPlanet.name = "planeta[" + x + "|" + y + "]";
@@ -129,6 +140,7 @@ angular.module("SpaceGame.HomeModule", [])
             };
 
             $scope.buildShip = function (typeId, number) {
+                if(number == 0) return;
                 DataService.buildShips(typeId, number).then(function (response) {
                     ModalService.openModalInfo("OK", response.data);
                     DataService.getResources().then(function (response) {

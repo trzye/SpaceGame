@@ -34,6 +34,11 @@ angular.module("SpaceGame.AuthModule", [])
             ,
             "getUsername": function () {
                 return $cookies.get("username");
+            },
+            logout: function () {
+                $cookies.remove("token");
+                $cookies.remove("username");
+                $state.go("login");
             }
         }
     }
