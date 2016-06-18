@@ -22,6 +22,7 @@ public class ControllerConstantObjects {
     public static final String OTHER_PLANET_PATH = "/otherPlanet";
     public static final String GET_BACK_FLEET_PATH = "/getBackFleet";
     public static final String INCOMING_ATTACKS_AND_ALLIANCES_PATH = "/incomingAttacksAndAlliances";
+    public static final String OUTGOING_ATTACKS_AND_ALLIANCES_PATH = "/outgoingAttacksAndAlliances";
     public static final String ALLIANCES_ON_MY_PLANET_PATH = "/alliancesOnMyPlanet";
     public static final String ATTACK_PATH = "/attack";
     public static final String HELP_PATH = "/help";
@@ -82,6 +83,7 @@ public class ControllerConstantObjects {
     public static final String GET_MY_RESOURCES = "Pobranie danych o surowcach dla gracza %s";
     public static final String GET_BACK_FLEET_LOG = "Flota użytkownika %s dostała rozkaz powrotu";
     public static final String INCOMING_ATTACKS_AND_ALLIANCES_LOG = "Zwrócono informacje o nadchodzących flotach dla użytkownika %s";
+    public static final String OUTGOING_ATTACKS_AND_ALLIANCES_LOG = "Zwrócono informacje o wychodzących flotach dla użytkownika %s";
     public static final String ALLIANCES_ON_MY_PLANET_LOG = "Zwrócono informację o sojuszniczej flocie na planecie gracza %s";
     public static final String ATTACK_PLANET_LOG = "Użytkownik %s zaatakował użytkownika %s";
     public static final String HELP_PLANET_LOG = "Użytkownik %s wysłał wsparcie do użytkownika %s";
