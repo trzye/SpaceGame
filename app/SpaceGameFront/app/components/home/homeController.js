@@ -126,9 +126,11 @@ angular.module("SpaceGame.HomeModule", [])
             getFleet();
 
 
-            $scope.levelUp = function (typeId) {
+            $scope.levelUp = function (typeId, building) {
+
                 DataService.upgradeBuilding(typeId).then(function (response) {
                     ModalService.openModalInfo("OK", response.data);
+                    building.level += 1;
                     DataService.getResources().then(function (response) {
                         resources.gadolin = response.data.gadolin;
                         resources.ununtrium = response.data.ununtrium;

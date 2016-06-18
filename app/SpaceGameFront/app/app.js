@@ -31,8 +31,7 @@ var spaceGameApp = angular.module('SpaceGame', [
                         DataService.getResources().then(function (response) {
                             deferred.resolve(response.data);
                         }, function (reponse) {
-                            if(typeof $cookies.get("token") === "undefined")
-                                $state.go("login");
+                            $state.go("login");
                             deferred.reject("Error");
                         });
                         return deferred.promise;
