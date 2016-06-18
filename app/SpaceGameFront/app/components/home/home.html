@@ -11,10 +11,18 @@
                     </p>
                     <div ng-show="selectedTargetFlag">
                         <table class="table table-hover">
-                            <td>Wybrany cel: </td><td><b><span ng-bind="selectedTargetPlanet.name"></span></b></td>
+                            <td>Wybrany cel:</td>
+                            <td><b><span ng-bind="selectedTargetPlanet.name"></span></b></td>
                         </table>
 
-                        <a ng-click="attack()" class="btn btn-danger"><i class="fa fa-rocket" aria-hidden="true"></i> Atakuj</a>
+                        <a ng-click="attack()" class="btn btn-danger"><i class="fa fa-rocket" aria-hidden="true"></i>
+                            Atakuj</a>
+                    </div>
+                    <div ng-show="outgoingAttacksAndAlliances.flag">
+                        <p>Nazwa planety docelowej: <b><span ng-bind="outgoingAttacksAndAlliances.name"></span></b></p>
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-success" style="width: {{outgoingAttacksAndAlliances.percentage}}%"></div>
+                        </div>
                     </div>
 
                 </div>
@@ -37,7 +45,8 @@
                                     </td>
                                     <td>
                                         <p style="margin-top: 20px;">
-                                            <a ng-click="levelUp(building.typeId, building)" class="btn btn-sm btn-success"><i
+                                            <a ng-click="levelUp(building.typeId, building)"
+                                               class="btn btn-sm btn-success"><i
                                                     class="fa fa-level-up" aria-hidden="true"></i> Rozbuduj budynek</a>
                                         </p>
 

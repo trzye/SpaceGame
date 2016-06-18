@@ -11,6 +11,27 @@ angular.module("SpaceGame.HomeModule", [])
             $scope.map = [];
             $scope.selectedTargetPlanet = {};
             $scope.selectedTargetFlag = false;
+            $scope.outgoingAttacksAndAlliances = {
+                "flag": false
+            };
+
+
+            var outgoing = function () {
+                DataService.outgoingAttacksAndAlliances().then(function (response) {
+                    $scope.outgoingAttacksAndAlliances = response.data;
+                    if(response.data !== "") {
+                        $scope.outgoingAttacksAndAlliances.percentage = 100 - parseInt(response.data.secondsToCome / response.data.secondsOfWholeOperation * 100);
+                        $scope.outgoingAttacksAndAlliances.name = "[" + response.data.coordinateX + "|" + response.data.coordinateY + "]";
+                        $scope.outgoingAttacksAndAlliances.status = response.data.status;
+                        $scope.outgoingAttacksAndAlliances.secondsToCome = response.data.secondsToCome;
+                        $scope.outgoingAttacksAndAlliances.flag = true;
+                    } else {
+                        $scope.outgoingAttacksAndAlliances.flag = false;
+                    }
+                });
+            };
+
+            outgoing();
 
             DataService.getBuildings().then(function (response) {
                 $scope.buildings = response.data;
@@ -82,9 +103,11 @@ angular.module("SpaceGame.HomeModule", [])
 
             $scope.attack = function () {
                 DataService.attack($scope.selectedTargetPlanet.x, $scope.selectedTargetPlanet.y)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.selectedTargetPlanet.attackInfo = response.data;
-                        console.log();
+                        ModalService.openModalInfo("OK", "Wysłano flotę");
+                    }, function (response) {
+                        ModalService.openModalInfo("ERROR", response.data);
                     })
             };
 
@@ -142,7 +165,7 @@ angular.module("SpaceGame.HomeModule", [])
             };
 
             $scope.buildShip = function (typeId, number) {
-                if(number == 0) return;
+                if (number == 0) return;
                 DataService.buildShips(typeId, number).then(function (response) {
                     ModalService.openModalInfo("OK", response.data);
                     DataService.getResources().then(function (response) {

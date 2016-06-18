@@ -20,6 +20,8 @@ angular.module("SpaceGame.ApiModule", [])
             "getBackFleet" : domain + "/getBackFleet",
             "incomingAttacksAndAlliances" : domain + "/incomingAttacksAndAlliances",
             "alliancesOnMyPlanet" : domain + "/alliancesOnMyPlanet",
-            "otherPlanet" : domain + "/otherPlanet"
+            "otherPlanet" : domain + "/otherPlanet",
+            "outgoingAttacksAndAlliances" : domain + "/outgoingAttacksAndAlliances"
+
         }
     }]);

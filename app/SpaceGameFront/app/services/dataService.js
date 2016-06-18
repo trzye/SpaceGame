@@ -107,6 +107,10 @@ angular.module("SpaceGame.DataModule", [])
             return getHttp(data, ApiService.otherPlanet);
         };
 
+        var outgoingAttacksAndAlliances = function () {
+            return getHttp(authData, ApiService.outgoingAttacksAndAlliances);
+        };
+
         return {
             getMap: getMap,
             getResources: getResources,
@@ -122,6 +126,7 @@ angular.module("SpaceGame.DataModule", [])
             getBackFleet: getBackFleet,
             incomingAttacksAndAlliances: incomingAttacksAndAlliances,
             alliancesOnMyPlanet: alliancesOnMyPlanet,
-            otherPlanet: otherPlanet
+            otherPlanet: otherPlanet,
+            outgoingAttacksAndAlliances: outgoingAttacksAndAlliances
         }
     }]);
