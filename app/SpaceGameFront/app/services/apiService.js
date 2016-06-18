@@ -9,7 +9,7 @@ angular.module("SpaceGame.ApiModule", [])
             "map" : domain + "/map",
             "myResources" : domain + "/myResources",
             "myBuildings" : domain + "/myBuildings",
-            "myFleet" : domain + "/myfleet",
+            "myFleet" : domain + "/myFleet",
             "myPlanet" : domain + "/myPlanet",
             "attackHistory" : domain + "/attackHistory",
             "allianceHistory" : domain + "/allianceHistory",

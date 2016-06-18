@@ -50,9 +50,19 @@ html, body {
 
 .planet {
     background-color: black;
-    border: 1px solid #3d3d3d;
     text-align: center;
     padding: 15px 10px;
+}
+
+.empty-space {
+    text-align: center;
+    padding: 15px 10px;
+    background-color: black;
+}
+
+.user-planet {
+    border: 1px solid #4b8f33;
+    cursor: auto !important;
 }
 
 .planet:hover {
@@ -63,7 +73,6 @@ html, body {
 
 .locked-planet {
     text-align: center;
-
     background: black url("../img/planet.png") no-repeat center;
     background-size: 70% 80%;
 }

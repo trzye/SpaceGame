@@ -17,6 +17,15 @@ angular.module("SpaceGame.DataModule", [])
             });
         };
 
+        var getMap = function () {
+            return $http({
+                method: "GET",
+                url: ApiService.map,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        };
 
         var getResources = function () {
             return getHttp(authData, ApiService.myResources);
@@ -44,35 +53,35 @@ angular.module("SpaceGame.DataModule", [])
 
         var upgradeBuilding = function (typeId) {
             var data = {
-                "authenticationData" : authData,
-                "typeId" : typeId
+                "authenticationData": authData,
+                "typeId": typeId
             };
             return getHttp(data, ApiService.upgradeBuilding);
         };
 
         var buildShips = function (typeId, number) {
             var data = {
-                "authenticationData" : authData,
-                "typeId" : typeId,
-                "number" : number
+                "authenticationData": authData,
+                "typeId": typeId,
+                "number": number
             };
             return getHttp(data, ApiService.buildShips);
         };
 
         var attack = function (coordinateX, coordinateY) {
             var data = {
-                "authenticationData" : authData,
-                "coordinateX" : coordinateX,
-                "coordinateY" : coordinateY
+                "authenticationData": authData,
+                "coordinateX": coordinateX,
+                "coordinateY": coordinateY
             };
             return getHttp(data, ApiService.attack);
         };
 
         var help = function (coordinateX, coordinateY) {
             var data = {
-                "authenticationData" : authData,
-                "coordinateX" : coordinateX,
-                "coordinateY" : coordinateY
+                "authenticationData": authData,
+                "coordinateX": coordinateX,
+                "coordinateY": coordinateY
             };
             return getHttp(data, ApiService.help);
         };
@@ -91,14 +100,15 @@ angular.module("SpaceGame.DataModule", [])
 
         var otherPlanet = function (coordinateX, coordinateY) {
             var data = {
-                "authenticationData" : authData,
-                "coordinateX" : coordinateX,
-                "coordinateY" : coordinateY
+                "authenticationData": authData,
+                "coordinateX": coordinateX,
+                "coordinateY": coordinateY
             };
             return getHttp(data, ApiService.otherPlanet);
         };
 
         return {
+            getMap: getMap,
             getResources: getResources,
             getBuildings: getBuildings,
             getFleet: getFleet,
