@@ -4,7 +4,7 @@ i czasu rzeczywistego”. W grze użytkownik rozbudowuje własną planetę w kos
 i atakuje innych graczy. Praca była zespołowa, ja zajmowałem się projektem i implementacją
 REST API.
 
-• API: docs.michaljereczek.apiary.io
+• API:  <a href="http://docs.michaljereczek.apiary.io">docs.michaljereczek.apiary.io</a>
 
 • Użyte technologie: Java SE, Spring, MySQL, Gradle, JavaScript, AngularJS
 
